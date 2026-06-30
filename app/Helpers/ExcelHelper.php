@@ -17,7 +17,7 @@ class ExcelHelper
     // ─────────────────────────────────────────────────────────────────────────
 
     /**
-     * Create a new Spreadsheet with LANEX branding on the first sheet.
+     * Create a new Spreadsheet with LANEXS branding on the first sheet.
      *
      * @param  string $title  Sheet / document title
      * @return array{spreadsheet: Spreadsheet, sheet: \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet}
@@ -26,9 +26,9 @@ class ExcelHelper
     {
         $spreadsheet = new Spreadsheet();
         $spreadsheet->getProperties()
-            ->setCreator('LANEX ERP')
+            ->setCreator('LANEXS ERP')
             ->setTitle($title)
-            ->setCompany('PT LANEX EXPRESS INDONESIA');
+            ->setCompany('PT LANEXS EXPRESS INDONESIA');
 
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setTitle(substr($title, 0, 31)); // Excel tab name max 31 chars
@@ -42,7 +42,7 @@ class ExcelHelper
      * @param  \PhpOffice\PhpSpreadsheet\Worksheet\Worksheet $sheet
      * @param  string[]  $columns  Column labels
      * @param  int       $row      Row number (1-based)
-     * @param  string    $bgColor  Hex background, default LANEX navy
+     * @param  string    $bgColor  Hex background, default LANEXS navy
      */
     public static function writeHeaderRow($sheet, array $columns, int $row = 1, string $bgColor = '1e3a5f'): void
     {

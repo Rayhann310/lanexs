@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - LANEX Enterprise</title>
+    <title>Login - LANEXS Enterprise</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -64,7 +64,7 @@
         <div class="hidden md:flex flex-col justify-between w-1/2 p-10 lg:p-14 text-white">
             <div>
                 <a href="<?= BASE_URL ?>/" class="inline-block mb-12 hover:scale-105 transition-transform duration-300">
-                    <img src="<?= BASE_URL ?>/assets/images/a.png" alt="LANEX" class="h-14 w-auto brightness-0 invert drop-shadow-md">
+                    <img src="<?= BASE_URL ?>/assets/images/a.png" alt="LANEXS" class="h-14 w-auto brightness-0 invert drop-shadow-md">
                 </a>
                 <h1 class="text-4xl lg:text-5xl font-extrabold tracking-tight mb-6 leading-tight drop-shadow-lg">
                     Sistem Manajemen <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">Ekspedisi Terpadu</span>
@@ -93,7 +93,7 @@
                 
                 <!-- Mobile Logo -->
                 <div class="md:hidden flex justify-center mb-8">
-                    <img src="<?= BASE_URL ?>/assets/images/a.png" alt="LANEX" class="h-12 w-auto drop-shadow-sm">
+                    <img src="<?= BASE_URL ?>/assets/images/a.png" alt="LANEXS" class="h-12 w-auto drop-shadow-sm">
                 </div>
 
                 <div class="mb-10 text-center md:text-left">
@@ -144,7 +144,7 @@
                 </form>
                 
                 <div class="mt-8 text-center">
-                    <p class="text-xs font-medium text-slate-400">&copy; <?= date('Y') ?> LANEX Logistics Enterprise.</p>
+                    <p class="text-xs font-medium text-slate-400">&copy; <?= date('Y') ?> LANEXS Logistics Enterprise.</p>
                 </div>
             </div>
         </div>

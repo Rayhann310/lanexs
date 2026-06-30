@@ -20,9 +20,9 @@ class NotificationService
         $url = BASE_URL . "/tracking?resi=" . urlencode($resi);
 
         $message = "Halo {$package['sender_name']},\n\n";
-        $message .= "Paket Anda dengan No. Resi *{$resi}* (Tujuan: {$receiver}) telah berhasil dibuat di sistem LANEX.\n\n";
+        $message .= "Paket Anda dengan No. Resi *{$resi}* (Tujuan: {$receiver}) telah berhasil dibuat di sistem LANEXS.\n\n";
         $message .= "Lacak paket Anda secara realtime di:\n{$url}\n\n";
-        $message .= "Terima kasih telah menggunakan LANEX Express.";
+        $message .= "Terima kasih telah menggunakan LANEXS Express.";
 
         // For now we log to file instead of actual API call to save costs/avoid setup
         self::logNotification('whatsapp', $phone, $message);
@@ -43,7 +43,7 @@ class NotificationService
 
         $message = "Halo {$package['sender_name']},\n\n";
         $message .= "Kabar baik! Paket Anda dengan No. Resi *{$resi}* telah BERHASIL DIKIRIM (Diterima oleh: {$receiver}).\n\n";
-        $message .= "Terima kasih telah menggunakan LANEX Express.";
+        $message .= "Terima kasih telah menggunakan LANEXS Express.";
 
         self::logNotification('whatsapp', $phone, $message);
     }

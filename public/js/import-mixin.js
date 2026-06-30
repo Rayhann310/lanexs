@@ -1,5 +1,5 @@
 /**
- * LANEX Excel Import Mixin
+ * LANEXS Excel Import Mixin
  * Include this script on any page that needs import functionality.
  * Usage: spread importMixin() into your Alpine component data object.
  *

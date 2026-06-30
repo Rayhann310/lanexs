@@ -55,7 +55,7 @@ class CustomerController extends BaseController
         ['spreadsheet' => $sp, 'sheet' => $sheet] = \App\Helpers\ExcelHelper::createWorkbook('Data Klien B2B');
 
         $sheet->mergeCells('A1:G1');
-        $sheet->setCellValue('A1', 'DATA KLIEN KORPORAT (B2B) — PT LANEX EXPRESS INDONESIA');
+        $sheet->setCellValue('A1', 'DATA KLIEN KORPORAT (B2B) — PT LANEXS EXPRESS INDONESIA');
         $sheet->getStyle('A1')->applyFromArray(['font' => ['bold' => true, 'size' => 13, 'color' => ['rgb' => '4338ca']], 'alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER]]);
         $sheet->getRowDimension(1)->setRowHeight(26);
 
@@ -103,7 +103,7 @@ class CustomerController extends BaseController
         $sheet->setCellValue('A' . $noteRow, '⚠ CATATAN: credit_limit diisi angka tanpa titik/koma. Kolom status akan otomatis ACTIVE.');
         $sheet->getStyle('A' . $noteRow)->applyFromArray(['font' => ['italic' => true, 'color' => ['rgb' => 'b45309']], 'fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => 'fef3c7']]]);
 
-        \App\Helpers\ExcelHelper::download($sp, 'Template_Import_Klien_LANEX.xlsx');
+        \App\Helpers\ExcelHelper::download($sp, 'Template_Import_Klien_LANEXS.xlsx');
     }
 
     // ── Import Preview ────────────────────────────────────────────────────────

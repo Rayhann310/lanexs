@@ -428,7 +428,7 @@ class PackageController extends BaseController
 
         // Title row
         $sheet->mergeCells('A1:J1');
-        $sheet->setCellValue('A1', 'LAPORAN DATA PAKET / RESI — PT LANEX EXPRESS INDONESIA');
+        $sheet->setCellValue('A1', 'LAPORAN DATA PAKET / RESI — PT LANEXS EXPRESS INDONESIA');
         $sheet->getStyle('A1')->applyFromArray([
             'font'      => ['bold' => true, 'size' => 13, 'color' => ['rgb' => '1e3a5f']],
             'alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER],
@@ -517,7 +517,7 @@ class PackageController extends BaseController
         \App\Helpers\ExcelHelper::autoFitColumns($branchSheet, 4);
 
         $spreadsheet->setActiveSheetIndex(0);
-        \App\Helpers\ExcelHelper::download($spreadsheet, 'Template_Import_Paket_LANEX.xlsx');
+        \App\Helpers\ExcelHelper::download($spreadsheet, 'Template_Import_Paket_LANEXS.xlsx');
     }
 
     /**

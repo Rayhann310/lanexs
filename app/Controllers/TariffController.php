@@ -177,7 +177,7 @@ class TariffController extends BaseController
         ['spreadsheet' => $sp, 'sheet' => $sheet] = \App\Helpers\ExcelHelper::createWorkbook('Data Tarif');
 
         $sheet->mergeCells('A1:G1');
-        $sheet->setCellValue('A1', 'DATA TARIF PENGIRIMAN — PT LANEX EXPRESS INDONESIA');
+        $sheet->setCellValue('A1', 'DATA TARIF PENGIRIMAN — PT LANEXS EXPRESS INDONESIA');
         $sheet->getStyle('A1')->applyFromArray(['font' => ['bold' => true, 'size' => 13, 'color' => ['rgb' => '7c3aed']], 'alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER]]);
         $sheet->getRowDimension(1)->setRowHeight(26);
         $sheet->mergeCells('A2:G2');
@@ -235,7 +235,7 @@ class TariffController extends BaseController
         \App\Helpers\ExcelHelper::autoFitColumns($branchSheet, 3);
 
         $sp->setActiveSheetIndex(0);
-        \App\Helpers\ExcelHelper::download($sp, 'Template_Import_Tarif_LANEX.xlsx');
+        \App\Helpers\ExcelHelper::download($sp, 'Template_Import_Tarif_LANEXS.xlsx');
     }
 
     // ── Import Preview ────────────────────────────────────────────────────────

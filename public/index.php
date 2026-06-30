@@ -18,7 +18,7 @@ $scriptName = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
 $baseUrl = str_ends_with($scriptName, '/public') ? substr($scriptName, 0, -7) : $scriptName;
 $baseUrl = rtrim($baseUrl, '/');
 define('BASE_URL', $baseUrl);
-define('APP_NAME', 'LANEX Logistics');
+define('APP_NAME', 'LANEXS Logistics');
 define('APP_LOGO', BASE_URL . '/assets/images/logo.png');
 
 // Load Environment variables if .env exists

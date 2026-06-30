@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($customer['company_name'] ?? 'B2B Portal') ?> - LANEX</title>
+    <title><?= htmlspecialchars($customer['company_name'] ?? 'B2B Portal') ?> - LANEXS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -41,7 +41,7 @@
                 <i class="bi bi-truck text-white text-xl"></i>
             </div>
             <div>
-                <h1 class="text-lg font-bold text-slate-800">LANEX B2B Portal</h1>
+                <h1 class="text-lg font-bold text-slate-800">LANEXS B2B Portal</h1>
                 <p class="text-xs text-slate-400"><?= htmlspecialchars($customer['company_name'] ?? '') ?></p>
             </div>
         </div>

@@ -106,7 +106,7 @@ class EmployeeController extends BaseController
         ['spreadsheet' => $sp, 'sheet' => $sheet] = \App\Helpers\ExcelHelper::createWorkbook('Data Karyawan');
 
         $sheet->mergeCells('A1:G1');
-        $sheet->setCellValue('A1', 'DATA KARYAWAN — PT LANEX EXPRESS INDONESIA');
+        $sheet->setCellValue('A1', 'DATA KARYAWAN — PT LANEXS EXPRESS INDONESIA');
         $sheet->getStyle('A1')->applyFromArray(['font' => ['bold' => true, 'size' => 13, 'color' => ['rgb' => '0f172a']], 'alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER]]);
         $sheet->getRowDimension(1)->setRowHeight(26);
 
@@ -175,7 +175,7 @@ class EmployeeController extends BaseController
         \App\Helpers\ExcelHelper::autoFitColumns($branchSheet, 2);
 
         $sp->setActiveSheetIndex(0);
-        \App\Helpers\ExcelHelper::download($sp, 'Template_Import_Karyawan_LANEX.xlsx');
+        \App\Helpers\ExcelHelper::download($sp, 'Template_Import_Karyawan_LANEXS.xlsx');
     }
 
     // ── Import Preview ────────────────────────────────────────────────────────

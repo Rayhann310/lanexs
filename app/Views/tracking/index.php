@@ -15,7 +15,7 @@
                 </div>
             </div>
             <h3 class="text-xl font-bold text-center text-slate-800 mb-2">Lacak Paket</h3>
-            <p class="text-center text-slate-500 mb-8">Masukkan nomor resi pengiriman LANEX di bawah ini</p>
+            <p class="text-center text-slate-500 mb-8">Masukkan nomor resi pengiriman LANEXS di bawah ini</p>
             
             <form action="<?= BASE_URL ?>/tracking" method="GET" class="flex flex-col sm:flex-row gap-3">
                 <div class="relative flex-1">

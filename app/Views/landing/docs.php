@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dokumentasi Sistem - LANEX Logistics</title>
+    <title>Dokumentasi Sistem - LANEXS Logistics</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -49,7 +49,7 @@
                     <div class="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-primary/30">
                         L
                     </div>
-                    <span class="font-bold text-2xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">LANEX</span>
+                    <span class="font-bold text-2xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">LANEXS</span>
                 </div>
                 <div class="hidden md:flex space-x-8 items-center">
                     <a href="<?= BASE_URL ?>/" class="text-slate-600 hover:text-primary font-medium transition-colors">Beranda</a>
@@ -71,10 +71,10 @@
                 Dokumentasi & Panduan
             </span>
             <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-6">
-                Memahami Alur Kerja <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">LANEX</span>
+                Memahami Alur Kerja <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">LANEXS</span>
             </h1>
             <p class="text-lg text-slate-300 max-w-2xl mx-auto">
-                Panduan komprehensif tentang cara kerja sistem logistik LANEX, fitur yang tersedia, serta hak akses untuk setiap peran pengguna.
+                Panduan komprehensif tentang cara kerja sistem logistik LANEXS, fitur yang tersedia, serta hak akses untuk setiap peran pengguna.
             </p>
         </div>
     </div>
@@ -148,7 +148,7 @@
                         </div>
                         <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow md:col-span-2">
                             <h3 class="text-lg font-bold text-indigo-500 mb-2">5. Klien B2B (Corporate)</h3>
-                            <p class="text-slate-600 text-sm mb-4">Portal khusus untuk perusahaan yang berlangganan layanan LANEX.</p>
+                            <p class="text-slate-600 text-sm mb-4">Portal khusus untuk perusahaan yang berlangganan layanan LANEXS.</p>
                             <ul class="text-sm text-slate-500 space-y-2">
                                 <li><i class="bi bi-check-circle-fill text-emerald-500 mr-2"></i> Melacak seluruh paket yang dikirimkan oleh perusahaannya.</li>
                                 <li><i class="bi bi-check-circle-fill text-emerald-500 mr-2"></i> Melihat tagihan (Invoice) yang belum dibayar.</li>
@@ -256,7 +256,7 @@
                         <div class="relative z-10 max-w-2xl">
                             <h3 class="text-xl font-bold mb-4">Pengelolaan Data Massal yang Sangat Cepat</h3>
                             <p class="text-slate-300 text-sm leading-relaxed mb-6">
-                                LANEX mendukung pengolahan data menggunakan Microsoft Excel <code>.xlsx</code> secara natif berkat integrasi PhpSpreadsheet. 
+                                LANEXS mendukung pengolahan data menggunakan Microsoft Excel <code>.xlsx</code> secara natif berkat integrasi PhpSpreadsheet. 
                                 Anda tidak perlu pusing menginput data satu per satu.
                             </p>
                             <ul class="space-y-3 text-sm text-slate-200">
@@ -277,7 +277,7 @@
     <footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 mt-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left flex flex-col md:flex-row justify-between items-center">
             <div class="mb-4 md:mb-0">
-                <p>&copy; <?= date('Y') ?> <b>LANEX Logistics</b>. All rights reserved.</p>
+                <p>&copy; <?= date('Y') ?> <b>LANEXS Logistics</b>. All rights reserved.</p>
                 <p class="text-sm mt-1">Enterprise Logistics Management System</p>
             </div>
             <div class="flex space-x-6 text-sm">

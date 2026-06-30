@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hasil Pelacakan <?= htmlspecialchars($package['resi']) ?> - LANEX</title>
+    <title>Hasil Pelacakan <?= htmlspecialchars($package['resi']) ?> - LANEXS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -32,7 +32,7 @@
         <div class="max-w-5xl mx-auto px-4 flex justify-between items-center">
             <a href="<?= BASE_URL ?>/" class="flex items-center space-x-2 text-primary">
                 <i class="bi bi-truck text-3xl"></i>
-                <span class="font-bold text-2xl tracking-tight">LANEX</span>
+                <span class="font-bold text-2xl tracking-tight">LANEXS</span>
             </a>
             <a href="<?= BASE_URL ?>/" class="text-gray-500 hover:text-primary transition font-medium"><i class="bi bi-house-door mr-1"></i> Beranda</a>
         </div>

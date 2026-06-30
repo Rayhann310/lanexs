@@ -144,7 +144,7 @@ class FinanceController extends BaseController
 
         // Title
         $sheet->mergeCells('A1:H1');
-        $sheet->setCellValue('A1', 'LAPORAN MUTASI KAS — PT LANEX EXPRESS INDONESIA');
+        $sheet->setCellValue('A1', 'LAPORAN MUTASI KAS — PT LANEXS EXPRESS INDONESIA');
         $sheet->getStyle('A1')->applyFromArray(['font' => ['bold' => true, 'size' => 13, 'color' => ['rgb' => '065f46']], 'alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER]]);
         $sheet->getRowDimension(1)->setRowHeight(28);
 

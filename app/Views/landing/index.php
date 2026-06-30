@@ -309,7 +309,7 @@
                                 </div>
                                 <div>
                                     <h5 class="font-bold text-gray-900 text-lg">Kantor Pusat</h5>
-                                    <p class="text-gray-500 text-sm mt-1 leading-relaxed">Gedung LANEX Center<br>Jl. Jend. Sudirman Kav 21, Jakarta</p>
+                                    <p class="text-gray-500 text-sm mt-1 leading-relaxed">Gedung LANEXS Center<br>Jl. Jend. Sudirman Kav 21, Jakarta</p>
                                 </div>
                             </li>
                             <li class="flex items-start group">
