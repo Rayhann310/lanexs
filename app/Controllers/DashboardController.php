@@ -51,13 +51,13 @@ class DashboardController extends BaseController
             $balance = $db->query($balanceSQL)->fetchColumn();
 
             $data = [
-                'totalPaket'     => number_format($row['total_paket']),
-                'paketHariIni'   => number_format($row['hari_ini']),
-                'paketTransit'   => number_format($row['transit']),
-                'paketSelesai'   => number_format($row['selesai']),
-                'paketPending'   => number_format($row['pending']),
-                'pendapatan'     => 'Rp ' . number_format($row['pendapatan'], 0, ',', '.'),
-                'saldoKas'       => 'Rp ' . number_format($balance, 0, ',', '.'),
+                'totalPaket'     => number_format((float)($row['total_paket'] ?? 0)),
+                'paketHariIni'   => number_format((float)($row['hari_ini'] ?? 0)),
+                'paketTransit'   => number_format((float)($row['transit'] ?? 0)),
+                'paketSelesai'   => number_format((float)($row['selesai'] ?? 0)),
+                'paketPending'   => number_format((float)($row['pending'] ?? 0)),
+                'pendapatan'     => 'Rp ' . number_format((float)($row['pendapatan'] ?? 0), 0, ',', '.'),
+                'saldoKas'       => 'Rp ' . number_format((float)($balance ?? 0), 0, ',', '.'),
                 'recentPackages' => $recentPackages,
             ];
         } catch (\Exception $e) {
