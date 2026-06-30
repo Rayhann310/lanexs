@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=lanex_db
+      - DB_USERNAME=lanex_user
+      - DB_PASSWORD=lanex_secret
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - lanex_network
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: lanex_db
+      MYSQL_USER: lanex_user
+      MYSQL_PASSWORD: lanex_secret
+      MYSQL_ROOT_PASSWORD: root_secret
+    ports:
+      - "3306:3306"
+    volumes:
+      - lanex_db_data:/var/lib/mysql
+    networks:
+      - lanex_network
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  lanex_network:
+    driver: bridge
+
+volumes:
+  lanex_db_data:
