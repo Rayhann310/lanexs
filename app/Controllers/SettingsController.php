@@ -312,7 +312,7 @@ class SettingsController extends BaseController
                     price, payment_type, payment_status, status, created_by, created_at
                 )
                 SELECT 
-                    COALESCE((SELECT kode_tracking FROM data_tracking dt WHERE dt.barang_id = db.barang_id LIMIT 1), CONCAT('LNX-MIGRATE-', db.barang_id)),
+                    COALESCE((SELECT kode_tracking FROM data_inbound di WHERE di.barang_id = db.barang_id LIMIT 1), CONCAT('LNX-MIGRATE-', db.barang_id)),
                     COALESCE(dp.nama_pengirim, 'Pengirim Tidak Diketahui'),
                     COALESCE(dp.notelp_pengirim, '-'),
                     COALESCE(CONCAT('[', db.nama_barang, '] ', dp.alamat_pengirim), '-'),
