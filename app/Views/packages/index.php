@@ -22,11 +22,11 @@
                 <i class="bi bi-file-earmark-arrow-up mr-2"></i> Import
             </button>
             <!-- Buat Resi Masal -->
-            <button type="button" @click="openMassModal()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2.5 rounded-xl font-medium shadow-sm transition flex items-center text-sm">
+            <button type="button" @click.stop="openMassModal()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2.5 rounded-xl font-medium shadow-sm transition flex items-center text-sm">
                 <i class="bi bi-layers mr-2"></i> Buat Resi Masal
             </button>
             <!-- Buat Resi -->
-            <button @click="openCreateModal()" class="bg-primary hover:bg-secondary text-white px-4 py-2.5 rounded-xl font-medium shadow-sm shadow-primary/20 transition flex items-center text-sm">
+            <button type="button" @click.stop="openCreateModal()" class="bg-primary hover:bg-secondary text-white px-4 py-2.5 rounded-xl font-medium shadow-sm shadow-primary/20 transition flex items-center text-sm">
                 <i class="bi bi-plus-lg mr-2"></i> Buat Resi Baru
             </button>
             <?php endif; ?>
