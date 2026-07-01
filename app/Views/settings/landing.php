@@ -129,7 +129,6 @@
         </div>
     </form>
 </div>
-</div>
 
 <script>
 // Image Preview Logic

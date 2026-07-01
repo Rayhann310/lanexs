@@ -37,8 +37,9 @@ class LandingPartnerController extends BaseController
 
         if (isset($_FILES['logo']) && $_FILES['logo']['error'] === UPLOAD_ERR_OK) {
             $ext = pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION);
+            $ext = pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION);
             $filename = 'partner_' . time() . '_' . rand(100, 999) . '.' . $ext;
-            $uploadDir = BASE_PATH . '/public/assets/images/partners/';
+            $uploadDir = dirname($_SERVER['SCRIPT_FILENAME']) . '/assets/images/partners/';
             if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
             
             if (move_uploaded_file($_FILES['logo']['tmp_name'], $uploadDir . $filename)) {
@@ -66,8 +67,9 @@ class LandingPartnerController extends BaseController
         $partner = $model->find($id);
         
         if ($partner) {
-            if (!empty($partner['logo_path']) && file_exists(BASE_PATH . '/public' . $partner['logo_path'])) {
-                unlink(BASE_PATH . '/public' . $partner['logo_path']);
+            $logoPath = dirname($_SERVER['SCRIPT_FILENAME']) . $partner['logo_path'];
+            if (!empty($partner['logo_path']) && file_exists($logoPath)) {
+                unlink($logoPath);
             }
             $model->delete($id);
             $_SESSION['success'] = "Mitra/Klien berhasil dihapus.";

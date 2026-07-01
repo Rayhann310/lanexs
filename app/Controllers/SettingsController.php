@@ -245,7 +245,8 @@ class SettingsController extends BaseController
         $currentImages = array_pad($currentImages, 7, null);
         
         $deleteImages = $request->get('delete_images') ?? [];
-        $uploadDir = BASE_PATH . '/public/assets/images/hero/';
+        $publicDir = dirname($_SERVER['SCRIPT_FILENAME']);
+        $uploadDir = $publicDir . '/assets/images/hero/';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0755, true);
         }
@@ -253,8 +254,8 @@ class SettingsController extends BaseController
         for ($i = 0; $i < 7; $i++) {
             // 1. Process deletions
             if (in_array($i, $deleteImages)) {
-                if (!empty($currentImages[$i]) && file_exists(BASE_PATH . '/public' . $currentImages[$i])) {
-                    unlink(BASE_PATH . '/public' . $currentImages[$i]);
+                if (!empty($currentImages[$i]) && file_exists($publicDir . $currentImages[$i])) {
+                    unlink($publicDir . $currentImages[$i]);
                 }
                 $currentImages[$i] = null;
             }
@@ -262,8 +263,8 @@ class SettingsController extends BaseController
             // 2. Process new uploads for this specific slot
             if (isset($_FILES['hero_images']['error'][$i]) && $_FILES['hero_images']['error'][$i] === UPLOAD_ERR_OK) {
                 // Delete old image in this slot if exists
-                if (!empty($currentImages[$i]) && file_exists(BASE_PATH . '/public' . $currentImages[$i])) {
-                    unlink(BASE_PATH . '/public' . $currentImages[$i]);
+                if (!empty($currentImages[$i]) && file_exists($publicDir . $currentImages[$i])) {
+                    unlink($publicDir . $currentImages[$i]);
                 }
                 
                 $ext = pathinfo($_FILES['hero_images']['name'][$i], PATHINFO_EXTENSION);
