@@ -48,7 +48,7 @@ ob_start();
                 </div>
 
                 <!-- Hero Image Slider (Self-Healing logic provides default image if empty) -->
-                <div class="relative lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl" data-aos="fade-left" data-aos-duration="1200">
+                <div class="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl" data-aos="fade-left" data-aos-duration="1200">
                     
                     <div class="swiper heroSwiper w-full h-full">
                         <div class="swiper-wrapper">
@@ -344,10 +344,11 @@ $slot = ob_get_clean();
 $extraScripts = '
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
+    var heroSlideCount = document.querySelectorAll('.heroSwiper .swiper-slide').length;
     var heroSwiper = new Swiper(".heroSwiper", {
         effect: "fade",
         autoplay: { delay: 3500, disableOnInteraction: false },
-        loop: true,
+        loop: heroSlideCount > 1,
         allowTouchMove: false
     });
     var testSwiper = new Swiper(".testSwiper", {
