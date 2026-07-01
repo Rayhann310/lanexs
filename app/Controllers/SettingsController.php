@@ -210,8 +210,13 @@ class SettingsController extends BaseController
         $settingModel = new \App\Models\Setting();
         
         $settings = [
-            'landing_hero_title' => $settingModel->get('landing_hero_title', 'Solusi Pengiriman Cepat, Aman, & Terpercaya'),
-            'landing_hero_subtitle' => $settingModel->get('landing_hero_subtitle', 'Tingkatkan efisiensi bisnis Anda dengan layanan logistik terintegrasi dari '.APP_NAME.'. Kami hadir untuk memastikan setiap paket sampai tepat waktu.'),
+            'landing_hero_title' => $settingModel->get('landing_hero_title', 'Best of The Best Service.'),
+            'landing_hero_subtitle' => $settingModel->get('landing_hero_subtitle', 'Solusi ekspedisi terpercaya dengan komitmen penuh pada keamanan, kecepatan, dan kepuasan pelanggan.'),
+            'landing_hero_images' => json_decode($settingModel->get('landing_hero_images', '[]'), true),
+            'landing_contact_address' => $settingModel->get('landing_contact_address', 'Gedung LANEXS Center<br>Jl. Jend. Sudirman Kav 21, Jakarta'),
+            'landing_contact_phone' => $settingModel->get('landing_contact_phone', '1500-LNX (569)<br>+62 811 2233 4455 (WA)'),
+            'landing_contact_email' => $settingModel->get('landing_contact_email', 'support@lanex.co.id'),
+            'landing_contact_map' => $settingModel->get('landing_contact_map', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126914.86989441113!2d106.74108821948523!3d-6.251458931102941!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3e945e34b9d%3A0x5371bf0fdad786a2!2sJakarta!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid'),
         ];
         
         $this->view('settings/landing', ['settings' => $settings]);
@@ -229,6 +234,49 @@ class SettingsController extends BaseController
         
         $settingModel->set('landing_hero_title', $request->get('landing_hero_title'));
         $settingModel->set('landing_hero_subtitle', $request->get('landing_hero_subtitle'));
+        $settingModel->set('landing_contact_address', $request->get('landing_contact_address'));
+        $settingModel->set('landing_contact_phone', $request->get('landing_contact_phone'));
+        $settingModel->set('landing_contact_email', $request->get('landing_contact_email'));
+        $settingModel->set('landing_contact_map', $request->get('landing_contact_map'));
+        
+        // Handle image deletions
+        $currentImages = json_decode($settingModel->get('landing_hero_images', '[]'), true) ?: [];
+        $deleteImages = $request->get('delete_images') ?? [];
+        if (!empty($deleteImages)) {
+            foreach ($deleteImages as $delImg) {
+                if (($key = array_search($delImg, $currentImages)) !== false) {
+                    unset($currentImages[$key]);
+                    if (file_exists(BASE_PATH . '/public' . $delImg)) {
+                        unlink(BASE_PATH . '/public' . $delImg);
+                    }
+                }
+            }
+            $currentImages = array_values($currentImages); // re-index
+        }
+
+        // Handle new image uploads (max 7 total)
+        if (isset($_FILES['hero_images'])) {
+            $files = $_FILES['hero_images'];
+            $uploadDir = BASE_PATH . '/public/assets/images/hero/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
+            }
+
+            for ($i = 0; $i < count($files['name']); $i++) {
+                if ($files['error'][$i] === UPLOAD_ERR_OK) {
+                    if (count($currentImages) >= 7) {
+                        break; // Stop if we reach 7
+                    }
+                    $ext = pathinfo($files['name'][$i], PATHINFO_EXTENSION);
+                    $filename = 'hero_' . time() . '_' . rand(1000, 9999) . '.' . $ext;
+                    if (move_uploaded_file($files['tmp_name'][$i], $uploadDir . $filename)) {
+                        $currentImages[] = '/assets/images/hero/' . $filename;
+                    }
+                }
+            }
+        }
+        
+        $settingModel->set('landing_hero_images', json_encode($currentImages));
         
         $_SESSION['success'] = "Pengaturan Landing Page berhasil disimpan.";
         Response::redirect('/settings/landing');

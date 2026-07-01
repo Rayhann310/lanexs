@@ -1,126 +1,12 @@
-<!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= APP_NAME ?> - Best of The Best Service</title>
-    <link rel="icon" type="image/x-icon" href="<?= BASE_URL ?>/favicon.ico">
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: { 
-                        primary: '#107c8c', // Deep Teal from Logo
-                        primaryHover: '#0d6573',
-                        secondary: '#f3aa00', // Amber Yellow from Logo
-                        secondaryHover: '#d99700',
-                        darkBg: '#1e293b' // Slate-800 for footer
-                    },
-                    fontFamily: { 
-                        sans: ['Inter', 'sans-serif'],
-                        heading: ['Outfit', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- AOS Animation -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
-    <style>
-        .nav-scrolled {
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        }
-        .hero-bg {
-            background-color: #f8fafc;
-            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
-            background-size: 32px 32px;
-        }
-        /* Custom scrollbar for marquees if any */
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        .accent-border-hover:hover {
-            border-bottom: 4px solid #f3aa00;
-            transform: translateY(-4px);
-        }
-    </style>
-</head>
-<body class="font-sans antialiased text-slate-700 bg-slate-50 selection:bg-primary selection:text-white overflow-x-hidden">
+<?php
+// index.php — Landing Page Beranda
+// Uses shared landing/layout.php for Navbar & Footer
 
-    <!-- Navbar -->
-    <nav class="fixed w-full z-50 transition-all duration-300 py-3" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <!-- Logo -->
-                <a href="<?= BASE_URL ?>/" class="flex items-center space-x-2">
-                    <img src="<?= BASE_URL ?>/assets/images/a.png" alt="<?= APP_NAME ?>" class="h-12 w-auto object-contain">
-                </a>
-                
-                <!-- Desktop Menu -->
-                <div class="hidden lg:flex space-x-8 items-center">
-                    <a href="#beranda" class="text-slate-600 hover:text-primary font-medium transition-colors text-sm">Beranda</a>
-                    <a href="#tentang" class="text-slate-600 hover:text-primary font-medium transition-colors text-sm">Profil</a>
-                    <a href="#layanan" class="text-slate-600 hover:text-primary font-medium transition-colors text-sm">Layanan</a>
-                    <a href="#keunggulan" class="text-slate-600 hover:text-primary font-medium transition-colors text-sm">Keunggulan</a>
-                    <a href="#testimoni" class="text-slate-600 hover:text-primary font-medium transition-colors text-sm">Testimoni</a>
-                    <a href="#kontak" class="text-slate-600 hover:text-primary font-medium transition-colors text-sm">Kontak</a>
-                </div>
-                
-                <div class="hidden lg:flex items-center">
-                    <?php if(isset($_SESSION['user_id'])): ?>
-                        <a href="<?= BASE_URL ?>/dashboard" class="px-6 py-2.5 bg-primary text-white font-semibold rounded-lg hover:bg-primaryHover transition-colors shadow-sm flex items-center">
-                            <i class="bi bi-grid-fill mr-2"></i> Dashboard
-                        </a>
-                    <?php else: ?>
-                        <a href="<?= BASE_URL ?>/login" class="px-6 py-2.5 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-colors flex items-center">
-                            <i class="bi bi-box-arrow-in-right mr-2"></i> Login ERP
-                        </a>
-                    <?php endif; ?>
-                </div>
+$pageTitle = APP_NAME . ' - Best of The Best Service';
+$pageDescription = htmlspecialchars($heroSubtitle ?? '');
 
-                <!-- Mobile Menu Button -->
-                <div class="lg:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-slate-800 p-2 focus:outline-none">
-                        <i class="bi bi-list text-3xl"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mobile Menu Panel -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-slate-100 absolute w-full shadow-xl transition-all origin-top left-0 top-full">
-            <div class="flex flex-col px-6 pt-4 pb-6 space-y-2">
-                <a href="#beranda" class="text-slate-700 font-medium py-2 border-b border-slate-50">Beranda</a>
-                <a href="#tentang" class="text-slate-700 font-medium py-2 border-b border-slate-50">Profil</a>
-                <a href="#layanan" class="text-slate-700 font-medium py-2 border-b border-slate-50">Layanan</a>
-                <a href="#keunggulan" class="text-slate-700 font-medium py-2 border-b border-slate-50">Keunggulan</a>
-                <a href="#testimoni" class="text-slate-700 font-medium py-2 border-b border-slate-50">Testimoni</a>
-                <a href="#kontak" class="text-slate-700 font-medium py-2 border-b border-slate-50">Kontak</a>
-                
-                <div class="pt-4">
-                    <?php if(isset($_SESSION['user_id'])): ?>
-                        <a href="<?= BASE_URL ?>/dashboard" class="w-full flex justify-center items-center bg-primary text-white px-4 py-3 rounded-lg font-semibold">
-                            <i class="bi bi-grid-fill mr-2"></i> Dashboard
-                        </a>
-                    <?php else: ?>
-                        <a href="<?= BASE_URL ?>/login" class="w-full flex justify-center items-center bg-primary text-white px-4 py-3 rounded-lg font-semibold">
-                            <i class="bi bi-box-arrow-in-right mr-2"></i> Login ERP
-                        </a>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </div>
-    </nav>
+ob_start();
+?>
 
     <!-- Hero Section -->
     <section id="beranda" class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 hero-bg overflow-hidden border-b border-slate-200">
@@ -134,12 +20,11 @@
                     </div>
                     
                     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-heading font-black text-slate-900 tracking-tight mb-6 leading-tight">
-                        Best of The Best <br>
-                        <span class="text-primary">Service.</span>
+                        <?= htmlspecialchars($heroTitle) ?>
                     </h1>
                     
                     <p class="text-lg text-slate-600 mb-10 leading-relaxed font-light max-w-lg">
-                        <?= htmlspecialchars($heroSubtitle) ?> Solusi ekspedisi terpercaya dengan komitmen penuh pada keamanan, kecepatan, dan kepuasan pelanggan.
+                        <?= htmlspecialchars($heroSubtitle) ?>
                     </p>
                     
                     <!-- Tracking Form -->
@@ -162,14 +47,24 @@
                     </div>
                 </div>
 
-                <!-- Hero Image -->
+                <!-- Hero Image Slider (Self-Healing logic provides default image if empty) -->
                 <div class="relative lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl" data-aos="fade-left" data-aos-duration="1200">
-                    <img src="https://images.unsplash.com/photo-1586528116311-ad8ed7c83a00?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Logistics Operations" class="w-full h-full object-cover">
-                    <!-- Overlay to make it less bright and more corporate -->
-                    <div class="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
+                    
+                    <div class="swiper heroSwiper w-full h-full">
+                        <div class="swiper-wrapper">
+                            <?php foreach($heroImages as $img): ?>
+                            <div class="swiper-slide w-full h-full">
+                                <img src="<?= htmlspecialchars($img) ?>" class="w-full h-full object-cover">
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+
+                    <!-- Overlay -->
+                    <div class="absolute inset-0 bg-primary/20 mix-blend-multiply z-10 pointer-events-none"></div>
                     
                     <!-- Floating badge -->
-                    <div class="absolute bottom-6 left-6 bg-white px-6 py-4 rounded-xl shadow-lg border border-slate-100 flex items-center gap-4">
+                    <div class="absolute bottom-6 left-6 bg-white px-6 py-4 rounded-xl shadow-lg border border-slate-100 flex items-center gap-4 z-20">
                         <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center text-secondary text-2xl">
                             <i class="bi bi-award-fill"></i>
                         </div>
@@ -189,11 +84,17 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p class="text-sm font-semibold text-slate-400 uppercase tracking-widest mb-6">Dipercaya Oleh Perusahaan Terkemuka</p>
             <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50 grayscale">
-                <span class="text-xl font-black uppercase tracking-widest font-heading text-slate-800">RetailCo.</span>
-                <span class="text-xl font-black uppercase tracking-widest font-heading text-slate-800">PharmaCorp</span>
-                <span class="text-xl font-black uppercase tracking-widest font-heading text-slate-800">TechMakers</span>
-                <span class="text-xl font-black uppercase tracking-widest font-heading text-slate-800">AgroTrade</span>
-                <span class="text-xl font-black uppercase tracking-widest font-heading text-slate-800">GlobalMarket</span>
+                <?php if(empty($partners)): ?>
+                    <span class="text-xl font-black uppercase tracking-widest font-heading text-slate-800">Nama Dipercaya Perusahaan</span>
+                <?php else: ?>
+                    <?php foreach($partners as $partner): ?>
+                        <?php if(!empty($partner['logo_path']) && file_exists(BASE_PATH . '/public' . $partner['logo_path'])): ?>
+                            <img src="<?= BASE_URL . $partner['logo_path'] ?>" alt="<?= htmlspecialchars($partner['name']) ?>" class="h-12 w-auto object-contain">
+                        <?php else: ?>
+                            <span class="text-xl font-black uppercase tracking-widest font-heading text-slate-800"><?= htmlspecialchars($partner['name']) ?></span>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
     </section>
@@ -351,46 +252,34 @@
                 <h2 class="text-3xl md:text-4xl font-heading font-black mb-4">Ulasan Mitra Bisnis</h2>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700" data-aos="fade-up" data-aos-delay="100">
-                    <div class="flex text-secondary mb-4 text-sm">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                    </div>
-                    <p class="text-slate-300 font-light text-sm leading-relaxed mb-6">"Distribusi produk ritel kami ke seluruh provinsi menjadi sangat mudah. Sistem tracking LANEXS terintegrasi sempurna dengan kebutuhan operasional kami."</p>
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center font-bold text-sm mr-3">AB</div>
-                        <div>
-                            <h4 class="font-bold text-sm">Andi Budi</h4>
-                            <p class="text-xs text-slate-400">Manager Operasional, RetailCo</p>
+            <div class="swiper testSwiper" data-aos="fade-up" data-aos-delay="100">
+                <div class="swiper-wrapper">
+                    <?php if(empty($testimonials)): ?>
+                        <div class="swiper-slide bg-slate-800 p-8 rounded-2xl border border-slate-700">
+                            <p class="text-slate-300 font-light text-sm leading-relaxed mb-6">Belum ada testimoni.</p>
                         </div>
-                    </div>
-                </div>
-                <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700" data-aos="fade-up" data-aos-delay="200">
-                    <div class="flex text-secondary mb-4 text-sm">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                    </div>
-                    <p class="text-slate-300 font-light text-sm leading-relaxed mb-6">"Harga kargo yang kompetitif dipadu dengan keandalan pengiriman. Sangat efisien untuk pengiriman bahan baku manufaktur dalam skala besar."</p>
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center font-bold text-sm mr-3">SM</div>
-                        <div>
-                            <h4 class="font-bold text-sm">Siti Maharani</h4>
-                            <p class="text-xs text-slate-400">Dir. Logistik, TechMakers</p>
+                    <?php else: ?>
+                        <?php foreach($testimonials as $testi): ?>
+                        <div class="swiper-slide bg-slate-800 p-8 rounded-2xl border border-slate-700">
+                            <div class="flex text-secondary mb-4 text-sm">
+                                <?php for($i=0; $i<$testi['rating']; $i++): ?><i class="bi bi-star-fill"></i><?php endfor; ?>
+                            </div>
+                            <p class="text-slate-300 font-light text-sm leading-relaxed mb-6">"<?= htmlspecialchars($testi['content']) ?>"</p>
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center font-bold text-sm mr-3 uppercase"><?= htmlspecialchars($testi['avatar_initials']) ?></div>
+                                <div>
+                                    <h4 class="font-bold text-sm"><?= htmlspecialchars($testi['name']) ?></h4>
+                                    <?php if(!empty($testi['position'])): ?>
+                                        <p class="text-xs text-slate-400"><?= htmlspecialchars($testi['position']) ?></p>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
-                <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700" data-aos="fade-up" data-aos-delay="300">
-                    <div class="flex text-secondary mb-4 text-sm">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                    </div>
-                    <p class="text-slate-300 font-light text-sm leading-relaxed mb-6">"Layanan Top Urgent sangat bisa diandalkan. Dokumen legal dan perangkat medis kami selalu sampai dengan aman dan tepat waktu."</p>
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center font-bold text-sm mr-3">DR</div>
-                        <div>
-                            <h4 class="font-bold text-sm">Doni R.</h4>
-                            <p class="text-xs text-slate-400">CEO, PharmaCorp</p>
-                        </div>
-                    </div>
-                </div>
+                <!-- Pagination -->
+                <div class="swiper-pagination !relative !mt-8"></div>
             </div>
         </div>
     </section>
@@ -413,7 +302,7 @@
                                 </div>
                                 <div>
                                     <h5 class="font-bold text-slate-800 text-sm">Headquarter</h5>
-                                    <p class="text-slate-500 text-sm mt-1 leading-relaxed font-light">Gedung LANEXS Center<br>Jl. Jend. Sudirman Kav 21, Jakarta</p>
+                                    <p class="text-slate-500 text-sm mt-1 leading-relaxed font-light"><?= $contactAddress ?></p>
                                 </div>
                             </li>
                             <li class="flex items-start">
@@ -422,7 +311,7 @@
                                 </div>
                                 <div>
                                     <h5 class="font-bold text-slate-800 text-sm">Call Center</h5>
-                                    <p class="text-slate-500 text-sm mt-1 leading-relaxed font-light">1500-LNX (569)<br>+62 811 2233 4455 (WA)</p>
+                                    <p class="text-slate-500 text-sm mt-1 leading-relaxed font-light"><?= $contactPhone ?></p>
                                 </div>
                             </li>
                             <li class="flex items-start">
@@ -431,7 +320,7 @@
                                 </div>
                                 <div>
                                     <h5 class="font-bold text-slate-800 text-sm">Email Support</h5>
-                                    <p class="text-slate-500 text-sm mt-1 font-light">support@lanex.co.id</p>
+                                    <p class="text-slate-500 text-sm mt-1 font-light"><?= htmlspecialchars($contactEmail) ?></p>
                                 </div>
                             </li>
                         </ul>
@@ -439,7 +328,7 @@
 
                     <!-- Map -->
                     <div class="relative h-[400px] lg:h-auto lg:col-span-3 bg-slate-200">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126914.86989441113!2d106.74108821948523!3d-6.251458931102941!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3e945e34b9d%3A0x5371bf0fdad786a2!2sJakarta!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
+                        <iframe src="<?= htmlspecialchars(explode('"', explode('src="', $contactMap)[1] ?? $contactMap)[0]) ?>" 
                             class="absolute inset-0 w-full h-full border-0 grayscale opacity-80" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
 
@@ -448,96 +337,29 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-darkBg text-slate-400 pt-16 pb-8 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-                <div class="lg:col-span-2">
-                    <div class="flex items-center space-x-2 mb-6">
-                        <img src="<?= BASE_URL ?>/assets/images/a.png" alt="<?= APP_NAME ?>" class="h-10 w-auto object-contain brightness-0 invert opacity-90">
-                    </div>
-                    <p class="text-slate-500 mb-8 max-w-sm leading-relaxed font-light text-sm">
-                        Best of The Best Service. Solusi ekspedisi terpercaya dengan komitmen penuh pada keamanan dan kecepatan pengiriman paket Anda.
-                    </p>
-                    <div class="flex space-x-3">
-                        <a href="#" class="w-8 h-8 rounded bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-colors"><i class="bi bi-facebook text-sm"></i></a>
-                        <a href="#" class="w-8 h-8 rounded bg-slate-800 flex items-center justify-center hover:bg-slate-600 hover:text-white transition-colors"><i class="bi bi-twitter-x text-sm"></i></a>
-                        <a href="#" class="w-8 h-8 rounded bg-slate-800 flex items-center justify-center hover:bg-pink-600 hover:text-white transition-colors"><i class="bi bi-instagram text-sm"></i></a>
-                        <a href="#" class="w-8 h-8 rounded bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-colors"><i class="bi bi-linkedin text-sm"></i></a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="text-sm font-bold text-white mb-6 uppercase tracking-wider">Perusahaan</h4>
-                    <ul class="space-y-3 font-light text-sm">
-                        <li><a href="#beranda" class="hover:text-primary transition-colors">Beranda</a></li>
-                        <li><a href="#tentang" class="hover:text-primary transition-colors">Profil Perusahaan</a></li>
-                        <li><a href="#layanan" class="hover:text-primary transition-colors">Layanan & Solusi</a></li>
-                        <li><a href="#keunggulan" class="hover:text-primary transition-colors">Keunggulan</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="text-sm font-bold text-white mb-6 uppercase tracking-wider">Layanan Pelanggan</h4>
-                    <ul class="space-y-3 font-light text-sm">
-                        <li><a href="#tracking" class="hover:text-primary transition-colors">Lacak Kiriman</a></li>
-                        <li><a href="<?= BASE_URL ?>/docs" class="text-secondary hover:text-secondaryHover font-medium transition-colors flex items-center">Dokumentasi API <i class="bi bi-box-arrow-up-right ml-2 text-xs"></i></a></li>
-                        <li><a href="#" class="hover:text-primary transition-colors">Pusat Bantuan</a></li>
-                        <li><a href="#" class="hover:text-primary transition-colors">Syarat & Ketentuan</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-slate-800 pt-6 flex flex-col md:flex-row justify-between items-center text-xs font-light">
-                <p>&copy; <?= date('Y') ?> <?= APP_NAME ?>. Seluruh hak cipta dilindungi.</p>
-                <div class="mt-4 md:mt-0 flex items-center space-x-4 text-slate-500">
-                    <div class="flex items-center"><span class="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span> Sistem Operasional</div>
-                </div>
-            </div>
-        </div>
-    </footer>
 
-    <!-- Scripts -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        // Initialize AOS
-        AOS.init({ once: true, offset: 20 });
-        
-        // Navbar styling on scroll
-        window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 10) {
-                navbar.classList.add('nav-scrolled');
-                navbar.classList.remove('py-3');
-                navbar.classList.add('py-2');
-            } else {
-                navbar.classList.remove('nav-scrolled');
-                navbar.classList.remove('py-2');
-                navbar.classList.add('py-3');
-            }
-        });
+<?php
+$slot = ob_get_clean();
 
-        // Mobile Menu Toggle
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        const icon = btn.querySelector('i');
+$extraScripts = '
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    var heroSwiper = new Swiper(".heroSwiper", {
+        effect: "fade",
+        autoplay: { delay: 3500, disableOnInteraction: false },
+        loop: true,
+        allowTouchMove: false
+    });
+    var testSwiper = new Swiper(".testSwiper", {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        pagination: { el: ".swiper-pagination", clickable: true },
+        breakpoints: {
+            768: { slidesPerView: 2, spaceBetween: 30 },
+            1024: { slidesPerView: 3, spaceBetween: 40 }
+        }
+    });
+</script>
+';
 
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-            if(menu.classList.contains('hidden')) {
-                icon.classList.replace('bi-x-lg', 'bi-list');
-            } else {
-                icon.classList.replace('bi-list', 'bi-x-lg');
-            }
-        });
-
-        // Close mobile menu on click
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                menu.classList.add('hidden');
-                icon.classList.replace('bi-x-lg', 'bi-list');
-            });
-        });
-    </script>
-</body>
-</html>
+require __DIR__ . '/layout.php';

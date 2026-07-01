@@ -16,10 +16,14 @@ $isAudit        = strpos($uri, '/audit-logs')   !== false;
 $isAnalytics    = strpos($uri, '/analytics')    !== false;
 $isSettingsSystem  = strpos($uri, '/settings/system')  !== false;
 $isSettingsProfile = strpos($uri, '/settings/profile') !== false;
+$isSettingsLanding = strpos($uri, '/settings/landing') !== false;
+$isSettingsPartners = strpos($uri, '/settings/partners') !== false;
+$isSettingsTestimonials = strpos($uri, '/settings/testimonials') !== false;
+$isSettingsPages = strpos($uri, '/settings/pages') !== false;
 
 $isOperational = $isPackages || $isManifests || $isScan;
 $isMasterData  = $isBranches || $isWarehouses || $isFleet || $isFinance || $isTariffs || $isServices || $isCustomers || $isEmployees;
-$isSettings    = $isSettingsSystem || $isSettingsProfile;
+$isSettings    = $isSettingsSystem || $isSettingsProfile || $isSettingsLanding || $isSettingsPartners || $isSettingsTestimonials || $isSettingsPages;
 $roleId = $_SESSION['role_id'] ?? 4;
 ?>
 <!DOCTYPE html>
@@ -282,10 +286,35 @@ $roleId = $_SESSION['role_id'] ?? 4;
                 <span>Sistem & Database</span>
             </a>
             
-            <a href="<?= BASE_URL ?>/settings/landing" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl transition-all font-medium <?= $isSettingsLanding ? 'bg-primary text-white shadow-md shadow-primary/20' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50' ?>">
-                <i class="bi bi-layout-text-window-reverse w-4 text-center"></i>
-                <span>Landing Page</span>
-            </a>
+            <!-- Setting Website Submenu -->
+            <div class="pt-2 pb-1" x-data="{ openWebsite: <?= ($isSettingsLanding || $isSettingsPartners || $isSettingsTestimonials || $isSettingsPages) ? 'true' : 'false' ?> }">
+                <button @click="openWebsite = !openWebsite" class="w-full flex items-center justify-between space-x-3 px-3 py-2.5 rounded-xl transition-all font-medium text-slate-500 hover:text-slate-900 hover:bg-slate-50">
+                    <div class="flex items-center space-x-3">
+                        <i class="bi bi-globe w-4 text-center"></i>
+                        <span>Setting Website</span>
+                    </div>
+                    <i class="bi" :class="openWebsite ? 'bi-chevron-down' : 'bi-chevron-right'"></i>
+                </button>
+                
+                <div x-show="openWebsite" x-transition class="pl-7 pr-2 py-1 space-y-1">
+                    <a href="<?= BASE_URL ?>/settings/landing" class="flex items-center space-x-3 px-3 py-2 rounded-lg transition-all text-sm font-medium <?= $isSettingsLanding ? 'bg-primary/10 text-primary' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50' ?>">
+                        <i class="bi bi-images w-4 text-center"></i>
+                        <span>Hero & Kontak</span>
+                    </a>
+                    <a href="<?= BASE_URL ?>/settings/partners" class="flex items-center space-x-3 px-3 py-2 rounded-lg transition-all text-sm font-medium <?= $isSettingsPartners ? 'bg-primary/10 text-primary' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50' ?>">
+                        <i class="bi bi-building w-4 text-center"></i>
+                        <span>Mitra / Klien</span>
+                    </a>
+                    <a href="<?= BASE_URL ?>/settings/testimonials" class="flex items-center space-x-3 px-3 py-2 rounded-lg transition-all text-sm font-medium <?= $isSettingsTestimonials ? 'bg-primary/10 text-primary' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50' ?>">
+                        <i class="bi bi-chat-quote w-4 text-center"></i>
+                        <span>Testimoni</span>
+                    </a>
+                    <a href="<?= BASE_URL ?>/settings/pages" class="flex items-center space-x-3 px-3 py-2 rounded-lg transition-all text-sm font-medium <?= $isSettingsPages ? 'bg-primary/10 text-primary' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50' ?>">
+                        <i class="bi bi-file-earmark-richtext w-4 text-center"></i>
+                        <span>Halaman Dinamis</span>
+                    </a>
+                </div>
+            </div>
             <?php endif; ?>
         </div>
         

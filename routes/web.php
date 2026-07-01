@@ -15,6 +15,7 @@ use App\Middleware\AuthMiddleware;
 // Landing Page
 Router::get('/', [LandingController::class, 'index']);
 Router::get('/docs', [LandingController::class, 'docs']);
+Router::get('/page/{slug}', [LandingController::class, 'page']);
 
 // Public Tracking Routes
 Router::get('/tracking', [TrackingController::class, 'search']);
@@ -144,6 +145,15 @@ Router::middleware([AuthMiddleware::class], function() {
     Router::post('/settings/generate-dummy', [\App\Controllers\SettingsController::class, 'generateDummyData']);
     Router::get('/settings/landing', [\App\Controllers\SettingsController::class, 'landing']);
     Router::post('/settings/landing', [\App\Controllers\SettingsController::class, 'updateLanding']);
+    Router::get('/settings/partners', [\App\Controllers\LandingPartnerController::class, 'index']);
+    Router::post('/settings/partners', [\App\Controllers\LandingPartnerController::class, 'store']);
+    Router::post('/settings/partners/delete/{id}', [\App\Controllers\LandingPartnerController::class, 'delete']);
+    Router::get('/settings/testimonials', [\App\Controllers\LandingTestimonialController::class, 'index']);
+    Router::post('/settings/testimonials', [\App\Controllers\LandingTestimonialController::class, 'store']);
+    Router::post('/settings/testimonials/delete/{id}', [\App\Controllers\LandingTestimonialController::class, 'delete']);
+    Router::get('/settings/pages', [\App\Controllers\LandingPageController::class, 'index']);
+    Router::get('/settings/pages/edit/{id}', [\App\Controllers\LandingPageController::class, 'edit']);
+    Router::post('/settings/pages/update/{id}', [\App\Controllers\LandingPageController::class, 'update']);
     Router::post('/settings/migrate-sireslan', [\App\Controllers\SettingsController::class, 'migrateSireslan']);
 
     // Audit Logs

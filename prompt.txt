@@ -1,0 +1,12 @@
+di header landing tambahkan menu profile yan gememiliki sub menu :
+
+sejarah perusahaan, visi misi, pengurus struktur organisaasi
+
+tambahkan juga menu layanan yang memiliki sub menu:
+
+layanana pengiiriman, layanan pengemasan, layanana tracking dan questions , 
+
+tambahkan juga menu experience dan menu kontak kami 
+
+
+setiap menu menu tersebut  harus memikliki halaman di frontend dan bisa di edit isinya di admin dashbaord di sub menu settin gwebiste pastikan tampilannay semua konsisten dan mobile friendly 
