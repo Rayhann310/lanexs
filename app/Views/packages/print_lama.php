@@ -92,7 +92,7 @@
                 <td class="font-bold">Pembayaran</td>
                 <td><?= htmlspecialchars($pkg['payment_type']) ?></td>
                 <td>
-                    <strong>Service Via</strong><br>Darat
+                    <strong>Service Via</strong><br><?= htmlspecialchars($pkg['service_name'] ?: 'Darat') ?>
                 </td>
             </tr>
         </table>

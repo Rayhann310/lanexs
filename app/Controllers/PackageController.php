@@ -8,6 +8,7 @@ use App\Models\Package;
 use App\Models\Branch;
 use App\Models\TrackingHistory;
 use App\Models\Customer;
+use App\Models\Service;
 
 class PackageController extends BaseController
 {
@@ -22,10 +23,14 @@ class PackageController extends BaseController
         $customerModel = new Customer();
         $customers = $customerModel->all();
         
+        $serviceModel = new Service();
+        $services = $serviceModel->all();
+        
         $this->view('packages/index', [
             'packages' => $packages,
             'branches' => $branches,
-            'customers' => $customers
+            'customers' => $customers,
+            'services' => $services
         ]);
     }
 
@@ -55,6 +60,14 @@ class PackageController extends BaseController
         $paymentType = $request->get('payment_type', 'CASH');
         $paymentStatus = $request->get('payment_status', 'UNPAID');
 
+        $serviceId = $request->get('service_id') ?: null;
+        $serviceName = null;
+        if ($serviceId) {
+            $serviceModel = new \App\Models\Service();
+            $service = $serviceModel->find($serviceId);
+            if ($service) $serviceName = $service['name'];
+        }
+
         $data = [
             'resi'                  => $resi,
             'customer_id'           => $request->get('customer_id') ?: null,
@@ -68,6 +81,8 @@ class PackageController extends BaseController
             'destination_branch_id' => $destBranchId,
             'origin_city'           => $originCity,
             'destination_city'      => $destCity,
+            'service_id'            => $serviceId,
+            'service_name'          => $serviceName,
             'item_type'             => $request->get('item_type') ?: 'UMUM',
             'koli'                  => $request->get('koli') ?: 1,
             'length'                => $request->get('length') ?: 0,
@@ -154,6 +169,14 @@ class PackageController extends BaseController
             $paymentType   = $pkg['payment_type'] ?? 'CASH';
             $paymentStatus = $pkg['payment_status'] ?? 'UNPAID';
 
+            $serviceId = $pkg['service_id'] ?? null;
+            $serviceName = null;
+            if ($serviceId) {
+                $serviceModel = new \App\Models\Service();
+                $service = $serviceModel->find($serviceId);
+                if ($service) $serviceName = $service['name'];
+            }
+
             $data = [
                 'resi'                  => $resi,
                 'customer_id'           => $pkg['customer_id'] ?: null,
@@ -167,6 +190,8 @@ class PackageController extends BaseController
                 'destination_branch_id' => $destBranchId,
                 'origin_city'           => $originCity,
                 'destination_city'      => $destCity,
+                'service_id'            => $serviceId,
+                'service_name'          => $serviceName,
                 'item_type'             => $pkg['item_type'] ?: 'UMUM',
                 'koli'                  => $pkg['koli'] ?: 1,
                 'length'                => $pkg['length'] ?: 0,
@@ -222,6 +247,15 @@ class PackageController extends BaseController
     {
         $packageModel = new Package();
         $routeMode    = $request->get('route_mode', 'branch');
+        
+        $serviceId = $request->get('service_id') ?: null;
+        $serviceName = null;
+        if ($serviceId) {
+            $serviceModel = new \App\Models\Service();
+            $service = $serviceModel->find($serviceId);
+            if ($service) $serviceName = $service['name'];
+        }
+
         $data = [
             'sender_name'           => $request->get('sender_name'),
             'sender_phone'          => $request->get('sender_phone'),
@@ -233,6 +267,8 @@ class PackageController extends BaseController
             'destination_branch_id' => $routeMode === 'branch' ? ($request->get('destination_branch_id') ?: null) : null,
             'origin_city'           => $routeMode === 'city' ? trim($request->get('origin_city', '')) : null,
             'destination_city'      => $routeMode === 'city' ? trim($request->get('destination_city', '')) : null,
+            'service_id'            => $serviceId,
+            'service_name'          => $serviceName,
             'item_type'             => $request->get('item_type') ?: 'UMUM',
             'koli'                  => $request->get('koli') ?: 1,
             'length'                => $request->get('length') ?: 0,

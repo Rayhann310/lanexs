@@ -9,6 +9,7 @@ $isScan         = strpos($uri, '/scan')         !== false;
 $isFleet        = strpos($uri, '/fleet')        !== false;
 $isFinance      = strpos($uri, '/finance')      !== false;
 $isTariffs      = strpos($uri, '/tariffs')      !== false;
+$isServices     = strpos($uri, '/services')     !== false;
 $isCustomers    = strpos($uri, '/customers')    !== false;
 $isEmployees    = strpos($uri, '/employees')    !== false;
 $isAudit        = strpos($uri, '/audit-logs')   !== false;
@@ -17,7 +18,7 @@ $isSettingsSystem  = strpos($uri, '/settings/system')  !== false;
 $isSettingsProfile = strpos($uri, '/settings/profile') !== false;
 
 $isOperational = $isPackages || $isManifests || $isScan;
-$isMasterData  = $isBranches || $isWarehouses || $isFleet || $isFinance || $isTariffs || $isCustomers || $isEmployees;
+$isMasterData  = $isBranches || $isWarehouses || $isFleet || $isFinance || $isTariffs || $isServices || $isCustomers || $isEmployees;
 $isSettings    = $isSettingsSystem || $isSettingsProfile;
 $roleId = $_SESSION['role_id'] ?? 4;
 ?>
@@ -216,6 +217,11 @@ $roleId = $_SESSION['role_id'] ?? 4;
             <a href="<?= BASE_URL ?>/tariffs" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl transition-all font-medium <?= $isTariffs ? 'bg-primary text-white shadow-md shadow-primary/20' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50' ?>">
                 <i class="bi bi-tags w-4 text-center"></i>
                 <span>Manajemen Tarif</span>
+            </a>
+
+            <a href="<?= BASE_URL ?>/services" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl transition-all font-medium <?= $isServices ? 'bg-primary text-white shadow-md shadow-primary/20' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50' ?>">
+                <i class="bi bi-truck w-4 text-center"></i>
+                <span>Master Layanan</span>
             </a>
 
             <a href="<?= BASE_URL ?>/customers" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl transition-all font-medium <?= $isCustomers ? 'bg-primary text-white shadow-md shadow-primary/20' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50' ?>">
