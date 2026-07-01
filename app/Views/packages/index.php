@@ -1118,8 +1118,11 @@
                         
                         let roleId = meta.settings.json.role_id;
                         
-                        // Cetak
-                        html += `<a href="<?= BASE_URL ?>/packages/print/${row.id}" target="_blank" class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-800 hover:bg-slate-200 transition" title="Cetak Barcode">
+                        // Cetak Lama & Baru
+                        html += `<a href="<?= BASE_URL ?>/packages/print/${row.id}?type=lama" target="_blank" class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-slate-800 hover:bg-slate-200 transition" title="Cetak Resi Lama">
+                                    <i class="bi bi-receipt"></i>
+                                 </a>`;
+                        html += `<a href="<?= BASE_URL ?>/packages/print/${row.id}?type=baru" target="_blank" class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition" title="Cetak Resi Baru (Thermal)">
                                     <i class="bi bi-printer"></i>
                                  </a>`;
                                  
