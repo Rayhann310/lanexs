@@ -407,6 +407,7 @@
             </div>
         </div>
     </div>
+</div>
 
     <!-- Modal Buat Resi Masal -->
     <div x-show="massModal" 
@@ -640,17 +641,8 @@
             
             // Mass Package Methods
             openMassModal() {
-                console.log('Opening mass modal');
-                try {
-                    this.massPackages = [ { ...this.defaultFormData } ];
-                    this.massModal = true;
-                    setTimeout(() => {
-                        let el = document.getElementById('massModalWrapper');
-                        if(el) el.style.display = '';
-                    }, 50);
-                } catch (e) {
-                    alert('Error opening modal: ' + e.message);
-                }
+                this.massPackages = [ { ...this.defaultFormData } ];
+                this.massModal = true;
             },
             addMassPackage() {
                 // If there's previous package, copy origin and destination branch for convenience
