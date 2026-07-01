@@ -46,32 +46,41 @@
                     <div class="border-t border-slate-100 pt-5 mt-5">
                         <label class="block text-sm font-medium text-slate-700 mb-3">Gambar Slider (Maks 7 Gambar)</label>
                         
-                        <?php if(!empty($settings['landing_hero_images'])): ?>
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                                <?php foreach($settings['landing_hero_images'] as $img): ?>
-                                    <div class="relative group rounded-xl overflow-hidden border border-slate-200">
-                                        <img src="<?= BASE_URL . $img ?>" class="w-full h-24 object-cover">
-                                        <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <label class="text-white text-xs font-bold cursor-pointer flex items-center space-x-1">
-                                                <input type="checkbox" name="delete_images[]" value="<?= htmlspecialchars($img) ?>" class="rounded text-red-500">
-                                                <span>Hapus</span>
-                                            </label>
-                                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4" id="hero-image-slots">
+                            <?php 
+                                $currentImages = $settings['landing_hero_images'] ?? []; 
+                                for($i = 0; $i < 7; $i++): 
+                                    $imgUrl = isset($currentImages[$i]) ? BASE_URL . $currentImages[$i] : '';
+                                    $hasImg = !empty($imgUrl);
+                            ?>
+                                <div class="hero-slot relative group rounded-xl overflow-hidden border-2 <?= $hasImg ? 'border-primary' : 'border-dashed border-slate-300 bg-slate-50' ?> aspect-video flex items-center justify-center cursor-pointer transition-all hover:border-primary/50" onclick="document.getElementById('hero_input_<?= $i ?>').click()">
+                                    
+                                    <!-- Preview Image -->
+                                    <img src="<?= $imgUrl ?>" id="preview_<?= $i ?>" class="w-full h-full object-cover <?= $hasImg ? '' : 'hidden' ?>">
+                                    
+                                    <!-- Placeholder (if empty) -->
+                                    <div id="placeholder_<?= $i ?>" class="flex flex-col items-center text-slate-400 <?= $hasImg ? 'hidden' : '' ?>">
+                                        <i class="bi bi-image text-2xl mb-1"></i>
+                                        <span class="text-xs font-semibold">Slot <?= $i + 1 ?></span>
                                     </div>
-                                <?php endforeach; ?>
-                            </div>
-                        <?php endif; ?>
+                                    
+                                    <!-- Overlay for Edit/Delete -->
+                                    <div class="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity gap-2 <?= $hasImg ? '' : 'hidden' ?>" id="overlay_<?= $i ?>">
+                                        <button type="button" class="bg-white/20 hover:bg-white/40 text-white rounded p-1.5 backdrop-blur-sm" title="Tukar/Ganti">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                        <label class="bg-red-500/80 hover:bg-red-600 text-white rounded p-1.5 backdrop-blur-sm cursor-pointer" onclick="event.stopPropagation();" title="Hapus">
+                                            <input type="checkbox" name="delete_images[]" value="<?= $i ?>" class="hidden delete-checkbox">
+                                            <i class="bi bi-trash"></i>
+                                        </label>
+                                    </div>
 
-                        <div class="flex items-center justify-center w-full">
-                            <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100">
-                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                    <i class="bi bi-cloud-arrow-up text-2xl text-slate-400 mb-2"></i>
-                                    <p class="mb-1 text-sm text-slate-500"><span class="font-semibold">Klik untuk upload</span></p>
-                                    <p class="text-xs text-slate-400">PNG, JPG (Disarankan 1920x1080)</p>
+                                    <!-- Hidden File Input -->
+                                    <input type="file" name="hero_images[<?= $i ?>]" id="hero_input_<?= $i ?>" accept="image/png, image/jpeg" class="hidden image-input" data-index="<?= $i ?>" onchange="previewImage(this, <?= $i ?>)">
                                 </div>
-                                <input type="file" name="hero_images[]" accept="image/png, image/jpeg" multiple class="hidden" />
-                            </label>
+                            <?php endfor; ?>
                         </div>
+                        <p class="text-xs text-slate-500 mt-2"><i class="bi bi-info-circle mr-1"></i> Klik slot untuk upload/ganti gambar (disarankan 1920x1080). Untuk menghapus, klik ikon tong sampah (gambar akan dihapus saat form disimpan). Gambar yang dihapus akan ditandai opacity merah sebelum disimpan.</p>
                     </div>
                 </div>
             </div>
@@ -120,4 +129,47 @@
         </div>
     </form>
 </div>
+</div>
+
+<script>
+// Image Preview Logic
+function previewImage(input, index) {
+    const preview = document.getElementById('preview_' + index);
+    const placeholder = document.getElementById('placeholder_' + index);
+    const overlay = document.getElementById('overlay_' + index);
+    const slot = preview.closest('.hero-slot');
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.classList.remove('hidden');
+            placeholder.classList.add('hidden');
+            overlay.classList.remove('hidden');
+            slot.classList.remove('border-dashed', 'border-slate-300', 'bg-slate-50');
+            slot.classList.add('border-primary');
+            
+            // Uncheck delete if a new file is chosen
+            const delCheck = overlay.querySelector('.delete-checkbox');
+            if(delCheck) {
+                delCheck.checked = false;
+                slot.classList.remove('opacity-50', 'ring-2', 'ring-red-500');
+            }
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+// Handle visual feedback for delete checkboxes
+document.querySelectorAll('.delete-checkbox').forEach(cb => {
+    cb.addEventListener('change', function() {
+        const slot = this.closest('.hero-slot');
+        if(this.checked) {
+            slot.classList.add('opacity-50', 'ring-2', 'ring-red-500');
+        } else {
+            slot.classList.remove('opacity-50', 'ring-2', 'ring-red-500');
+        }
+    });
+});
+</script>
 <?php \App\Helpers\View::endSection(); ?>
