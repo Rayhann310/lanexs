@@ -441,74 +441,141 @@
                         </thead>
                         <tbody>
                             <template x-for="(pkg, idx) in massPackages" :key="idx">
-                                <tr class="hover:bg-slate-50">
-                                    <td class="p-2 border border-slate-200 text-center" x-text="idx + 1"></td>
-                                    
-                                    <td class="p-2 border border-slate-200 space-y-2">
-                                        <input type="text" x-model="pkg.sender_name" placeholder="Nama" class="w-full text-xs px-2 py-1 border border-slate-300 rounded focus:border-primary focus:ring-1 focus:ring-primary outline-none">
-                                        <input type="text" x-model="pkg.sender_phone" placeholder="No Telp" class="w-full text-xs px-2 py-1 border border-slate-300 rounded focus:border-primary focus:ring-1 focus:ring-primary outline-none">
-                                        <textarea x-model="pkg.sender_address" placeholder="Alamat" rows="2" class="w-full text-xs px-2 py-1 border border-slate-300 rounded focus:border-primary focus:ring-1 focus:ring-primary outline-none"></textarea>
-                                    </td>
-                                    
-                                    <td class="p-2 border border-slate-200 space-y-2">
-                                        <input type="text" x-model="pkg.receiver_name" placeholder="Nama" class="w-full text-xs px-2 py-1 border border-slate-300 rounded focus:border-primary focus:ring-1 focus:ring-primary outline-none">
-                                        <input type="text" x-model="pkg.receiver_phone" placeholder="No Telp" class="w-full text-xs px-2 py-1 border border-slate-300 rounded focus:border-primary focus:ring-1 focus:ring-primary outline-none">
-                                        <textarea x-model="pkg.receiver_address" placeholder="Alamat" rows="2" class="w-full text-xs px-2 py-1 border border-slate-300 rounded focus:border-primary focus:ring-1 focus:ring-primary outline-none"></textarea>
-                                    </td>
-                                    
-                                    <td class="p-2 border border-slate-200 space-y-2">
-                                        <select x-model="pkg.origin_branch_id" @change="calculateMassPrice(idx)" class="w-full text-xs px-2 py-1 border border-slate-300 rounded focus:border-primary focus:ring-1 focus:ring-primary outline-none">
-                                            <option value="">-- Asal --</option>
-                                            <?php foreach($branches as $b): ?>
-                                                <option value="<?= $b['id'] ?>"><?= htmlspecialchars($b['name']) ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                        <select x-model="pkg.destination_branch_id" @change="calculateMassPrice(idx)" class="w-full text-xs px-2 py-1 border border-slate-300 rounded focus:border-primary focus:ring-1 focus:ring-primary outline-none">
-                                            <option value="">-- Tujuan --</option>
-                                            <?php foreach($branches as $b): ?>
-                                                <option value="<?= $b['id'] ?>"><?= htmlspecialchars($b['name']) ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </td>
-                                    
-                                    <td class="p-2 border border-slate-200 space-y-2">
-                                        <div class="flex space-x-2">
-                                            <input type="text" x-model="pkg.item_type" placeholder="Jenis" class="w-1/2 text-xs px-2 py-1 border border-slate-300 rounded focus:border-primary focus:ring-1 focus:ring-primary outline-none">
-                                            <input type="number" x-model="pkg.koli" placeholder="Koli" @change="calculateMassPrice(idx)" class="w-1/2 text-xs px-2 py-1 border border-slate-300 rounded focus:border-primary focus:ring-1 focus:ring-primary outline-none">
-                                        </div>
-                                        <div class="flex space-x-2">
-                                            <input type="number" step="0.1" x-model="pkg.weight" placeholder="Kg" @change="calculateMassPrice(idx)" class="w-1/2 text-xs px-2 py-1 border border-slate-300 rounded focus:border-primary focus:ring-1 focus:ring-primary outline-none">
-                                            <input type="number" step="0.1" x-model="pkg.length" placeholder="P(cm)" @change="calculateMassPrice(idx)" class="w-1/2 text-xs px-2 py-1 border border-slate-300 rounded focus:border-primary focus:ring-1 focus:ring-primary outline-none">
-                                        </div>
-                                        <div class="flex space-x-2">
-                                            <input type="number" step="0.1" x-model="pkg.width" placeholder="L(cm)" @change="calculateMassPrice(idx)" class="w-1/2 text-xs px-2 py-1 border border-slate-300 rounded focus:border-primary focus:ring-1 focus:ring-primary outline-none">
-                                            <input type="number" step="0.1" x-model="pkg.height" placeholder="T(cm)" @change="calculateMassPrice(idx)" class="w-1/2 text-xs px-2 py-1 border border-slate-300 rounded focus:border-primary focus:ring-1 focus:ring-primary outline-none">
-                                        </div>
-                                    </td>
-                                    
-                                    <td class="p-2 border border-slate-200 space-y-2">
-                                        <select x-model="pkg.payment_type" class="w-full text-xs px-2 py-1 border border-slate-300 rounded focus:border-primary focus:ring-1 focus:ring-primary outline-none">
-                                            <option value="CASH">CASH</option>
-                                            <option value="TRANSFER">TRANSFER</option>
-                                            <option value="INVOICE">INVOICE</option>
-                                        </select>
-                                        <select x-model="pkg.payment_status" class="w-full text-xs px-2 py-1 border border-slate-300 rounded focus:border-primary focus:ring-1 focus:ring-primary outline-none">
-                                            <option value="PAID">PAID</option>
-                                            <option value="UNPAID">UNPAID</option>
-                                            <option value="COD">COD</option>
-                                        </select>
-                                        <div class="text-right font-bold text-slate-700 bg-slate-100 px-2 py-1 rounded" x-text="'Rp ' + Number(pkg.price||0).toLocaleString('id-ID')"></div>
-                                    </td>
-                                    
+                                <tr class="align-top" :class="idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'">
+                                    <!-- No -->
                                     <td class="p-2 border border-slate-200 text-center align-middle">
-                                        <button type="button" @click="removeMassPackage(idx)" class="text-red-500 hover:text-red-700 p-2 rounded hover:bg-red-50 transition" title="Hapus Baris">
+                                        <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs" x-text="idx + 1"></span>
+                                    </td>
+                                    <!-- Pengirim -->
+                                    <td class="p-2 border border-slate-200">
+                                        <div class="space-y-2 min-w-[170px]">
+                                            <div>
+                                                <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Nama Pengirim <span class="text-red-400">*</span></label>
+                                                <input type="text" x-model="pkg.sender_name" placeholder="Contoh: Budi Santoso" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition">
+                                            </div>
+                                            <div>
+                                                <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">No. Telepon</label>
+                                                <input type="text" x-model="pkg.sender_phone" placeholder="08xxxxxxxxxx" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition">
+                                            </div>
+                                            <div>
+                                                <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Alamat Pengirim</label>
+                                                <textarea x-model="pkg.sender_address" placeholder="Alamat lengkap pengirim" rows="2" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition resize-none"></textarea>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <!-- Penerima -->
+                                    <td class="p-2 border border-slate-200">
+                                        <div class="space-y-2 min-w-[170px]">
+                                            <div>
+                                                <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Nama Penerima <span class="text-red-400">*</span></label>
+                                                <input type="text" x-model="pkg.receiver_name" placeholder="Contoh: Siti Rahma" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition">
+                                            </div>
+                                            <div>
+                                                <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">No. Telepon</label>
+                                                <input type="text" x-model="pkg.receiver_phone" placeholder="08xxxxxxxxxx" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition">
+                                            </div>
+                                            <div>
+                                                <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Alamat Penerima</label>
+                                                <textarea x-model="pkg.receiver_address" placeholder="Alamat lengkap penerima" rows="2" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition resize-none"></textarea>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <!-- Rute -->
+                                    <td class="p-2 border border-slate-200">
+                                        <div class="space-y-2 min-w-[160px]">
+                                            <div>
+                                                <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Cabang Asal <span class="text-red-400">*</span></label>
+                                                <select x-model="pkg.origin_branch_id" @change="calculateMassPrice(idx)" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition bg-white">
+                                                    <option value="">-- Pilih Cabang Asal --</option>
+                                                    <?php foreach($branches as $b): ?>
+                                                        <option value="<?= $b['id'] ?>"><?= htmlspecialchars($b['name']) ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Cabang Tujuan <span class="text-red-400">*</span></label>
+                                                <select x-model="pkg.destination_branch_id" @change="calculateMassPrice(idx)" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition bg-white">
+                                                    <option value="">-- Pilih Cabang Tujuan --</option>
+                                                    <?php foreach($branches as $b): ?>
+                                                        <option value="<?= $b['id'] ?>"><?= htmlspecialchars($b['name']) ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <!-- Info Barang -->
+                                    <td class="p-2 border border-slate-200">
+                                        <div class="space-y-2 min-w-[200px]">
+                                            <div class="grid grid-cols-2 gap-2">
+                                                <div>
+                                                    <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Jenis Barang</label>
+                                                    <input type="text" x-model="pkg.item_type" placeholder="UMUM" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition">
+                                                </div>
+                                                <div>
+                                                    <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Koli (pcs)</label>
+                                                    <input type="number" min="1" x-model="pkg.koli" placeholder="1" @change="calculateMassPrice(idx)" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition">
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-2 gap-2">
+                                                <div>
+                                                    <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Berat (kg) <span class="text-red-400">*</span></label>
+                                                    <input type="number" step="0.1" min="0" x-model="pkg.weight" placeholder="0.0" @change="calculateMassPrice(idx)" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition">
+                                                </div>
+                                                <div>
+                                                    <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Panjang (cm)</label>
+                                                    <input type="number" step="0.1" min="0" x-model="pkg.length" placeholder="0" @change="calculateMassPrice(idx)" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition">
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-2 gap-2">
+                                                <div>
+                                                    <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Lebar (cm)</label>
+                                                    <input type="number" step="0.1" min="0" x-model="pkg.width" placeholder="0" @change="calculateMassPrice(idx)" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition">
+                                                </div>
+                                                <div>
+                                                    <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Tinggi (cm)</label>
+                                                    <input type="number" step="0.1" min="0" x-model="pkg.height" placeholder="0" @change="calculateMassPrice(idx)" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition">
+                                                </div>
+                                            </div>
+                                            <div class="bg-blue-50 border border-blue-100 rounded-lg px-2 py-1.5 text-[10px] text-blue-700 font-medium">
+                                                <i class="bi bi-box mr-1"></i> Volume: <span class="font-bold" x-text="((parseFloat(pkg.length)||0) * (parseFloat(pkg.width)||0) * (parseFloat(pkg.height)||0) / 1000000).toFixed(4) + ' m³'"></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <!-- Biaya & Pembayaran -->
+                                    <td class="p-2 border border-slate-200">
+                                        <div class="space-y-2 min-w-[140px]">
+                                            <div>
+                                                <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Jenis Pembayaran</label>
+                                                <select x-model="pkg.payment_type" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition bg-white">
+                                                    <option value="CASH">CASH</option>
+                                                    <option value="TRANSFER">TRANSFER</option>
+                                                    <option value="INVOICE">INVOICE</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Status Bayar</label>
+                                                <select x-model="pkg.payment_status" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition bg-white">
+                                                    <option value="UNPAID">UNPAID</option>
+                                                    <option value="PAID">PAID</option>
+                                                    <option value="COD">COD</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Total Biaya</label>
+                                                <div class="text-right font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-1.5 rounded-lg text-xs" x-text="'Rp ' + Number(pkg.price||0).toLocaleString('id-ID')"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <!-- Aksi -->
+                                    <td class="p-2 border border-slate-200 text-center align-middle">
+                                        <button type="button" @click="removeMassPackage(idx)" class="text-red-500 hover:text-red-700 p-2 rounded-lg hover:bg-red-50 transition" title="Hapus Baris">
                                             <i class="bi bi-trash text-lg"></i>
                                         </button>
                                     </td>
                                 </tr>
                             </template>
                         </tbody>
-                    </table>
+                                        </table>
                     
                     <div class="mt-4 flex justify-between items-center">
                         <button type="button" @click="addMassPackage()" class="text-primary hover:text-secondary font-medium text-sm flex items-center bg-primary/10 px-4 py-2 rounded-xl transition">
