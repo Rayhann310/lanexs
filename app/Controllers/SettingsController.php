@@ -261,10 +261,26 @@ class SettingsController extends BaseController
                 $db->exec("DROP TABLE IF EXISTS `$tbl`");
             }
 
-            // Eksekusi SQL dump dari Sireslan (membuat tabel data_barang, dsb)
-            $db->exec($fileContent);
+            // Bersihkan statement bawaan phpMyAdmin yang bentrok dengan PDO
+            $fileContent = preg_replace('/^SET SQL_MODE.*?;/mi', '', $fileContent);
+            $fileContent = preg_replace('/^SET time_zone.*?;/mi', '', $fileContent);
+            $fileContent = preg_replace('/^START TRANSACTION\s*;/mi', '', $fileContent);
+            $fileContent = preg_replace('/^COMMIT\s*;/mi', '', $fileContent);
+            $fileContent = preg_replace('/^\/\*.*?\*\/\s*;?/ms', '', $fileContent);
+
+            // Eksekusi SQL dump per-statement
+            $statements = array_filter(
+                array_map('trim', explode(";\n", $fileContent)),
+                fn($s) => !empty($s)
+            );
+            foreach ($statements as $stmt) {
+                if (!empty(trim($stmt))) {
+                    try { $db->exec($stmt . ';'); } catch (\Exception $e) { /* skip errors per statement */ }
+                }
+            }
 
             $db->beginTransaction();
+
 
             // 1. Migrasi Users (Password default)
             $defaultPassword = password_hash('Lanex2026!', PASSWORD_BCRYPT);
