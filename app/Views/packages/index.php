@@ -22,7 +22,7 @@
                 <i class="bi bi-file-earmark-arrow-up mr-2"></i> Import
             </button>
             <!-- Buat Resi Masal -->
-            <button @click="openMassModal()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2.5 rounded-xl font-medium shadow-sm transition flex items-center text-sm">
+            <button type="button" @click="openMassModal()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2.5 rounded-xl font-medium shadow-sm transition flex items-center text-sm">
                 <i class="bi bi-layers mr-2"></i> Buat Resi Masal
             </button>
             <!-- Buat Resi -->
@@ -523,10 +523,9 @@
                         
                         <div class="flex space-x-3">
                             <button type="button" @click="massModal = false" class="px-5 py-2.5 rounded-xl font-medium text-slate-600 bg-white border border-slate-200 hover:bg-slate-50 transition">Batal</button>
-                            <button type="button" @click="$refs.massSubmitBtn.click()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-8 py-2.5 rounded-xl font-medium transition shadow-sm flex items-center">
+                            <button type="button" @click="document.getElementById('massForm').submit()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-8 py-2.5 rounded-xl font-medium transition shadow-sm flex items-center">
                                 <i class="bi bi-save mr-2"></i> Simpan Semua Paket
                             </button>
-                            <button type="submit" x-ref="massSubmitBtn" class="hidden"></button>
                         </div>
                     </div>
                 </form>
