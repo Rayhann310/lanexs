@@ -309,6 +309,9 @@ class PackageController extends BaseController
 
     public function print(Request $request, $id)
     {
+        $type = $_GET['type'] ?? 'lama';
+        $viewName = $type === 'baru' ? 'packages/print_baru' : 'packages/print_lama';
+
         $packageModel = new Package();
         $db = $packageModel->getDb();
         
@@ -333,7 +336,7 @@ class PackageController extends BaseController
         }
 
         ob_start();
-        $this->view('packages/print', ['package' => $package, 'isPdf' => true]);
+        $this->view($viewName, ['packages' => [$package], 'isPdf' => true]);
         $html = ob_get_clean();
 
         if (class_exists(\Dompdf\Dompdf::class)) {
@@ -343,10 +346,76 @@ class PackageController extends BaseController
             
             $dompdf = new \Dompdf\Dompdf($options);
             $dompdf->loadHtml($html);
-            // Label resi usually is smaller or thermal, but we use A4 portrait as default for now
-            $dompdf->setPaper('A4', 'portrait');
+            if ($type === 'baru') {
+                $dompdf->setPaper([0, 0, 226.77, 800], 'portrait'); // 80mm thermal
+            } else {
+                $dompdf->setPaper([0, 0, 396.85, 595.28], 'portrait'); // A5 size for old format to fit table
+            }
             $dompdf->render();
             $dompdf->stream("Resi_{$package['resi']}.pdf", ["Attachment" => false]);
+            exit;
+        } else {
+            echo $html;
+        }
+    }
+
+    public function printMass(Request $request)
+    {
+        $ids = $_POST['ids'] ?? [];
+        $type = $_POST['type'] ?? 'lama'; // lama or baru
+        $viewName = $type === 'baru' ? 'packages/print_baru' : 'packages/print_lama';
+
+        if (empty($ids)) {
+            $_SESSION['error'] = "Pilih setidaknya satu paket untuk dicetak.";
+            Response::redirect('/packages');
+            return;
+        }
+
+        $packageModel = new Package();
+        $db = $packageModel->getDb();
+        
+        $inQuery = implode(',', array_fill(0, count($ids), '?'));
+        
+        $sql = "
+            SELECT p.*, 
+                   bo.name as origin_branch_name, bo.city as origin_city,
+                   bd.name as dest_branch_name, bd.city as dest_city,
+                   c.company_name as customer_name
+            FROM packages p
+            LEFT JOIN branches bo ON p.origin_branch_id = bo.id
+            LEFT JOIN branches bd ON p.destination_branch_id = bd.id
+            LEFT JOIN customers c ON p.customer_id = c.id
+            WHERE p.id IN ($inQuery)
+            ORDER BY p.id ASC
+        ";
+        
+        $stmt = $db->prepare($sql);
+        $stmt->execute($ids);
+        $packages = $stmt->fetchAll();
+
+        if (empty($packages)) {
+            $_SESSION['error'] = "Paket tidak ditemukan.";
+            Response::redirect('/packages');
+        }
+
+        ob_start();
+        $this->view($viewName, ['packages' => $packages, 'isPdf' => true]);
+        $html = ob_get_clean();
+
+        if (class_exists(\Dompdf\Dompdf::class)) {
+            $options = new \Dompdf\Options();
+            $options->set('isHtml5ParserEnabled', true);
+            $options->set('isRemoteEnabled', true);
+            
+            $dompdf = new \Dompdf\Dompdf($options);
+            $dompdf->loadHtml($html);
+            if ($type === 'baru') {
+                $dompdf->setPaper([0, 0, 226.77, 800], 'portrait'); // 80mm thermal
+            } else {
+                $dompdf->setPaper([0, 0, 396.85, 595.28], 'portrait'); // A5 size
+            }
+            $dompdf->render();
+            $dompdf->stream("Mass_Resi_" . date('Ymd_His') . ".pdf", ["Attachment" => false]);
             exit;
         } else {
             echo $html;

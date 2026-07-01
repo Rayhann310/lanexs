@@ -78,6 +78,7 @@ Router::middleware([AuthMiddleware::class], function() {
     Router::get('/packages/print/{id}', [PackageController::class, 'print']);
     Router::post('/packages/update-status', [PackageController::class, 'updateStatus']);
     Router::post('/packages/mass', [PackageController::class, 'storeMass']);
+    Router::post('/packages/print-mass', [PackageController::class, 'printMass']);
     
     // Manifests & Bagging
     Router::get('/manifests', [\App\Controllers\ManifestController::class, 'index']);

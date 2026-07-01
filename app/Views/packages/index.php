@@ -1167,6 +1167,32 @@
         });
     });
 
+    // Checkbox and Mass Print Logic
+    $('#checkAll').on('click', function() {
+        $('.row-checkbox').prop('checked', this.checked);
+    });
+    
+    function submitMassPrint(type) {
+        const checked = $('.row-checkbox:checked');
+        if(checked.length === 0) {
+            Swal.fire({icon: 'warning', title: 'Oops...', text: 'Pilih minimal satu resi untuk dicetak.'});
+            return;
+        }
+        
+        const container = type === 'lama' ? $('#massPrintInputsLama') : $('#massPrintInputsBaru');
+        container.empty();
+        
+        checked.each(function() {
+            container.append(`<input type="hidden" name="ids[]" value="${$(this).val()}">`);
+        });
+        
+        if (type === 'lama') {
+            $('#massPrintFormLama').submit();
+        } else {
+            $('#massPrintFormBaru').submit();
+        }
+    }
+
     // Helper for HTML escaping
     function escapeHtml(text) {
         if (!text) return '';
