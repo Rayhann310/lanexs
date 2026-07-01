@@ -348,7 +348,11 @@ class SettingsController extends BaseController
             ";
             $trackingMigrated = $db->exec($sqlTracking);
 
+            $db->commit();
+
             // Bersihkan tabel Sireslan agar database kembali bersih
+            // DDL statement seperti DROP TABLE menyebabkan implicit commit di MySQL,
+            // jadi kita harus taruh setelah transaksi utama selesai.
             $tablesToDrop = [
                 'data_barang', 'data_inbound', 'data_penerima', 
                 'data_pengirim', 'data_tracking', 'data_vendor', 
@@ -358,7 +362,6 @@ class SettingsController extends BaseController
                 $db->exec("DROP TABLE IF EXISTS `$tbl`");
             }
 
-            $db->commit();
             $db->exec('SET FOREIGN_KEY_CHECKS = 1');
 
             $_SESSION['success'] = "Migrasi Sireslan sukses! Berhasil memindahkan: $usersMigrated User, $packagesMigrated Paket, dan $trackingMigrated histori tracking.";
