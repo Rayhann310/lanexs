@@ -414,14 +414,7 @@
          class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center overflow-y-auto pt-10 pb-10"
          x-transition.opacity>
         <div @click.away="massModal = false"
-             class="bg-white rounded-2xl shadow-2xl w-full max-w-7xl mx-4 relative my-auto"
-             x-show="massModal"
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-             x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-             x-transition:leave="transition ease-in duration-200"
-             x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-             x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+             class="bg-white rounded-2xl shadow-2xl w-full max-w-7xl mx-4 relative my-auto">
             
             <div class="p-6 border-b border-slate-100 flex justify-between items-center">
                 <h3 class="text-xl font-bold text-slate-800">Buat Resi Masal</h3>
@@ -647,8 +640,13 @@
             
             // Mass Package Methods
             openMassModal() {
-                this.massPackages = [ { ...this.defaultFormData } ];
-                this.massModal = true;
+                console.log('Opening mass modal');
+                try {
+                    this.massPackages = [ { ...this.defaultFormData } ];
+                    this.massModal = true;
+                } catch (e) {
+                    alert('Error opening modal: ' + e.message);
+                }
             },
             addMassPackage() {
                 // If there's previous package, copy origin and destination branch for convenience
