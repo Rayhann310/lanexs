@@ -528,7 +528,7 @@
     </div>
 </div>
 
-</div>
+
 
 <!-- Hidden Form for SweetAlert Delete -->
 <form id="deleteForm" method="POST" class="hidden"></form>
