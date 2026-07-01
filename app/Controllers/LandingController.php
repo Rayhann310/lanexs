@@ -26,9 +26,7 @@ class LandingController extends BaseController
         $heroImages = [];
         $publicDir = dirname($_SERVER['SCRIPT_FILENAME']);
         foreach ($rawImages as $img) {
-            if (file_exists($publicDir . $img)) {
-                $heroImages[] = BASE_URL . $img;
-            }
+            $heroImages[] = BASE_URL . $img;
         }
         // Fallback to default if empty
         if (empty($heroImages)) {
