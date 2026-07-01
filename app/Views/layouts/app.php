@@ -64,6 +64,23 @@ $roleId = $_SESSION['role_id'] ?? 4;
     
     <!-- Bootstrap Icons (still useful with Tailwind) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Tom Select — searchable/creatable dropdown -->
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+    <style>
+        /* Tom Select — match Tailwind/app style */
+        .ts-wrapper { width: 100%; }
+        .ts-control { border-radius: 0.75rem !important; border-color: #e2e8f0 !important; background: #f8fafc !important; padding: 0.45rem 1rem !important; font-size: 0.875rem !important; min-height: 42px !important; }
+        .ts-control:focus-within { border-color: #4e73df !important; box-shadow: 0 0 0 3px rgba(78,115,223,0.15) !important; }
+        .ts-dropdown { border-radius: 0.75rem !important; border-color: #e2e8f0 !important; box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important; font-size: 0.875rem !important; }
+        .ts-dropdown .option { padding: 0.5rem 1rem !important; }
+        .ts-dropdown .option.selected, .ts-dropdown .option:hover { background: #eff3ff !important; color: #4e73df !important; }
+        .ts-wrapper.focus .ts-control { border-color: #4e73df !important; }
+        /* Compact version for table cells */
+        .ts-compact .ts-control { min-height: 30px !important; padding: 0.2rem 0.5rem !important; font-size: 0.7rem !important; border-radius: 0.5rem !important; }
+        .ts-compact .ts-dropdown { font-size: 0.7rem !important; }
+    </style>
     
     <!-- SweetAlert2 -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.min.css" rel="stylesheet">

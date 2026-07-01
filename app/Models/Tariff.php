@@ -12,34 +12,50 @@ class Tariff extends BaseModel
      * Calculate price based on Origin and Destination Branch, considering both BRANCH and CITY tariffs.
      * Returns the matched tariff record (with calculated total_price added).
      */
-    public function calculate(int $originBranchId, int $destBranchId, float $weight, float $volume = 0, int $koli = 1)
+    public function calculate($originBranchId, $destBranchId, $weight, $volume = 0, $koli = 1, $originCity = null, $destCity = null)
     {
         $this->ensureTableExists();
         
-        // Get branch details to know their cities
-        $branchModel = new Branch();
-        $originBranch = $branchModel->find($originBranchId);
-        $destBranch = $branchModel->find($destBranchId);
-        
-        if (!$originBranch || !$destBranch) {
-            return null;
+        $tariff = null;
+
+        // Mode 1: Branch to Branch priority
+        if ($originBranchId && $destBranchId) {
+            $branchModel = new Branch();
+            $originBranch = $branchModel->find($originBranchId);
+            $destBranch = $branchModel->find($destBranchId);
+            
+            if ($originBranch && $destBranch) {
+                // Determine city from branches if not explicitly provided
+                $originCity = $originCity ?: $originBranch['city'];
+                $destCity = $destCity ?: $destBranch['city'];
+
+                $sql = "SELECT * FROM {$this->table} WHERE type = 'BRANCH' AND origin_branch_id = :origin AND destination_branch_id = :dest AND is_active = 1 LIMIT 1";
+                $stmt = self::$db->prepare($sql);
+                $stmt->execute(['origin' => $originBranchId, 'dest' => $destBranchId]);
+                $tariff = $stmt->fetch();
+            }
         }
-        
-        $originCity = $originBranch['city'];
-        $destCity = $destBranch['city'];
-        
-        // 1. Check for specific BRANCH to BRANCH tariff (Highest priority)
-        $sql = "SELECT * FROM {$this->table} WHERE type = 'BRANCH' AND origin_branch_id = :origin AND destination_branch_id = :dest AND is_active = 1 LIMIT 1";
-        $stmt = self::$db->prepare($sql);
-        $stmt->execute(['origin' => $originBranchId, 'dest' => $destBranchId]);
-        $tariff = $stmt->fetch();
-        
-        // 2. If not found, check CITY to CITY tariff
-        if (!$tariff) {
+
+        // Mode 2: City to City (either directly requested or fallback from branch)
+        if (!$tariff && $originCity && $destCity) {
             $sql = "SELECT * FROM {$this->table} WHERE type = 'CITY' AND origin_city = :origin_city AND destination_city = :dest_city AND is_active = 1 LIMIT 1";
             $stmt = self::$db->prepare($sql);
             $stmt->execute(['origin_city' => $originCity, 'dest_city' => $destCity]);
             $tariff = $stmt->fetch();
+        }
+
+        // Mode 3: Smart Fallback Tariff (Auto-Generated on the fly if not found)
+        // User requested automatic tariffs from any city to any city.
+        if (!$tariff) {
+            $tariff = [
+                'type' => 'CITY',
+                'origin_city' => $originCity,
+                'destination_city' => $destCity,
+                'price_per_kg' => 15000, // Rp 15.000 / kg default
+                'price_per_volume' => 30000,
+                'price_per_koli' => 50000,
+                'estimated_days' => 3
+            ];
         }
         
         if ($tariff) {

@@ -33,80 +33,89 @@ class PackageController extends BaseController
     {
         $packageModel = new Package();
         $branchModel = new Branch();
-        
-        // Find origin branch code for Resi
-        $originBranch = $branchModel->find($request->get('origin_branch_id'));
-        $originCode = $originBranch ? explode('-', $originBranch['code'])[0] : 'XXX';
-        
-        // Generate Resi
+
+        $routeMode = $request->get('route_mode', 'branch'); // 'branch' or 'city'
+        $originBranchId = $routeMode === 'branch' ? ($request->get('origin_branch_id') ?: null) : null;
+        $destBranchId   = $routeMode === 'branch' ? ($request->get('destination_branch_id') ?: null) : null;
+        $originCity     = $routeMode === 'city' ? trim($request->get('origin_city', '')) : null;
+        $destCity       = $routeMode === 'city' ? trim($request->get('destination_city', '')) : null;
+
+        // Generate Resi using branch code if available, else city initials
+        $originBranch = $originBranchId ? $branchModel->find($originBranchId) : null;
+        if ($originBranch) {
+            $originCode = explode('-', $originBranch['code'])[0];
+        } elseif ($originCity) {
+            $originCode = strtoupper(substr(preg_replace('/[^A-Za-z]/', '', $originCity), 0, 3));
+        } else {
+            $originCode = 'LNX';
+        }
+
         $resi = $packageModel->generateResi($originCode);
-        
+
         $paymentType = $request->get('payment_type', 'CASH');
         $paymentStatus = $request->get('payment_status', 'UNPAID');
 
         $data = [
-            'resi' => $resi,
-            'customer_id' => $request->get('customer_id') ?: null,
-            'sender_name' => $request->get('sender_name'),
-            'sender_phone' => $request->get('sender_phone'),
-            'sender_address' => $request->get('sender_address'),
-            'receiver_name' => $request->get('receiver_name'),
-            'receiver_phone' => $request->get('receiver_phone'),
-            'receiver_address' => $request->get('receiver_address'),
-            'origin_branch_id' => $request->get('origin_branch_id'),
-            'destination_branch_id' => $request->get('destination_branch_id'),
-            'item_type' => $request->get('item_type') ?: 'UMUM',
-            'koli' => $request->get('koli') ?: 1,
-            'length' => $request->get('length') ?: 0,
-            'width' => $request->get('width') ?: 0,
-            'height' => $request->get('height') ?: 0,
-            'volume' => ($request->get('length') * $request->get('width') * $request->get('height')) / 1000000,
-            'weight' => $request->get('weight', 1.0),
-            'price' => $request->get('price', 0),
-            'payment_type' => $paymentType,
-            'payment_status' => $paymentStatus,
-            'status' => 'PENDING',
-            'created_by' => $_SESSION['user_id']
+            'resi'                  => $resi,
+            'customer_id'           => $request->get('customer_id') ?: null,
+            'sender_name'           => $request->get('sender_name'),
+            'sender_phone'          => $request->get('sender_phone'),
+            'sender_address'        => $request->get('sender_address'),
+            'receiver_name'         => $request->get('receiver_name'),
+            'receiver_phone'        => $request->get('receiver_phone'),
+            'receiver_address'      => $request->get('receiver_address'),
+            'origin_branch_id'      => $originBranchId,
+            'destination_branch_id' => $destBranchId,
+            'origin_city'           => $originCity,
+            'destination_city'      => $destCity,
+            'item_type'             => $request->get('item_type') ?: 'UMUM',
+            'koli'                  => $request->get('koli') ?: 1,
+            'length'                => $request->get('length') ?: 0,
+            'width'                 => $request->get('width') ?: 0,
+            'height'                => $request->get('height') ?: 0,
+            'volume'                => ($request->get('length') * $request->get('width') * $request->get('height')) / 1000000,
+            'weight'                => $request->get('weight', 1.0),
+            'price'                 => $request->get('price', 0),
+            'payment_type'          => $paymentType,
+            'payment_status'        => $paymentStatus,
+            'status'                => 'PENDING',
+            'created_by'            => $_SESSION['user_id']
         ];
-        
+
         $packageId = $packageModel->create($data);
-        
+
         if ($packageId) {
-            // Log creation
             \App\Services\AuditLogger::log('CREATE', 'Package', $packageId, null, $data);
-            
-            // Finance Integration: Auto insert Transaction if PAID
+
             if ($paymentStatus == 'PAID' && in_array($paymentType, ['CASH', 'TRANSFER'])) {
                 $transactionModel = new \App\Models\Transaction();
                 $transactionModel->create([
-                    'branch_id' => $request->get('origin_branch_id'),
-                    'type' => 'INCOME',
-                    'amount' => $request->get('price', 0),
+                    'branch_id'      => $originBranchId,
+                    'type'           => 'INCOME',
+                    'amount'         => $request->get('price', 0),
                     'reference_type' => 'PACKAGE',
-                    'reference_id' => $resi,
-                    'description' => "Pembayaran Paket $paymentType - Resi: $resi",
-                    'created_by' => $_SESSION['user_id']
+                    'reference_id'   => $resi,
+                    'description'    => "Pembayaran Paket $paymentType - Resi: $resi",
+                    'created_by'     => $_SESSION['user_id']
                 ]);
             }
 
-            // Add Tracking History
             $trackingModel = new TrackingHistory();
             $trackingModel->create([
-                'package_id' => $packageId,
-                'branch_id' => $request->get('origin_branch_id'),
-                'user_id' => $_SESSION['user_id'],
-                'status' => 'PENDING',
+                'package_id'  => $packageId,
+                'branch_id'   => $originBranchId,
+                'user_id'     => $_SESSION['user_id'],
+                'status'      => 'PENDING',
                 'description' => 'Paket dibuat dan menunggu penjemputan/pengiriman'
             ]);
-            
-            // Send WA Notification
+
             \App\Services\NotificationService::sendResiCreated($data);
-            
+
             $_SESSION['success'] = "Paket berhasil dibuat dengan Resi: " . $resi;
         } else {
             $_SESSION['error'] = "Gagal membuat paket.";
         }
-        
+
         Response::redirect('/packages');
     }
 
@@ -126,36 +135,50 @@ class PackageController extends BaseController
 
         $successCount = 0;
         foreach ($payload as $pkg) {
-            $originBranch = $branchModel->find($pkg['origin_branch_id']);
-            $originCode = $originBranch ? explode('-', $originBranch['code'])[0] : 'XXX';
+            $routeMode    = $pkg['route_mode'] ?? 'branch';
+            $originBranchId = $routeMode === 'branch' ? ($pkg['origin_branch_id'] ?: null) : null;
+            $destBranchId   = $routeMode === 'branch' ? ($pkg['destination_branch_id'] ?: null) : null;
+            $originCity     = $routeMode === 'city' ? trim($pkg['origin_city'] ?? '') : null;
+            $destCity       = $routeMode === 'city' ? trim($pkg['destination_city'] ?? '') : null;
+
+            $originBranch = $originBranchId ? $branchModel->find($originBranchId) : null;
+            if ($originBranch) {
+                $originCode = explode('-', $originBranch['code'])[0];
+            } elseif ($originCity) {
+                $originCode = strtoupper(substr(preg_replace('/[^A-Za-z]/', '', $originCity), 0, 3));
+            } else {
+                $originCode = 'LNX';
+            }
             $resi = $packageModel->generateResi($originCode);
 
-            $paymentType = $pkg['payment_type'] ?? 'CASH';
+            $paymentType   = $pkg['payment_type'] ?? 'CASH';
             $paymentStatus = $pkg['payment_status'] ?? 'UNPAID';
 
             $data = [
-                'resi' => $resi,
-                'customer_id' => $pkg['customer_id'] ?: null,
-                'sender_name' => $pkg['sender_name'],
-                'sender_phone' => $pkg['sender_phone'],
-                'sender_address' => $pkg['sender_address'],
-                'receiver_name' => $pkg['receiver_name'],
-                'receiver_phone' => $pkg['receiver_phone'],
-                'receiver_address' => $pkg['receiver_address'],
-                'origin_branch_id' => $pkg['origin_branch_id'],
-                'destination_branch_id' => $pkg['destination_branch_id'],
-                'item_type' => $pkg['item_type'] ?: 'UMUM',
-                'koli' => $pkg['koli'] ?: 1,
-                'length' => $pkg['length'] ?: 0,
-                'width' => $pkg['width'] ?: 0,
-                'height' => $pkg['height'] ?: 0,
-                'volume' => (($pkg['length'] ?: 0) * ($pkg['width'] ?: 0) * ($pkg['height'] ?: 0)) / 1000000,
-                'weight' => $pkg['weight'] ?: 1.0,
-                'price' => $pkg['price'] ?: 0,
-                'payment_type' => $paymentType,
-                'payment_status' => $paymentStatus,
-                'status' => 'PENDING',
-                'created_by' => $_SESSION['user_id']
+                'resi'                  => $resi,
+                'customer_id'           => $pkg['customer_id'] ?: null,
+                'sender_name'           => $pkg['sender_name'],
+                'sender_phone'          => $pkg['sender_phone'],
+                'sender_address'        => $pkg['sender_address'],
+                'receiver_name'         => $pkg['receiver_name'],
+                'receiver_phone'        => $pkg['receiver_phone'],
+                'receiver_address'      => $pkg['receiver_address'],
+                'origin_branch_id'      => $originBranchId,
+                'destination_branch_id' => $destBranchId,
+                'origin_city'           => $originCity,
+                'destination_city'      => $destCity,
+                'item_type'             => $pkg['item_type'] ?: 'UMUM',
+                'koli'                  => $pkg['koli'] ?: 1,
+                'length'                => $pkg['length'] ?: 0,
+                'width'                 => $pkg['width'] ?: 0,
+                'height'                => $pkg['height'] ?: 0,
+                'volume'                => (($pkg['length'] ?: 0) * ($pkg['width'] ?: 0) * ($pkg['height'] ?: 0)) / 1000000,
+                'weight'                => $pkg['weight'] ?: 1.0,
+                'price'                 => $pkg['price'] ?: 0,
+                'payment_type'          => $paymentType,
+                'payment_status'        => $paymentStatus,
+                'status'                => 'PENDING',
+                'created_by'            => $_SESSION['user_id']
             ];
 
             $packageId = $packageModel->create($data);
@@ -198,23 +221,26 @@ class PackageController extends BaseController
     public function update(Request $request, $id)
     {
         $packageModel = new Package();
+        $routeMode    = $request->get('route_mode', 'branch');
         $data = [
-            'sender_name' => $request->get('sender_name'),
-            'sender_phone' => $request->get('sender_phone'),
-            'sender_address' => $request->get('sender_address'),
-            'receiver_name' => $request->get('receiver_name'),
-            'receiver_phone' => $request->get('receiver_phone'),
-            'receiver_address' => $request->get('receiver_address'),
-            'origin_branch_id' => $request->get('origin_branch_id'),
-            'destination_branch_id' => $request->get('destination_branch_id'),
-            'item_type' => $request->get('item_type') ?: 'UMUM',
-            'koli' => $request->get('koli') ?: 1,
-            'length' => $request->get('length') ?: 0,
-            'width' => $request->get('width') ?: 0,
-            'height' => $request->get('height') ?: 0,
-            'volume' => ($request->get('length') * $request->get('width') * $request->get('height')) / 1000000,
-            'weight' => $request->get('weight', 1.0),
-            'price' => $request->get('price', 0),
+            'sender_name'           => $request->get('sender_name'),
+            'sender_phone'          => $request->get('sender_phone'),
+            'sender_address'        => $request->get('sender_address'),
+            'receiver_name'         => $request->get('receiver_name'),
+            'receiver_phone'        => $request->get('receiver_phone'),
+            'receiver_address'      => $request->get('receiver_address'),
+            'origin_branch_id'      => $routeMode === 'branch' ? ($request->get('origin_branch_id') ?: null) : null,
+            'destination_branch_id' => $routeMode === 'branch' ? ($request->get('destination_branch_id') ?: null) : null,
+            'origin_city'           => $routeMode === 'city' ? trim($request->get('origin_city', '')) : null,
+            'destination_city'      => $routeMode === 'city' ? trim($request->get('destination_city', '')) : null,
+            'item_type'             => $request->get('item_type') ?: 'UMUM',
+            'koli'                  => $request->get('koli') ?: 1,
+            'length'                => $request->get('length') ?: 0,
+            'width'                 => $request->get('width') ?: 0,
+            'height'                => $request->get('height') ?: 0,
+            'volume'                => ($request->get('length') * $request->get('width') * $request->get('height')) / 1000000,
+            'weight'                => $request->get('weight', 1.0),
+            'price'                 => $request->get('price', 0),
         ];
 
         $oldData = $packageModel->find($id);

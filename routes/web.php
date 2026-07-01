@@ -8,6 +8,7 @@ use App\Controllers\LandingController;
 use App\Controllers\PackageController;
 use App\Controllers\TrackingController;
 use App\Controllers\BranchController;
+use App\Controllers\TrackingTemplateController;
 use App\Middleware\AuthMiddleware;
 
 // Landing Page
@@ -139,6 +140,11 @@ Router::middleware([AuthMiddleware::class], function() {
 
     // Audit Logs
     Router::get('/audit-logs', [\App\Controllers\AuditLogController::class, 'index']);
+
+    // Tracking Templates (API)
+    Router::get('/api/tracking-templates', [TrackingTemplateController::class, 'index']);
+    Router::post('/api/tracking-templates', [TrackingTemplateController::class, 'store']);
+    Router::post('/api/tracking-templates/delete/{id}', [TrackingTemplateController::class, 'delete']);
 });
 
 // API Routes

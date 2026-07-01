@@ -127,18 +127,27 @@ class TariffController extends BaseController
      */
     public function calculate(Request $request)
     {
-        $origin = (int)$request->get('origin_branch_id');
-        $dest   = (int)$request->get('destination_branch_id');
+        $origin = $request->get('origin_branch_id') ? (int)$request->get('origin_branch_id') : null;
+        $dest   = $request->get('destination_branch_id') ? (int)$request->get('destination_branch_id') : null;
+        $originCity = $request->get('origin_city');
+        $destCity   = $request->get('destination_city');
+        $routeMode = $request->get('route_mode', 'branch');
+        
         $weight = (float)$request->get('weight', 1.0);
         $volume = (float)$request->get('volume', 0.0);
         $koli   = (int)$request->get('koli', 1);
 
-        if (!$origin || !$dest) {
+        if ($routeMode === 'branch' && (!$origin || !$dest)) {
             Response::json(['status' => 'error', 'message' => 'Cabang Asal dan Tujuan harus diisi.']);
+            return;
+        }
+        if ($routeMode === 'city' && (!$originCity || !$destCity)) {
+            Response::json(['status' => 'error', 'message' => 'Kota Asal dan Tujuan harus diisi.']);
+            return;
         }
 
         $tariffModel = new Tariff();
-        $result = $tariffModel->calculate($origin, $dest, $weight, $volume, $koli);
+        $result = $tariffModel->calculate($origin, $dest, $weight, $volume, $koli, $originCity, $destCity);
 
         if ($result) {
             Response::json(['status' => 'success', 'data' => [

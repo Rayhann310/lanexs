@@ -165,24 +165,52 @@
                     <h4 class="font-bold text-slate-700 mb-4 pb-2 border-b border-slate-100 flex items-center">
                         <i class="bi bi-box-seam mr-2 text-orange-500"></i> Detail Pengiriman & Pembayaran
                     </h4>
+                    <!-- Route Mode Toggle -->
+                    <div class="mb-2 flex items-center space-x-3">
+                        <span class="text-sm font-medium text-slate-600">Mode Rute:</span>
+                        <div class="flex bg-slate-100 rounded-xl p-1 gap-1">
+                            <button type="button" @click="formData.route_mode='branch'"
+                                :class="formData.route_mode!=='city' ? 'bg-white shadow text-primary font-semibold' : 'text-slate-500 hover:text-slate-700'"
+                                class="px-4 py-1.5 rounded-lg text-sm transition-all flex items-center gap-1.5">
+                                <i class="bi bi-building"></i> Cabang ke Cabang
+                            </button>
+                            <button type="button" @click="formData.route_mode='city'"
+                                :class="formData.route_mode==='city' ? 'bg-white shadow text-indigo-600 font-semibold' : 'text-slate-500 hover:text-slate-700'"
+                                class="px-4 py-1.5 rounded-lg text-sm transition-all flex items-center gap-1.5">
+                                <i class="bi bi-geo-alt"></i> Kota ke Kota
+                            </button>
+                        </div>
+                        <input type="hidden" name="route_mode" :value="formData.route_mode">
+                    </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
+                        <!-- BRANCH MODE -->
+                        <div x-show="formData.route_mode!=='city'">
                             <label class="block text-sm font-medium text-slate-700 mb-1">Cabang Asal</label>
-                            <select name="origin_branch_id" x-model="formData.origin_branch_id" required class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
+                            <select name="origin_branch_id" x-model="formData.origin_branch_id" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
                                 <option value="">-- Pilih Cabang Asal --</option>
                                 <?php foreach($branches as $b): ?>
                                     <option value="<?= $b['id'] ?>"><?= htmlspecialchars($b['code']) ?> - <?= htmlspecialchars($b['name']) ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <div>
+                        <div x-show="formData.route_mode!=='city'">
                             <label class="block text-sm font-medium text-slate-700 mb-1">Cabang Tujuan</label>
-                            <select name="destination_branch_id" x-model="formData.destination_branch_id" required class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
+                            <select name="destination_branch_id" x-model="formData.destination_branch_id" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
                                 <option value="">-- Pilih Cabang Tujuan --</option>
                                 <?php foreach($branches as $b): ?>
                                     <option value="<?= $b['id'] ?>"><?= htmlspecialchars($b['code']) ?> - <?= htmlspecialchars($b['name']) ?></option>
                                 <?php endforeach; ?>
                             </select>
+                        </div>
+                        <!-- CITY MODE -->
+                        <div x-show="formData.route_mode==='city'">
+                            <label class="block text-sm font-medium text-slate-700 mb-1"><i class="bi bi-geo-alt text-indigo-500 mr-1"></i>Kota Asal</label>
+                            <select name="origin_city" id="select_origin_city" class="w-full" placeholder="Cari kota asal..."></select>
+                        </div>
+                        <div x-show="formData.route_mode==='city'">
+                            <label class="block text-sm font-medium text-slate-700 mb-1"><i class="bi bi-geo-alt-fill text-indigo-500 mr-1"></i>Kota Tujuan</label>
+                            <select name="destination_city" id="select_dest_city" class="w-full" placeholder="Cari kota tujuan..."></select>
                         </div>
                         
                         <!-- Added Payment Info -->
@@ -254,44 +282,45 @@
          class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center"
          x-transition.opacity>
         <div @click.away="statusModal = false"
-             class="bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-4"
+             class="bg-white rounded-2xl shadow-2xl w-full max-w-xl mx-4"
              x-show="statusModal"
              x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+             x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
              x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
              x-transition:leave="transition ease-in duration-200"
              x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-             x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+             x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95">
             
             <div class="p-6 border-b border-slate-100 flex justify-between items-center">
-                <h3 class="text-xl font-bold text-slate-800">Update Status Paket</h3>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-800">Update Status Paket</h3>
+                    <p class="text-sm text-slate-500 mt-0.5">Resi: <span class="font-bold text-primary" x-text="currentResi"></span></p>
+                </div>
                 <button @click="statusModal = false" class="text-slate-400 hover:text-slate-600 transition">
                     <i class="bi bi-x-lg text-xl"></i>
                 </button>
             </div>
-            <form :action="statusFormAction" method="POST" class="p-6">
-                <div class="mb-4">
-                    <p class="text-sm text-slate-500 mb-1">Nomor Resi</p>
-                    <p class="text-lg font-bold text-primary" x-text="currentResi"></p>
-                </div>
 
-                <div class="mb-4">
+            <form :action="statusFormAction" method="POST" class="p-6 space-y-4" id="statusUpdateForm">
+                <!-- Status Select -->
+                <div>
                     <label class="block text-sm font-medium text-slate-700 mb-1">Status Baru</label>
-                    <select name="status" x-model="statusData.status" required class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
-                        <option value="PENDING">PENDING</option>
-                        <option value="PICKUP">PICKUP (Dijemput Kurir)</option>
-                        <option value="GUDANG_ASAL">GUDANG ASAL (Di Gudang Asal)</option>
-                        <option value="TRANSIT">TRANSIT (Sedang Transit)</option>
-                        <option value="GUDANG_TUJUAN">GUDANG TUJUAN (Di Gudang Tujuan)</option>
-                        <option value="DELIVERY">DELIVERY (Dalam Pengiriman Kurir)</option>
-                        <option value="SELESAI">SELESAI (Telah Diterima)</option>
-                        <option value="RETUR">RETUR (Dikembalikan)</option>
+                    <select name="status" id="ts_status_select" x-model="statusData.status" required>
+                        <option value="PENDING" data-icon="bi-clock">PENDING — Menunggu Proses</option>
+                        <option value="PICKUP" data-icon="bi-bicycle">PICKUP — Dijemput Kurir</option>
+                        <option value="GUDANG_ASAL" data-icon="bi-building">GUDANG ASAL — Di Gudang Asal</option>
+                        <option value="TRANSIT" data-icon="bi-truck">TRANSIT — Sedang Perjalanan</option>
+                        <option value="GUDANG_TUJUAN" data-icon="bi-shop">GUDANG TUJUAN — Di Gudang Tujuan</option>
+                        <option value="DELIVERY" data-icon="bi-box-seam">DELIVERY — Dalam Pengiriman Kurir</option>
+                        <option value="SELESAI" data-icon="bi-check-circle">SELESAI — Telah Diterima</option>
+                        <option value="RETUR" data-icon="bi-arrow-return-left">RETUR — Dikembalikan</option>
                     </select>
                 </div>
 
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Lokasi Cabang (Opsional)</label>
-                    <select name="branch_id" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
+                <!-- Branch -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Lokasi Cabang <span class="text-slate-400 font-normal">(opsional)</span></label>
+                    <select name="branch_id" id="ts_branch_select">
                         <option value="">-- Tidak Terkait Cabang --</option>
                         <?php foreach($branches as $b): ?>
                             <option value="<?= $b['id'] ?>"><?= htmlspecialchars($b['name']) ?></option>
@@ -299,16 +328,44 @@
                     </select>
                 </div>
 
-                <div class="mb-6">
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Deskripsi / Keterangan</label>
-                    <textarea name="description" rows="3" required placeholder="Contoh: Paket telah tiba di HUB Jakarta" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"></textarea>
+                <!-- Description with Templates -->
+                <div>
+                    <div class="flex items-center justify-between mb-1">
+                        <label class="block text-sm font-medium text-slate-700">Deskripsi Tracking</label>
+                        <button type="button" id="saveTemplateBtn"
+                            class="text-xs text-indigo-600 hover:text-indigo-800 font-medium flex items-center gap-1 bg-indigo-50 hover:bg-indigo-100 px-2 py-1 rounded-lg transition"
+                            onclick="saveTrackingTemplate()">
+                            <i class="bi bi-bookmark-plus"></i> Simpan sebagai Template
+                        </button>
+                    </div>
+                    <!-- Tom Select creatable for description -->
+                    <select id="ts_description_select" name="description" placeholder="Pilih template atau ketik deskripsi baru...">
+                        <!-- populated via JS from API -->
+                    </select>
+                    <p class="text-[11px] text-slate-400 mt-1"><i class="bi bi-lightbulb mr-1"></i>Ketik deskripsi baru atau pilih dari template yang tersimpan</p>
                 </div>
 
-                <div class="flex justify-end space-x-3">
-                    <button type="button" @click="statusModal = false" class="px-5 py-2.5 rounded-xl font-medium text-slate-600 bg-white border border-slate-200 hover:bg-slate-50 transition">Batal</button>
-                    <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-2.5 rounded-xl font-medium transition shadow-sm flex items-center">
-                        <i class="bi bi-save mr-2"></i> Update
+                <!-- Saved Templates Panel -->
+                <div id="templatePanel" class="hidden bg-slate-50 border border-slate-200 rounded-xl p-3">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-semibold text-slate-600 uppercase tracking-wide">Template Tersimpan</span>
+                        <button type="button" class="text-xs text-slate-400 hover:text-slate-600" onclick="document.getElementById('templatePanel').classList.add('hidden')">
+                            <i class="bi bi-x"></i>
+                        </button>
+                    </div>
+                    <div id="templateList" class="space-y-1 max-h-40 overflow-y-auto"></div>
+                </div>
+
+                <div class="flex justify-between items-center pt-2">
+                    <button type="button" class="text-xs text-slate-500 hover:text-slate-700 flex items-center gap-1" onclick="loadTemplates()">
+                        <i class="bi bi-collection"></i> Lihat Semua Template
                     </button>
+                    <div class="flex space-x-3">
+                        <button type="button" @click="statusModal = false" class="px-5 py-2.5 rounded-xl font-medium text-slate-600 bg-white border border-slate-200 hover:bg-slate-50 transition">Batal</button>
+                        <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-2.5 rounded-xl font-medium transition shadow-sm flex items-center">
+                            <i class="bi bi-save mr-2"></i> Update Status
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -604,6 +661,127 @@
 
 <?php \App\Helpers\View::section('scripts'); ?>
     <script src="<?= BASE_URL ?>/js/import-mixin.js"></script>
+
+    <!-- Tom Select Initializations -->
+    <script>
+        document.addEventListener('alpine:init', () => {
+            // Wait for Alpine to be ready
+            setTimeout(() => {
+                // Initialize City Selects if they exist
+                const initCitySelect = (id) => {
+                    const el = document.getElementById(id);
+                    if (el && !el.tomselect) {
+                        new TomSelect(el, {
+                            options: typeof INDONESIA_CITIES !== 'undefined' ? INDONESIA_CITIES : [],
+                            valueField: 'value',
+                            labelField: 'label',
+                            searchField: 'label',
+                            placeholder: 'Pilih atau cari kota...',
+                            maxOptions: 50,
+                            onChange: function(value) {
+                                // Trigger Alpine model update
+                                el.dispatchEvent(new Event('input', { bubbles: true }));
+                                // Also trigger calculation if possible
+                                const alpineData = document.querySelector('[x-data="packageManager()"]');
+                                if (alpineData && alpineData.__x) {
+                                    if (id === 'select_origin_city') alpineData.__x.$data.formData.origin_city = value;
+                                    if (id === 'select_dest_city') alpineData.__x.$data.formData.destination_city = value;
+                                    alpineData.__x.$data.calculatePrice();
+                                }
+                            }
+                        });
+                    }
+                };
+                
+                initCitySelect('select_origin_city');
+                initCitySelect('select_dest_city');
+
+                // Initialize Status Select with Icons
+                const statusEl = document.getElementById('ts_status_select');
+                if (statusEl && !statusEl.tomselect) {
+                    new TomSelect(statusEl, {
+                        render: {
+                            option: function(data, escape) {
+                                return `<div class="flex items-center gap-2"><i class="bi ${data.icon} text-slate-500"></i><span>${escape(data.text)}</span></div>`;
+                            },
+                            item: function(data, escape) {
+                                return `<div class="flex items-center gap-2 font-medium"><i class="bi ${data.icon} text-primary"></i><span>${escape(data.text)}</span></div>`;
+                            }
+                        }
+                    });
+                }
+
+                // Initialize Branch Select in Status
+                const branchEl = document.getElementById('ts_branch_select');
+                if (branchEl && !branchEl.tomselect) {
+                    new TomSelect(branchEl, {
+                        placeholder: '-- Pilih Cabang (Opsional) --'
+                    });
+                }
+
+                // Initialize Description Template Select
+                const descEl = document.getElementById('ts_description_select');
+                if (descEl && !descEl.tomselect) {
+                    window.descTomSelect = new TomSelect(descEl, {
+                        create: true,
+                        placeholder: 'Ketik deskripsi baru atau pilih template...',
+                        render: {
+                            option_create: function(data, escape) {
+                                return '<div class="create">Gunakan deskripsi: <strong>' + escape(data.input) + '</strong></div>';
+                            }
+                        }
+                    });
+                    
+                    // Fetch templates
+                    fetch('<?= BASE_URL ?>/api/tracking-templates')
+                        .then(r => r.json())
+                        .then(data => {
+                            if (data.status === 'success' && window.descTomSelect) {
+                                data.data.forEach(t => {
+                                    window.descTomSelect.addOption({value: t.content, text: t.title + ' - ' + t.content});
+                                });
+                            }
+                        });
+                }
+            }, 100);
+        });
+
+        // Save Template function
+        window.saveTrackingTemplate = function() {
+            if (!window.descTomSelect) return;
+            const content = window.descTomSelect.getValue();
+            if (!content) {
+                Swal.fire({ icon: 'warning', title: 'Oops', text: 'Pilih atau ketik deskripsi terlebih dahulu!' });
+                return;
+            }
+            
+            Swal.fire({
+                title: 'Simpan Template',
+                input: 'text',
+                inputLabel: 'Nama Template',
+                inputPlaceholder: 'Contoh: Paket Tiba',
+                showCancelButton: true,
+                confirmButtonText: 'Simpan',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed && result.value) {
+                    fetch('<?= BASE_URL ?>/tracking-templates', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: new URLSearchParams({ title: result.value, content: content })
+                    })
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Template tersimpan!', timer: 1500 });
+                            window.descTomSelect.addOption({value: content, text: result.value + ' - ' + content});
+                        }
+                    });
+                }
+            });
+        };
+    </script>
+
 <script>
     // Alpine.js component for Package Manager
     function packageManager() {
@@ -625,6 +803,8 @@
                 sender_name: '', sender_phone: '', sender_address: '',
                 receiver_name: '', receiver_phone: '', receiver_address: '',
                 origin_branch_id: '', destination_branch_id: '',
+                origin_city: '', destination_city: '',
+                route_mode: 'branch',
                 item_type: 'UMUM', koli: '1', length: '0', width: '0', height: '0',
                 weight: '1.0', price: '0',
                 payment_type: 'CASH', payment_status: 'UNPAID'
@@ -675,10 +855,13 @@
             
             calculatePrice() {
                 if (this.formData.id !== '') return; // Don't recalculate if editing existing package
-                if (!this.formData.origin_branch_id || !this.formData.destination_branch_id || !this.formData.weight) {
-                    this.formData.price = '0';
-                    this.tariffInfo = '';
-                    return;
+                
+                let routeMode = this.formData.route_mode || 'branch';
+                if (routeMode === 'branch' && (!this.formData.origin_branch_id || !this.formData.destination_branch_id || !this.formData.weight)) {
+                    this.formData.price = '0'; this.tariffInfo = ''; return;
+                }
+                if (routeMode === 'city' && (!this.formData.origin_city || !this.formData.destination_city || !this.formData.weight)) {
+                    this.formData.price = '0'; this.tariffInfo = ''; return;
                 }
                 
                 this.tariffInfo = 'Menghitung...';
@@ -686,7 +869,14 @@
                 let volume = (this.formData.length * this.formData.width * this.formData.height) / 1000000;
                 let koli = this.formData.koli || 1;
                 
-                fetch(`<?= BASE_URL ?>/api/tariffs/calculate?origin_branch_id=${this.formData.origin_branch_id}&destination_branch_id=${this.formData.destination_branch_id}&weight=${this.formData.weight}&volume=${volume}&koli=${koli}`)
+                let qs = `route_mode=${routeMode}&weight=${this.formData.weight}&volume=${volume}&koli=${koli}`;
+                if (routeMode === 'city') {
+                    qs += `&origin_city=${encodeURIComponent(this.formData.origin_city)}&destination_city=${encodeURIComponent(this.formData.destination_city)}`;
+                } else {
+                    qs += `&origin_branch_id=${this.formData.origin_branch_id}&destination_branch_id=${this.formData.destination_branch_id}`;
+                }
+                
+                fetch(`<?= BASE_URL ?>/api/tariffs/calculate?${qs}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.status === 'success') {
@@ -708,8 +898,11 @@
             
             // Mass Package Methods
             openMassModal() {
-                this.massPackages = [ { ...this.defaultFormData } ];
+                this.massPackages = [ { ...this.defaultFormData, route_mode: 'branch' } ];
                 this.massModal = true;
+            },
+            addMassRouteField(pkg) {
+                return { ...pkg, route_mode: pkg.route_mode || 'branch', origin_city: pkg.origin_city || '', destination_city: pkg.destination_city || '' };
             },
             addMassPackage() {
                 // If there's previous package, copy origin and destination branch for convenience
@@ -729,15 +922,26 @@
             },
             calculateMassPrice(index) {
                 let pkg = this.massPackages[index];
-                if (!pkg.origin_branch_id || !pkg.destination_branch_id || !pkg.weight) {
-                    pkg.price = '0';
-                    return;
+                let routeMode = pkg.route_mode || 'branch';
+                
+                if (routeMode === 'branch' && (!pkg.origin_branch_id || !pkg.destination_branch_id || !pkg.weight)) {
+                    pkg.price = '0'; return;
+                }
+                if (routeMode === 'city' && (!pkg.origin_city || !pkg.destination_city || !pkg.weight)) {
+                    pkg.price = '0'; return;
                 }
                 
                 let volume = (pkg.length * pkg.width * pkg.height) / 1000000;
                 let koli = pkg.koli || 1;
                 
-                fetch(`<?= BASE_URL ?>/api/tariffs/calculate?origin_branch_id=${pkg.origin_branch_id}&destination_branch_id=${pkg.destination_branch_id}&weight=${pkg.weight}&volume=${volume}&koli=${koli}`)
+                let qs = `route_mode=${routeMode}&weight=${pkg.weight}&volume=${volume}&koli=${koli}`;
+                if (routeMode === 'city') {
+                    qs += `&origin_city=${encodeURIComponent(pkg.origin_city)}&destination_city=${encodeURIComponent(pkg.destination_city)}`;
+                } else {
+                    qs += `&origin_branch_id=${pkg.origin_branch_id}&destination_branch_id=${pkg.destination_branch_id}`;
+                }
+                
+                fetch(`<?= BASE_URL ?>/api/tariffs/calculate?${qs}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.status === 'success') {
