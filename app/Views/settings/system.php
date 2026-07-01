@@ -149,5 +149,5 @@
             </div>
         </div>
     </div>
-</div>
+
 <?php \App\Helpers\View::endSection(); ?>
