@@ -68,11 +68,11 @@
                 <thead class="bg-slate-50/50 text-slate-500 text-left text-xs font-semibold uppercase tracking-wider">
                     <tr>
                         <th class="px-6 py-4 rounded-tl-xl">No. Resi</th>
-                        <th class="px-6 py-4">Pengirim</th>
-                        <th class="px-6 py-4">Penerima</th>
-                        <th class="px-6 py-4">Rute</th>
-                        <th class="px-6 py-4">Status</th>
-                        <th class="px-6 py-4 text-right rounded-tr-xl">Aksi</th>
+                        <th class="px-4 py-3">Pengirim</th>
+                        <th class="px-4 py-3">Penerima</th>
+                        <th class="px-4 py-3">Rute</th>
+                        <th class="px-4 py-3">Status</th>
+                        <th class="px-4 py-3 text-right rounded-tr-xl">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100 text-slate-700">
@@ -1060,14 +1060,14 @@
             "columns": [
                 { 
                     "data": "resi", 
-                    "className": "px-6 py-4 font-bold text-primary",
+                    "className": "px-4 py-3 font-semibold text-primary text-sm",
                     "render": function(data, type, row) {
                         return escapeHtml(data);
                     }
                 },
                 { 
                     "data": null, 
-                    "className": "px-6 py-4",
+                    "className": "px-4 py-3 text-sm",
                     "render": function(data, type, row) {
                         return `<div class="font-medium text-slate-800">${escapeHtml(row.sender_name)}</div>
                                 <div class="text-sm text-slate-500 mt-0.5">${escapeHtml(row.sender_phone)}</div>`;
@@ -1075,7 +1075,7 @@
                 },
                 { 
                     "data": null, 
-                    "className": "px-6 py-4",
+                    "className": "px-4 py-3 text-sm",
                     "render": function(data, type, row) {
                         return `<div class="font-medium text-slate-800">${escapeHtml(row.receiver_name)}</div>
                                 <div class="text-sm text-slate-500 mt-0.5">${escapeHtml(row.receiver_phone)}</div>`;
@@ -1083,7 +1083,7 @@
                 },
                 { 
                     "data": null, 
-                    "className": "px-6 py-4",
+                    "className": "px-4 py-3 text-sm",
                     "render": function(data, type, row) {
                         return `<div class="text-sm flex items-center space-x-2">
                                     <span class="font-medium text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg">${escapeHtml(row.origin_branch_name || 'N/A')}</span>
@@ -1094,7 +1094,7 @@
                 },
                 { 
                     "data": "status", 
-                    "className": "px-6 py-4",
+                    "className": "px-4 py-3 text-sm",
                     "render": function(data, type, row) {
                         let statusClass = 'bg-slate-100 text-slate-700';
                         if (data === 'PENDING') statusClass = 'bg-slate-100 text-slate-700';
@@ -1110,7 +1110,7 @@
                 },
                 { 
                     "data": null, 
-                    "className": "px-6 py-4 flex items-center justify-end space-x-2",
+                    "className": "px-4 py-3 flex items-center justify-end space-x-1",
                     "orderable": false,
                     "render": function(data, type, row, meta) {
                         const jsonRow = JSON.stringify(row).replace(/"/g, '&quot;');
