@@ -251,6 +251,16 @@ class SettingsController extends BaseController
         try {
             $db->exec('SET FOREIGN_KEY_CHECKS = 0');
             
+            // Bersihkan sisa tabel Sireslan dari percobaan sebelumnya (jika ada)
+            $oldTables = [
+                'data_barang', 'data_inbound', 'data_penerima',
+                'data_pengirim', 'data_tracking', 'data_vendor',
+                'master_laporan', 'user'
+            ];
+            foreach ($oldTables as $tbl) {
+                $db->exec("DROP TABLE IF EXISTS `$tbl`");
+            }
+
             // Eksekusi SQL dump dari Sireslan (membuat tabel data_barang, dsb)
             $db->exec($fileContent);
 
