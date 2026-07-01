@@ -36,11 +36,19 @@ class LandingController extends BaseController
             ];
         }
 
-        $partnerModel = new LandingPartner();
-        $partners = $partnerModel->all();
+        try {
+            $partnerModel = new LandingPartner();
+            $partners = $partnerModel->all();
+        } catch (\Exception $e) {
+            $partners = [];
+        }
 
-        $testimonialModel = new LandingTestimonial();
-        $testimonials = $testimonialModel->all();
+        try {
+            $testimonialModel = new LandingTestimonial();
+            $testimonials = $testimonialModel->all();
+        } catch (\Exception $e) {
+            $testimonials = [];
+        }
 
         $this->view('landing/index', [
             'heroTitle' => $heroTitle,
@@ -57,8 +65,14 @@ class LandingController extends BaseController
     
     public function page(Request $request, $slug)
     {
-        $model = new LandingPage();
-        $page = $model->findBySlug($slug);
+        $page = null;
+        try {
+            $model = new LandingPage();
+            $page = $model->findBySlug($slug);
+        } catch (\Exception $e) {
+            // Table doesn't exist yet, fallback to null
+        }
+        
         if (!$page) {
             http_response_code(404);
             $page = ['id' => 0, 'slug' => $slug, 'title' => 'Halaman Tidak Ditemukan', 'content' => '<p>Halaman yang Anda cari tidak tersedia.</p>'];
