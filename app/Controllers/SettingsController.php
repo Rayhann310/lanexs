@@ -169,9 +169,10 @@ class SettingsController extends BaseController
             $db->exec('SET FOREIGN_KEY_CHECKS = 0');
             
             $tables = [
-                'manifest_bag_items',
-                'manifest_bags',
+                'manifest_items',
                 'manifests',
+                'bag_items',
+                'bags',
                 'tracking_histories',
                 'packages',
                 'transactions',

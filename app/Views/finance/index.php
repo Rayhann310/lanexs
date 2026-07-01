@@ -72,7 +72,7 @@
                         <?php foreach ($transactions as $t): ?>
                             <tr class="hover:bg-slate-50/80 transition group">
                                 <td class="px-6 py-4 text-xs font-mono text-slate-500"><?= date('d/m/Y H:i', strtotime($t['created_at'])) ?></td>
-                                <?php if($_SESSION['role_id'] == 1): ?><td class="px-6 py-4 font-bold text-slate-800"><?= htmlspecialchars($t['branch_name']) ?></td><?php endif; ?>
+                                <?php if($_SESSION['role_id'] == 1): ?><td class="px-6 py-4 font-bold text-slate-800"><?= htmlspecialchars($t['branch_name'] ?? '') ?></td><?php endif; ?>
                                 <td class="px-6 py-4">
                                     <?php if($t['type'] == 'INCOME'): ?>
                                         <span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-xs font-bold"><i class="bi bi-arrow-down-left mr-1"></i> MASUK</span>
@@ -83,11 +83,11 @@
                                 <td class="px-6 py-4">
                                     <span class="text-xs text-slate-500 font-bold bg-slate-100 px-2 py-1 rounded"><?= $t['reference_type'] ?></span>
                                     <?php if($t['reference_id']): ?>
-                                        <br><span class="text-xs font-mono text-indigo-500 mt-1 block"><?= htmlspecialchars($t['reference_id']) ?></span>
+                                        <br><span class="text-xs font-mono text-indigo-500 mt-1 block"><?= htmlspecialchars($t['reference_id'] ?? '') ?></span>
                                     <?php endif; ?>
                                 </td>
-                                <td class="px-6 py-4 max-w-xs truncate" title="<?= htmlspecialchars($t['description']) ?>">
-                                    <?= htmlspecialchars($t['description']) ?>
+                                <td class="px-6 py-4 max-w-xs truncate" title="<?= htmlspecialchars($t['description'] ?? '') ?>">
+                                    <?= htmlspecialchars($t['description'] ?? '') ?>
                                 </td>
                                 <td class="px-6 py-4 text-right font-bold <?= $t['type'] == 'INCOME' ? 'text-emerald-600' : 'text-red-600' ?>">
                                     <?= $t['type'] == 'INCOME' ? '+' : '-' ?> Rp <?= number_format($t['amount'], 0, ',', '.') ?>
