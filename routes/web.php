@@ -9,6 +9,7 @@ use App\Controllers\PackageController;
 use App\Controllers\TrackingController;
 use App\Controllers\BranchController;
 use App\Controllers\TrackingTemplateController;
+use App\Controllers\ServiceController;
 use App\Middleware\AuthMiddleware;
 
 // Landing Page
@@ -65,6 +66,12 @@ Router::middleware([AuthMiddleware::class], function() {
     Router::get('/tariffs/template', [\App\Controllers\TariffController::class, 'downloadTemplate']);
     Router::post('/tariffs/import-preview', [\App\Controllers\TariffController::class, 'importPreview']);
     Router::post('/tariffs/import-process', [\App\Controllers\TariffController::class, 'importProcess']);
+
+    // Master Data: Services
+    Router::get('/services', [ServiceController::class, 'index']);
+    Router::post('/services', [ServiceController::class, 'store']);
+    Router::post('/services/update/{id}', [ServiceController::class, 'update']);
+    Router::post('/services/delete/{id}', [ServiceController::class, 'delete']);
 
     // Packages Routes
     Router::get('/packages', [PackageController::class, 'index']);

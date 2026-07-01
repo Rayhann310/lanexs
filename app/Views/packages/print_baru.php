@@ -117,7 +117,7 @@
             <table class="text-xs">
                 <tr>
                     <td><strong>Isi:</strong> <?= htmlspecialchars($pkg['item_type'] ?: '-') ?></td>
-                    <td class="text-right"><strong>Layanan:</strong> Paket Darat</td>
+                    <td class="text-right"><strong>Layanan:</strong> <?= htmlspecialchars($pkg['service_name'] ?: 'Reguler') ?></td>
                 </tr>
                 <tr>
                     <td><strong>Berat:</strong> <?= (float)$pkg['weight'] ?> kg</td>

@@ -240,6 +240,16 @@
                             <label class="block text-sm font-medium text-slate-700 mb-1">Jenis Barang</label>
                             <input type="text" name="item_type" x-model="formData.item_type" placeholder="Umum, Elektronik, dll" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
                         </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1"><i class="bi bi-truck mr-1 text-indigo-500"></i>Layanan Pengiriman</label>
+                            <select name="service_id" x-model="formData.service_id" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all">
+                                <option value="">-- Pilih Layanan --</option>
+                                <?php foreach($services as $svc): ?>
+                                <option value="<?= $svc['id'] ?>"><?= htmlspecialchars($svc['code']) ?> - <?= htmlspecialchars($svc['name']) ?> (<?= $svc['estimated_days'] ?> hari)</option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                         
                         <div class="md:col-span-2 grid grid-cols-4 gap-4">
                             <div>
@@ -592,6 +602,15 @@
                                                 <div>
                                                     <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Jenis Barang</label>
                                                     <input type="text" x-model="pkg.item_type" placeholder="UMUM" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition">
+                                                </div>
+                                                <div>
+                                                    <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Layanan</label>
+                                                    <select x-model="pkg.service_id" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition bg-white">
+                                                        <option value="">-- Pilih --</option>
+                                                        <?php foreach($services as $svc): ?>
+                                                        <option value="<?= $svc['id'] ?>"><?= htmlspecialchars($svc['code']) ?> - <?= htmlspecialchars($svc['name']) ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
                                                 </div>
                                                 <div>
                                                     <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Koli (pcs)</label>
