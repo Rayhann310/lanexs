@@ -286,13 +286,13 @@ class SettingsController extends BaseController
                     description, status, created_by, created_at
                 )
                 SELECT 
-                    COALESCE((SELECT noresi_tracking FROM data_tracking dt WHERE dt.id_barang = db.barang_id LIMIT 1), CONCAT('LNX-MIGRATE-', db.barang_id)),
+                    COALESCE((SELECT kode_tracking FROM data_tracking dt WHERE dt.barang_id = db.barang_id LIMIT 1), CONCAT('LNX-MIGRATE-', db.barang_id)),
                     COALESCE(dp.nama_pengirim, 'Pengirim Tidak Diketahui'),
                     COALESCE(dp.notelp_pengirim, '-'),
                     COALESCE(dp.alamat_pengirim, '-'),
                     COALESCE(dpe.nama_penerima, 'Penerima Tidak Diketahui'),
                     COALESCE(dpe.notelp_penerima, '-'),
-                    COALESCE(dpe.alamat_penerima, '-'),
+                    COALESCE(CONCAT(dpe.alamat_penerima, ', ', dpe.kabkota_penerima, ', ', dpe.provinsi_penerima), '-'),
                     1, 1,
                     CAST(db.kilo_barang AS DECIMAL(10,2)),
                     CONCAT(db.nama_barang, ' (Koli: ', db.koli_barang, ')'),
@@ -313,10 +313,10 @@ class SettingsController extends BaseController
                     1,
                     1,
                     'UPDATE_STATUS',
-                    dt.status_tracking,
-                    dt.tgl_tracking
+                    dt.keterangan,
+                    dt.tgl_input
                 FROM data_tracking dt
-                JOIN packages p ON p.resi = dt.noresi_tracking
+                JOIN packages p ON p.resi = dt.kode_tracking
             ";
             $trackingMigrated = $db->exec($sqlTracking);
 
