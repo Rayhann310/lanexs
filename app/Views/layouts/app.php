@@ -68,6 +68,8 @@ $roleId = $_SESSION['role_id'] ?? 4;
     <!-- Tom Select — searchable/creatable dropdown -->
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+    <script src="<?= BASE_URL ?>/public/js/indonesia-cities.js"></script>
+    
     <style>
         /* Tom Select — match Tailwind/app style */
         .ts-wrapper { width: 100%; }

@@ -663,7 +663,22 @@
     <script src="<?= BASE_URL ?>/js/import-mixin.js"></script>
 
     <!-- Tom Select Initializations -->
+    
+    <!-- Datalist for Mass Resi City Inputs -->
+    <datalist id="indonesia_city_list"></datalist>
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof INDONESIA_CITIES !== 'undefined') {
+                const dl = document.getElementById('indonesia_city_list');
+                let options = '';
+                INDONESIA_CITIES.forEach(c => {
+                    options += `<option value="${c.value}">${c.label}</option>`;
+                });
+                dl.innerHTML = options;
+            }
+        });
+    </script>
+<script>
         document.addEventListener('alpine:init', () => {
             // Wait for Alpine to be ready
             setTimeout(() => {
@@ -907,10 +922,13 @@
             addMassPackage() {
                 // If there's previous package, copy origin and destination branch for convenience
                 let prev = this.massPackages[this.massPackages.length - 1];
-                let next = { ...this.defaultFormData };
+                let next = { ...this.defaultFormData, route_mode: 'branch' };
                 if (prev) {
+                    next.route_mode = prev.route_mode || 'branch';
                     next.origin_branch_id = prev.origin_branch_id;
                     next.destination_branch_id = prev.destination_branch_id;
+                    next.origin_city = prev.origin_city;
+                    next.destination_city = prev.destination_city;
                 }
                 this.massPackages.push(next);
             },
