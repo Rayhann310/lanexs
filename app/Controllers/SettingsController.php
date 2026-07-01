@@ -293,19 +293,21 @@ class SettingsController extends BaseController
                     resi, sender_name, sender_phone, sender_address, 
                     receiver_name, receiver_phone, receiver_address, 
                     origin_branch_id, destination_branch_id, weight, 
-                    description, status, created_by, created_at
+                    price, payment_type, payment_status, status, created_by, created_at
                 )
                 SELECT 
                     COALESCE((SELECT kode_tracking FROM data_tracking dt WHERE dt.barang_id = db.barang_id LIMIT 1), CONCAT('LNX-MIGRATE-', db.barang_id)),
                     COALESCE(dp.nama_pengirim, 'Pengirim Tidak Diketahui'),
                     COALESCE(dp.notelp_pengirim, '-'),
-                    COALESCE(dp.alamat_pengirim, '-'),
+                    COALESCE(CONCAT('[', db.nama_barang, '] ', dp.alamat_pengirim), '-'),
                     COALESCE(dpe.nama_penerima, 'Penerima Tidak Diketahui'),
                     COALESCE(dpe.notelp_penerima, '-'),
                     COALESCE(CONCAT(dpe.alamat_penerima, ', ', dpe.kabkota_penerima, ', ', dpe.provinsi_penerima), '-'),
                     1, 1,
                     CAST(db.kilo_barang AS DECIMAL(10,2)),
-                    CONCAT(db.nama_barang, ' (Koli: ', db.koli_barang, ')'),
+                    0,
+                    'CASH',
+                    'PAID',
                     'SELESAI', 
                     1,
                     db.tgl_input
