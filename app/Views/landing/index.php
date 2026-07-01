@@ -344,7 +344,7 @@ $slot = ob_get_clean();
 $extraScripts = '
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    var heroSlideCount = document.querySelectorAll('.heroSwiper .swiper-slide').length;
+    var heroSlideCount = document.querySelectorAll(".heroSwiper .swiper-slide").length;
     var heroSwiper = new Swiper(".heroSwiper", {
         effect: "fade",
         autoplay: { delay: 3500, disableOnInteraction: false },
