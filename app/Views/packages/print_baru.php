@@ -63,11 +63,12 @@
         <!-- Header -->
         <div class="text-center mb-2">
             <?php 
-                $path = 'public/assets/images/a.png';
-                if(file_exists($path)) {
-                    $type = pathinfo($path, PATHINFO_EXTENSION);
-                    $data = file_get_contents($path);
-                    $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+                $logoPath = $_SERVER['DOCUMENT_ROOT'] . '/lanex/public/assets/images/a.png';
+                if(!file_exists($logoPath)) $logoPath = dirname(dirname(dirname(__DIR__))) . '/public/assets/images/a.png';
+                if(file_exists($logoPath)) {
+                    $imgType = pathinfo($logoPath, PATHINFO_EXTENSION);
+                    $imgData = file_get_contents($logoPath);
+                    $base64 = 'data:image/' . $imgType . ';base64,' . base64_encode($imgData);
                     echo '<img src="'.$base64.'" class="logo">';
                 } else {
                     echo '<h2 style="margin:0;">LANEXS</h2>';

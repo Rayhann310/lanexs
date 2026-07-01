@@ -31,11 +31,12 @@
             <tr>
                 <td style="width: 30%; border: none; border-right: 2px solid #000; border-bottom: 2px solid #000; padding: 5px;">
                     <?php 
-                        $path = 'public/assets/images/a.png';
-                        if(file_exists($path)) {
-                            $type = pathinfo($path, PATHINFO_EXTENSION);
-                            $data = file_get_contents($path);
-                            $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+                        $logoPath = $_SERVER['DOCUMENT_ROOT'] . '/lanex/public/assets/images/a.png';
+                        if(!file_exists($logoPath)) $logoPath = dirname(dirname(dirname(__DIR__))) . '/public/assets/images/a.png';
+                        if(file_exists($logoPath)) {
+                            $imgType = pathinfo($logoPath, PATHINFO_EXTENSION);
+                            $imgData = file_get_contents($logoPath);
+                            $base64 = 'data:image/' . $imgType . ';base64,' . base64_encode($imgData);
                             echo '<img src="'.$base64.'" style="max-height:50px;">';
                         } else {
                             echo "<strong>LANEXS</strong>";
