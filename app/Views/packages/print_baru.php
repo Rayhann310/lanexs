@@ -58,7 +58,7 @@
     </style>
 </head>
 <body>
-    <?php foreach($packages as $pkg): ?>
+    <?php foreach($packages as $i => $pkg): ?>
     <div class="wrapper">
         <!-- Header -->
         <div class="text-center mb-2">
@@ -141,7 +141,7 @@
             <div class="mt-1 font-bold">Terima Kasih</div>
         </div>
     </div>
-    <div class="page-break"></div>
+    <?php if ($i < count($packages) - 1): ?><div class="page-break"></div><?php endif; ?>
     <?php endforeach; ?>
 </body>
 </html>

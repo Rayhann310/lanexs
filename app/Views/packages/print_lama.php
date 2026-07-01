@@ -25,7 +25,7 @@
     </style>
 </head>
 <body>
-    <?php foreach($packages as $pkg): ?>
+    <?php foreach($packages as $i => $pkg): ?>
     <div class="wrapper">
         <table class="no-border-top no-border-bottom">
             <tr>
@@ -147,7 +147,7 @@
             Terimakasih Telah Percaya Dengan Layanan Kami :)
         </div>
     </div>
-    <div class="page-break"></div>
+    <?php if ($i < count($packages) - 1): ?><div class="page-break"></div><?php endif; ?>
     <?php endforeach; ?>
 </body>
 </html>
