@@ -305,7 +305,7 @@ class SettingsController extends BaseController
 
             // 2. Migrasi Paket / Resi
             $sqlPackages = "
-                INSERT INTO packages (
+                INSERT IGNORE INTO packages (
                     resi, sender_name, sender_phone, sender_address, 
                     receiver_name, receiver_phone, receiver_address, 
                     origin_branch_id, destination_branch_id, weight, 
