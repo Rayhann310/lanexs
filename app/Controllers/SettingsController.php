@@ -228,5 +228,121 @@ class SettingsController extends BaseController
         $_SESSION['success'] = "Pengaturan Landing Page berhasil disimpan.";
         Response::redirect('/settings/landing');
     }
+
+    public function migrateSireslan(Request $request)
+    {
+        if (($_SESSION['role_id'] ?? 0) != 1) {
+            $_SESSION['error'] = "Akses ditolak. Hanya Super Admin yang dapat melakukan migrasi.";
+            Response::redirect('/settings/system');
+            return;
+        }
+
+        if (!isset($_FILES['sireslan_sql']) || $_FILES['sireslan_sql']['error'] !== UPLOAD_ERR_OK) {
+            $_SESSION['error'] = "Gagal mengunggah file SQL.";
+            Response::redirect('/settings/system');
+            return;
+        }
+
+        $fileContent = file_get_contents($_FILES['sireslan_sql']['tmp_name']);
+        
+        $dummyModel = new \App\Models\User();
+        $db = $dummyModel->getDb();
+
+        try {
+            $db->exec('SET FOREIGN_KEY_CHECKS = 0');
+            
+            // Eksekusi SQL dump dari Sireslan (membuat tabel data_barang, dsb)
+            $db->exec($fileContent);
+
+            $db->beginTransaction();
+
+            // 1. Migrasi Users (Password default)
+            $defaultPassword = password_hash('Lanex2026!', PASSWORD_BCRYPT);
+            $sqlUsers = "
+                INSERT IGNORE INTO users (company_id, branch_id, role_id, username, password, fullname)
+                SELECT 1, 1, 
+                    CASE 
+                        WHEN level = 'HA_Master' THEN 1 
+                        WHEN level = 'HA_Inbound' THEN 3
+                        WHEN level = 'HA_Outbound' THEN 3
+                        WHEN level = 'HA_Kepala_Gudang' THEN 3
+                        ELSE 4 
+                    END as mapped_role,
+                    username, 
+                    ?, 
+                    name
+                FROM user
+            ";
+            $stmt = $db->prepare($sqlUsers);
+            $stmt->execute([$defaultPassword]);
+            $usersMigrated = $stmt->rowCount();
+
+            // 2. Migrasi Paket / Resi
+            $sqlPackages = "
+                INSERT INTO packages (
+                    resi, sender_name, sender_phone, sender_address, 
+                    receiver_name, receiver_phone, receiver_address, 
+                    origin_branch_id, destination_branch_id, weight, 
+                    description, status, created_by, created_at
+                )
+                SELECT 
+                    COALESCE((SELECT noresi_tracking FROM data_tracking dt WHERE dt.id_barang = db.barang_id LIMIT 1), CONCAT('LNX-MIGRATE-', db.barang_id)),
+                    COALESCE(dp.nama_pengirim, 'Pengirim Tidak Diketahui'),
+                    COALESCE(dp.notelp_pengirim, '-'),
+                    COALESCE(dp.alamat_pengirim, '-'),
+                    COALESCE(dpe.nama_penerima, 'Penerima Tidak Diketahui'),
+                    COALESCE(dpe.notelp_penerima, '-'),
+                    COALESCE(dpe.alamat_penerima, '-'),
+                    1, 1,
+                    CAST(db.kilo_barang AS DECIMAL(10,2)),
+                    CONCAT(db.nama_barang, ' (Koli: ', db.koli_barang, ')'),
+                    'SELESAI', 
+                    1,
+                    db.tgl_input
+                FROM data_barang db
+                LEFT JOIN data_pengirim dp ON db.pengirim_id = dp.pengirim_id
+                LEFT JOIN data_penerima dpe ON db.penerima_id = dpe.penerima_id
+            ";
+            $packagesMigrated = $db->exec($sqlPackages);
+
+            // 3. Migrasi Tracking Histories
+            $sqlTracking = "
+                INSERT INTO tracking_histories (package_id, branch_id, user_id, status, description, created_at)
+                SELECT 
+                    p.id,
+                    1,
+                    1,
+                    'UPDATE_STATUS',
+                    dt.status_tracking,
+                    dt.tgl_tracking
+                FROM data_tracking dt
+                JOIN packages p ON p.resi = dt.noresi_tracking
+            ";
+            $trackingMigrated = $db->exec($sqlTracking);
+
+            // Bersihkan tabel Sireslan agar database kembali bersih
+            $tablesToDrop = [
+                'data_barang', 'data_inbound', 'data_penerima', 
+                'data_pengirim', 'data_tracking', 'data_vendor', 
+                'master_laporan', 'user'
+            ];
+            foreach ($tablesToDrop as $tbl) {
+                $db->exec("DROP TABLE IF EXISTS `$tbl`");
+            }
+
+            $db->commit();
+            $db->exec('SET FOREIGN_KEY_CHECKS = 1');
+
+            $_SESSION['success'] = "Migrasi Sireslan sukses! Berhasil memindahkan: $usersMigrated User, $packagesMigrated Paket, dan $trackingMigrated histori tracking.";
+        } catch (\Exception $e) {
+            if ($db->inTransaction()) {
+                $db->rollBack();
+            }
+            $db->exec('SET FOREIGN_KEY_CHECKS = 1');
+            $_SESSION['error'] = "Gagal memigrasi database Sireslan: " . $e->getMessage();
+        }
+
+        Response::redirect('/settings/system');
+    }
 }
 

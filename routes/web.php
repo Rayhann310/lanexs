@@ -135,6 +135,7 @@ Router::middleware([AuthMiddleware::class], function() {
     Router::post('/settings/generate-dummy', [\App\Controllers\SettingsController::class, 'generateDummyData']);
     Router::get('/settings/landing', [\App\Controllers\SettingsController::class, 'landing']);
     Router::post('/settings/landing', [\App\Controllers\SettingsController::class, 'updateLanding']);
+    Router::post('/settings/migrate-sireslan', [\App\Controllers\SettingsController::class, 'migrateSireslan']);
 
     // Audit Logs
     Router::get('/audit-logs', [\App\Controllers\AuditLogController::class, 'index']);
