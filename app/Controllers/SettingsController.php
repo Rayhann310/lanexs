@@ -172,14 +172,18 @@ class SettingsController extends BaseController
                 'manifest_bag_items',
                 'manifest_bags',
                 'manifests',
-                'tracking_history',
+                'tracking_histories',
                 'packages',
                 'transactions',
                 'audit_logs'
             ];
             
             foreach ($tables as $table) {
-                $db->exec("TRUNCATE TABLE $table");
+                try {
+                    $db->exec("TRUNCATE TABLE $table");
+                } catch (\Exception $e) {
+                    // Abaikan jika tabel belum ada di database
+                }
             }
             
             $db->exec('SET FOREIGN_KEY_CHECKS = 1');
