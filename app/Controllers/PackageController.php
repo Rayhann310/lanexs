@@ -498,6 +498,13 @@ class PackageController extends BaseController
             $params['status_filter'] = $statusFilter;
         }
 
+        // Filter Service
+        $serviceFilter = $_GET['service_filter'] ?? '';
+        if (!empty($serviceFilter)) {
+            $whereSql .= " AND p.service_id = :service_filter";
+            $params['service_filter'] = $serviceFilter;
+        }
+
         // Total records without filter
         $totalRecords = $db->query("SELECT COUNT(*) FROM packages")->fetchColumn();
 

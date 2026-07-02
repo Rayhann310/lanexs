@@ -61,6 +61,14 @@
                     <option value="SELESAI">SELESAI</option>
                     <option value="RETUR">RETUR</option>
                 </select>
+                
+                <span class="text-sm font-medium text-slate-600 whitespace-nowrap ml-2 md:ml-4">Layanan:</span>
+                <select id="serviceFilter" class="w-full md:w-48 px-3 py-2 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-sm">
+                    <option value="">Semua Layanan</option>
+                    <?php foreach($services as $svc): ?>
+                        <option value="<?= $svc['id'] ?>"><?= htmlspecialchars($svc['code']) ?> - <?= htmlspecialchars($svc['name']) ?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
         </div>
         <div class="overflow-x-auto p-2">
@@ -1095,6 +1103,7 @@
                 "type": "GET",
                 "data": function(d) {
                     d.status_filter = $('#statusFilter').val();
+                    d.service_filter = $('#serviceFilter').val();
                 }
             },
             "columns": [
@@ -1178,7 +1187,7 @@
         });
 
         // Trigger filter reload
-        $('#statusFilter').on('change', function() {
+        $('#statusFilter, #serviceFilter').on('change', function() {
             $('#packagesTable').DataTable().ajax.reload();
         });
 
