@@ -67,11 +67,9 @@
             <table id="packagesTable" class="w-full whitespace-nowrap">
                 <thead class="bg-slate-50/50 text-slate-500 text-left text-xs font-semibold uppercase tracking-wider">
                     <tr>
-                        <th class="px-6 py-4 rounded-tl-xl">No. Resi</th>
+                        <th class="px-6 py-4 rounded-tl-xl w-32">No. Resi</th>
                         <th class="px-4 py-3">Pengirim</th>
                         <th class="px-4 py-3">Penerima</th>
-                        <th class="px-4 py-3">Rute</th>
-                        <th class="px-4 py-3">Status</th>
                         <th class="px-4 py-3 text-right rounded-tr-xl">Aksi</th>
                     </tr>
                 </thead>
@@ -1029,8 +1027,21 @@
                 this.modalTitle = 'Edit Data Paket';
                 this.formAction = '<?= BASE_URL ?>/packages/update/' + data.id;
                 this.submitLabel = 'Simpan Perubahan';
+                if (!data.origin_branch_id && data.origin_city) {
+                    data.route_mode = 'city';
+                } else {
+                    data.route_mode = 'branch';
+                }
                 this.formData = { ...data };
                 this.packageModal = true;
+                
+                setTimeout(() => {
+                    const elOrig = document.getElementById('select_origin_city');
+                    if (elOrig && elOrig.tomselect) elOrig.tomselect.setValue(data.origin_city || '');
+                    
+                    const elDest = document.getElementById('select_dest_city');
+                    if (elDest && elDest.tomselect) elDest.tomselect.setValue(data.destination_city || '');
+                }, 100);
             },
             
             openStatusModal(data) {
@@ -1079,14 +1090,14 @@
             "columns": [
                 { 
                     "data": "resi", 
-                    "className": "px-4 py-3 font-semibold text-primary text-sm",
+                    "className": "px-4 py-3 font-semibold text-primary text-sm cursor-pointer hover:text-indigo-700 transition whitespace-nowrap",
                     "render": function(data, type, row) {
-                        return escapeHtml(data);
+                        return '<div class="flex items-center gap-2"><i class="bi bi-chevron-down text-slate-400 text-[10px] toggle-icon"></i>' + escapeHtml(data) + '</div>';
                     }
                 },
                 { 
                     "data": null, 
-                    "className": "px-4 py-3 text-sm",
+                    "className": "px-4 py-3 text-sm min-w-[120px]",
                     "render": function(data, type, row) {
                         return `<div class="font-medium text-slate-800">${escapeHtml(row.sender_name)}</div>
                                 <div class="text-sm text-slate-500 mt-0.5">${escapeHtml(row.sender_phone)}</div>`;
@@ -1094,37 +1105,10 @@
                 },
                 { 
                     "data": null, 
-                    "className": "px-4 py-3 text-sm",
+                    "className": "px-4 py-3 text-sm min-w-[120px]",
                     "render": function(data, type, row) {
                         return `<div class="font-medium text-slate-800">${escapeHtml(row.receiver_name)}</div>
                                 <div class="text-sm text-slate-500 mt-0.5">${escapeHtml(row.receiver_phone)}</div>`;
-                    }
-                },
-                { 
-                    "data": null, 
-                    "className": "px-4 py-3 text-sm",
-                    "render": function(data, type, row) {
-                        return `<div class="text-sm flex items-center space-x-2">
-                                    <span class="font-medium text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg">${escapeHtml(row.origin_branch_name || row.origin_city || 'N/A')}</span>
-                                    <i class="bi bi-arrow-right text-slate-400"></i>
-                                    <span class="font-medium text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg">${escapeHtml(row.dest_branch_name || row.destination_city || 'N/A')}</span>
-                                </div>`;
-                    }
-                },
-                { 
-                    "data": "status", 
-                    "className": "px-4 py-3 text-sm",
-                    "render": function(data, type, row) {
-                        let statusClass = 'bg-slate-100 text-slate-700';
-                        if (data === 'PENDING') statusClass = 'bg-slate-100 text-slate-700';
-                        else if (data === 'PICKUP') statusClass = 'bg-blue-100 text-blue-700';
-                        else if (data === 'TRANSIT') statusClass = 'bg-orange-100 text-orange-700';
-                        else if (data === 'DELIVERY') statusClass = 'bg-purple-100 text-purple-700';
-                        else if (data === 'SELESAI') statusClass = 'bg-emerald-100 text-emerald-700';
-                        else if (data === 'RETUR') statusClass = 'bg-red-100 text-red-700';
-                        else statusClass = 'bg-cyan-100 text-cyan-700';
-                        
-                        return `<span class="px-3 py-1.5 text-xs font-bold rounded-full ${statusClass}">${escapeHtml(data)}</span>`;
                     }
                 },
                 { 
@@ -1187,6 +1171,64 @@
         $('#statusFilter').on('change', function() {
             $('#packagesTable').DataTable().ajax.reload();
         });
+
+        // Child row logic
+        $('#packagesTable tbody').on('click', 'td:first-child', function () {
+            var tr = $(this).closest('tr');
+            var row = $('#packagesTable').DataTable().row(tr);
+            var icon = $(this).find('.toggle-icon');
+     
+            if (row.child.isShown()) {
+                row.child.hide();
+                tr.removeClass('bg-slate-50');
+                icon.removeClass('bi-chevron-up text-indigo-500').addClass('bi-chevron-down text-slate-400');
+            } else {
+                row.child(formatPackageDetails(row.data())).show();
+                tr.addClass('bg-slate-50');
+                icon.removeClass('bi-chevron-down text-slate-400').addClass('bi-chevron-up text-indigo-500');
+            }
+        });
+
+        function formatPackageDetails(row) {
+            let statusClass = 'bg-slate-100 text-slate-700';
+            if (row.status === 'PENDING') statusClass = 'bg-slate-100 text-slate-700';
+            else if (row.status === 'PICKUP') statusClass = 'bg-blue-100 text-blue-700';
+            else if (row.status === 'TRANSIT') statusClass = 'bg-orange-100 text-orange-700';
+            else if (row.status === 'DELIVERY') statusClass = 'bg-purple-100 text-purple-700';
+            else if (row.status === 'SELESAI') statusClass = 'bg-emerald-100 text-emerald-700';
+            else if (row.status === 'RETUR') statusClass = 'bg-red-100 text-red-700';
+            else statusClass = 'bg-cyan-100 text-cyan-700';
+
+            return `
+            <div class="p-4 bg-white rounded-lg m-2 border border-slate-200 shadow-sm">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Rute Pengiriman</div>
+                        <div class="text-sm flex items-center space-x-2">
+                            <span class="font-medium text-slate-700 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-lg shadow-sm">${escapeHtml(row.origin_branch_name || row.origin_city || 'N/A')}</span>
+                            <i class="bi bi-arrow-right text-slate-400"></i>
+                            <span class="font-medium text-slate-700 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-lg shadow-sm">${escapeHtml(row.dest_branch_name || row.destination_city || 'N/A')}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Status Kiriman</div>
+                        <span class="px-3 py-1.5 text-xs font-bold rounded-full border inline-block ${statusClass}">${escapeHtml(row.status)}</span>
+                    </div>
+                    <div>
+                        <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Info Barang & Biaya</div>
+                        <div class="text-sm text-slate-700 bg-slate-50 p-3 rounded-lg border border-slate-200 shadow-sm">
+                            <div class="mb-1 flex justify-between"><span>Berat:</span> <b>${row.weight} Kg</b></div>
+                            <div class="mb-1 flex justify-between"><span>Koli:</span> <b>${row.koli || 1}</b></div>
+                            <div class="mb-1 flex justify-between text-indigo-700"><span>Biaya:</span> <b>Rp ${parseInt(row.price).toLocaleString('id-ID')}</b></div>
+                            <div class="flex justify-between border-t border-slate-200 pt-1 mt-1">
+                                <span>Status Bayar:</span> 
+                                <span class="font-bold text-${row.payment_status === 'PAID' ? 'emerald' : 'red'}-600">${escapeHtml(row.payment_status)}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        }
     });
 
     // Checkbox and Mass Print Logic
