@@ -6,28 +6,27 @@ class Package extends BaseModel
 {
     protected string $table = 'packages';
 
-    public function generateResi(string $originCode): string
+    public function generateResi(string $originCode = ''): string
     {
-        // Format: LNX-[ORIGIN]-[DATE]-[ID]
-        // E.g. LNX-JKT-2607-000001
+        // Format: LNX[YYYY][ID]
+        // E.g. LNX20260017
         
-        $dateStr = date('ym'); // Year Month e.g., 2607 for July 2026
-        
-        // Find last resi with this prefix
-        $prefix = "LNX-{$originCode}-{$dateStr}";
+        $year = date('Y');
+        $prefix = "LNX{$year}";
         
         $stmt = self::$db->prepare("SELECT resi FROM {$this->table} WHERE resi LIKE :prefix ORDER BY id DESC LIMIT 1");
         $stmt->execute(['prefix' => $prefix . '%']);
         $last = $stmt->fetch();
         
         if ($last) {
-            $lastId = intval(substr($last['resi'], -6));
-            $newId = str_pad((string)($lastId + 1), 6, '0', STR_PAD_LEFT);
+            $lastId = intval(substr($last['resi'], strlen($prefix)));
+            $newIdStr = str_pad((string)($lastId + 1), 4, '0', STR_PAD_LEFT);
         } else {
-            $newId = '000001';
+            // Start from 17 as requested (since last was 16 before migration)
+            $newIdStr = '0017';
         }
         
-        return "{$prefix}-{$newId}";
+        return "{$prefix}{$newIdStr}";
     }
 
     public function getAllWithRelations()
