@@ -1105,9 +1105,9 @@
                     "className": "px-4 py-3 text-sm",
                     "render": function(data, type, row) {
                         return `<div class="text-sm flex items-center space-x-2">
-                                    <span class="font-medium text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg">${escapeHtml(row.origin_branch_name || 'N/A')}</span>
+                                    <span class="font-medium text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg">${escapeHtml(row.origin_branch_name || row.origin_city || 'N/A')}</span>
                                     <i class="bi bi-arrow-right text-slate-400"></i>
-                                    <span class="font-medium text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg">${escapeHtml(row.dest_branch_name || 'N/A')}</span>
+                                    <span class="font-medium text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg">${escapeHtml(row.dest_branch_name || row.destination_city || 'N/A')}</span>
                                 </div>`;
                     }
                 },

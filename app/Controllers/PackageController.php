@@ -93,7 +93,7 @@ class PackageController extends BaseController
             'price'                 => $request->get('price', 0),
             'payment_type'          => $paymentType,
             'payment_status'        => $paymentStatus,
-            'status'                => 'PENDING',
+            'status'                => 'RECEIVED',
             'created_by'            => $_SESSION['user_id']
         ];
 
@@ -120,8 +120,8 @@ class PackageController extends BaseController
                 'package_id'  => $packageId,
                 'branch_id'   => $originBranchId,
                 'user_id'     => $_SESSION['user_id'],
-                'status'      => 'PENDING',
-                'description' => 'Paket dibuat dan menunggu penjemputan/pengiriman'
+                'status'      => 'RECEIVED',
+                'description' => 'Paket diterima dan siap diproses'
             ]);
 
             \App\Services\NotificationService::sendResiCreated($data);
@@ -202,7 +202,7 @@ class PackageController extends BaseController
                 'price'                 => $pkg['price'] ?: 0,
                 'payment_type'          => $paymentType,
                 'payment_status'        => $paymentStatus,
-                'status'                => 'PENDING',
+                'status'                => 'RECEIVED',
                 'created_by'            => $_SESSION['user_id']
             ];
 
@@ -228,7 +228,7 @@ class PackageController extends BaseController
                     'package_id' => $packageId,
                     'branch_id' => $pkg['origin_branch_id'],
                     'user_id' => $_SESSION['user_id'],
-                    'status' => 'PENDING',
+                    'status' => 'RECEIVED',
                     'description' => 'Paket masal dibuat dan menunggu penjemputan/pengiriman'
                 ]);
             }
@@ -759,7 +759,7 @@ class PackageController extends BaseController
                     'price'                 => floatval($row['price']),
                     'payment_type'          => $paymentType,
                     'payment_status'        => $paymentStatus,
-                    'status'                => 'PENDING',
+                    'status'                => 'RECEIVED',
                     'created_by'            => $userId
                 ];
 
@@ -771,8 +771,8 @@ class PackageController extends BaseController
                         'package_id' => $packageId,
                         'branch_id'  => $row['origin_branch_id'],
                         'user_id'    => $userId,
-                        'status'     => 'PENDING',
-                        'description' => 'Paket dibuat via Import Massal (CSV)'
+                        'status'     => 'RECEIVED',
+                        'description' => 'Paket diterima dan siap diproses (Masal)'
                     ]);
 
                     // Auto-create finance transaction if PAID
