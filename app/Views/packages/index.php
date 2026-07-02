@@ -1032,16 +1032,26 @@
                 } else {
                     data.route_mode = 'branch';
                 }
+                // Save actual sender info before spread (watch may overwrite it)
+                const senderName    = data.sender_name    || '';
+                const senderPhone   = data.sender_phone   || '';
+                const senderAddress = data.sender_address || '';
+                
                 this.formData = { ...data };
                 this.packageModal = true;
                 
-                setTimeout(() => {
+                // Restore sender fields AFTER Alpine's $watch fires (it runs synchronously on assignment)
+                this.$nextTick(() => {
+                    this.formData.sender_name    = senderName;
+                    this.formData.sender_phone   = senderPhone;
+                    this.formData.sender_address = senderAddress;
+                    
+                    // Populate city TomSelects
                     const elOrig = document.getElementById('select_origin_city');
                     if (elOrig && elOrig.tomselect) elOrig.tomselect.setValue(data.origin_city || '');
-                    
                     const elDest = document.getElementById('select_dest_city');
                     if (elDest && elDest.tomselect) elDest.tomselect.setValue(data.destination_city || '');
-                }, 100);
+                });
             },
             
             openStatusModal(data) {
@@ -1097,18 +1107,18 @@
                 },
                 { 
                     "data": null, 
-                    "className": "px-4 py-3 text-sm min-w-[120px]",
+                    "className": "px-4 py-3 text-sm max-w-[160px]",
                     "render": function(data, type, row) {
-                        return `<div class="font-medium text-slate-800">${escapeHtml(row.sender_name)}</div>
-                                <div class="text-sm text-slate-500 mt-0.5">${escapeHtml(row.sender_phone)}</div>`;
+                        return `<div class="font-medium text-slate-800 truncate max-w-[150px]" title="${escapeHtml(row.sender_name)}">${escapeHtml(row.sender_name)}</div>
+                                <div class="text-xs text-slate-500 mt-0.5 truncate max-w-[150px]">${escapeHtml(row.sender_phone)}</div>`;
                     }
                 },
                 { 
                     "data": null, 
-                    "className": "px-4 py-3 text-sm min-w-[120px]",
+                    "className": "px-4 py-3 text-sm max-w-[160px]",
                     "render": function(data, type, row) {
-                        return `<div class="font-medium text-slate-800">${escapeHtml(row.receiver_name)}</div>
-                                <div class="text-sm text-slate-500 mt-0.5">${escapeHtml(row.receiver_phone)}</div>`;
+                        return `<div class="font-medium text-slate-800 truncate max-w-[150px]" title="${escapeHtml(row.receiver_name)}">${escapeHtml(row.receiver_name)}</div>
+                                <div class="text-xs text-slate-500 mt-0.5 truncate max-w-[150px]">${escapeHtml(row.receiver_phone)}</div>`;
                     }
                 },
                 { 
