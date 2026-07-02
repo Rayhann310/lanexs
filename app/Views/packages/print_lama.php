@@ -65,10 +65,10 @@
                         </tr>
                         <tr>
                             <td style="border: none; border-right: 1px solid #000;">
-                                <?= htmlspecialchars($pkg['origin_city'] ?: ($pkg['origin_branch_name'] ?? '-')) ?>
+                                <?= htmlspecialchars($pkg['origin_city'] ?: ($pkg['branch_origin_city'] ?? ($pkg['origin_branch_name'] ?? '-'))) ?>
                             </td>
                             <td style="border: none;">
-                                <?= htmlspecialchars($pkg['dest_city'] ?: ($pkg['dest_branch_name'] ?? '-')) ?>
+                                <?= htmlspecialchars($pkg['destination_city'] ?: ($pkg['dest_city'] ?? ($pkg['branch_dest_city'] ?? ($pkg['dest_branch_name'] ?? '-')))) ?>
                             </td>
                         </tr>
                     </table>

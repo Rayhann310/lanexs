@@ -91,9 +91,9 @@
         
         <!-- Route -->
         <div class="route text-center">
-            <?= htmlspecialchars($pkg['origin_city'] ?: ($pkg['origin_branch_name'] ?? '-')) ?> 
+            <?= htmlspecialchars($pkg['origin_city'] ?: ($pkg['branch_origin_city'] ?? ($pkg['origin_branch_name'] ?? '-'))) ?> 
             &nbsp;&rarr;&nbsp; 
-            <?= htmlspecialchars($pkg['dest_city'] ?: ($pkg['dest_branch_name'] ?? '-')) ?>
+            <?= htmlspecialchars($pkg['destination_city'] ?: ($pkg['dest_city'] ?? ($pkg['branch_dest_city'] ?? ($pkg['dest_branch_name'] ?? '-')))) ?>
         </div>
 
         <!-- Pengirim & Penerima -->

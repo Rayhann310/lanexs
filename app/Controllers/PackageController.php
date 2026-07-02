@@ -353,8 +353,8 @@ class PackageController extends BaseController
         
         $sql = "
             SELECT p.*, 
-                   bo.name as origin_branch_name, bo.city as origin_city,
-                   bd.name as dest_branch_name, bd.city as dest_city,
+                   bo.name as origin_branch_name, bo.city as branch_origin_city,
+                   bd.name as dest_branch_name, bd.city as branch_dest_city,
                    c.company_name as customer_name
             FROM packages p
             LEFT JOIN branches bo ON p.origin_branch_id = bo.id
@@ -414,8 +414,8 @@ class PackageController extends BaseController
         
         $sql = "
             SELECT p.*, 
-                   bo.name as origin_branch_name, bo.city as origin_city,
-                   bd.name as dest_branch_name, bd.city as dest_city,
+                   bo.name as origin_branch_name, bo.city as branch_origin_city,
+                   bd.name as dest_branch_name, bd.city as branch_dest_city,
                    c.company_name as customer_name
             FROM packages p
             LEFT JOIN branches bo ON p.origin_branch_id = bo.id
