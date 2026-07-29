@@ -528,6 +528,16 @@
                                     <!-- Pengirim -->
                                     <td class="p-2 border border-slate-200">
                                         <div class="space-y-2 min-w-[170px]">
+                                            <?php if(isset($customers) && count($customers) > 0): ?>
+                                            <div>
+                                                <select x-model="pkg.customer_id" @change="applyB2BMass(idx)" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded-lg bg-slate-50 outline-none transition">
+                                                    <option value="">-- Klien B2B --</option>
+                                                    <?php foreach($customers as $c): ?>
+                                                        <option value="<?= $c['id'] ?>"><?= htmlspecialchars($c['company_name']) ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                            <?php endif; ?>
                                             <div>
                                                 <label class="block text-[10px] font-semibold text-slate-500 uppercase tracking-wide mb-0.5">Nama Pengirim <span class="text-red-400">*</span></label>
                                                 <input type="text" x-model="pkg.sender_name" placeholder="Contoh: Budi Santoso" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition">
@@ -992,6 +1002,19 @@
             addMassRouteField(pkg) {
                 return { ...pkg, route_mode: pkg.route_mode || 'branch', origin_city: pkg.origin_city || '', destination_city: pkg.destination_city || '' };
             },
+            applyB2BMass(index) {
+                  let pkg = this.massPackages[index];
+                  if (pkg.customer_id) {
+                      const customers = <?= json_encode($customers) ?>;
+                      const customer = customers.find(c => c.id == pkg.customer_id);
+                      if (customer) {
+                          pkg.sender_name = customer.company_name;
+                          pkg.sender_phone = customer.phone || '';
+                          pkg.sender_address = customer.address || '';
+                          pkg.payment_type = 'INVOICE';
+                      }
+                  }
+              },
             addMassPackage() {
                 // If there's previous package, copy origin and destination branch for convenience
                 let prev = this.massPackages[this.massPackages.length - 1];
