@@ -21,6 +21,13 @@
             <button @click="importModal = true" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2.5 rounded-xl font-medium shadow-sm transition flex items-center text-sm">
                 <i class="bi bi-file-earmark-arrow-up mr-2"></i> Import
             </button>
+            <!-- Cetak Massal -->
+            <button type="button" onclick="submitMassPrint('lama')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-4 py-2.5 rounded-xl font-medium shadow-sm transition flex items-center text-sm border border-indigo-200">
+                <i class="bi bi-printer mr-2"></i> Print Masal (Lama)
+            </button>
+            <button type="button" onclick="submitMassPrint('baru')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-4 py-2.5 rounded-xl font-medium shadow-sm transition flex items-center text-sm border border-indigo-200">
+                <i class="bi bi-printer mr-2"></i> Print Masal (Baru)
+            </button>
             <!-- Buat Resi Masal -->
             <button type="button" @click.stop="openMassModal()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2.5 rounded-xl font-medium shadow-sm transition flex items-center text-sm">
                 <i class="bi bi-layers mr-2"></i> Buat Resi Masal
@@ -75,7 +82,8 @@
             <table id="packagesTable" class="w-full whitespace-nowrap">
                 <thead class="bg-slate-50/50 text-slate-500 text-left text-xs font-semibold uppercase tracking-wider">
                     <tr>
-                        <th class="px-6 py-4 rounded-tl-xl w-32">No. Resi</th>
+                        <th class="px-4 py-3 rounded-tl-xl w-10 text-center"><input type="checkbox" id="checkAll" class="rounded border-slate-300 text-primary focus:ring-primary"></th>
+                        <th class="px-6 py-4 w-32">No. Resi</th>
                         <th class="px-4 py-3">Pengirim</th>
                         <th class="px-4 py-3">Penerima</th>
                         <th class="px-4 py-3 text-right rounded-tr-xl">Aksi</th>
@@ -1139,6 +1147,15 @@
                 }
             },
             "columns": [
+                {
+                    "data": "id",
+                    "orderable": false,
+                    "searchable": false,
+                    "className": "text-center",
+                    "render": function(data) {
+                        return `<input type="checkbox" class="row-checkbox rounded border-slate-300 text-primary focus:ring-primary" value="${data}">`;
+                    }
+                },
                 { 
                     "data": "resi", 
                     "className": "px-4 py-3 font-semibold text-primary text-sm cursor-pointer hover:text-indigo-700 transition whitespace-nowrap",
@@ -1316,6 +1333,14 @@
     }
 </script>
 
-
+<!-- Mass Print Forms -->
+<form id="massPrintFormLama" action="<?= BASE_URL ?>/packages/print-mass" method="POST" target="_blank" style="display:none;">
+    <input type="hidden" name="type" value="lama">
+    <div id="massPrintInputsLama"></div>
+</form>
+<form id="massPrintFormBaru" action="<?= BASE_URL ?>/packages/print-mass" method="POST" target="_blank" style="display:none;">
+    <input type="hidden" name="type" value="baru">
+    <div id="massPrintInputsBaru"></div>
+</form>
 
 <?php \App\Helpers\View::endSection(); ?>

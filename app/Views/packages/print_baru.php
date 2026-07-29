@@ -15,8 +15,8 @@
         .page-break { page-break-after: always; }
         .wrapper {
             width: 100%;
-            max-width: 80mm;
-            margin: 0 auto;
+            border: 2px solid #000;
+            margin-bottom: 20px;
             padding: 5px;
             box-sizing: border-box;
         }
