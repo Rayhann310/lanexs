@@ -382,7 +382,7 @@ class PackageController extends BaseController
             
             $dompdf = new \Dompdf\Dompdf($options);
             $dompdf->loadHtml($html);
-            $dompdf->setPaper([0, 0, 396.85, 595.28], 'portrait'); // A5 size for old format to fit table
+            $dompdf->setPaper([0, 0, 283.46, 425.20], 'portrait'); // 100x150mm size
             $dompdf->render();
             $dompdf->stream("Resi_{$package['resi']}.pdf", ["Attachment" => false]);
             exit;
@@ -441,7 +441,7 @@ class PackageController extends BaseController
             
             $dompdf = new \Dompdf\Dompdf($options);
             $dompdf->loadHtml($html);
-            $dompdf->setPaper([0, 0, 396.85, 595.28], 'portrait'); // A5 size
+            $dompdf->setPaper([0, 0, 283.46, 425.20], 'portrait'); // 100x150mm size
             $dompdf->render();
             $dompdf->stream("Mass_Resi_" . date('Ymd_His') . ".pdf", ["Attachment" => false]);
             exit;
