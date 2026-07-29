@@ -289,6 +289,11 @@
                             <input type="number" name="price" x-model="formData.price" required class="w-full px-4 py-2 bg-white text-slate-800 font-bold border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
                             <p class="text-[10px] text-slate-400 mt-1" x-show="tariffInfo" x-text="tariffInfo"></p>
                         </div>
+
+                        <div x-show="formData.id !== ''">
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Tanggal Kirim (Opsional)</label>
+                            <input type="datetime-local" step="1" name="created_at" x-model="formData.created_at" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
+                        </div>
                     </div>
                 </div>
                 
@@ -1101,6 +1106,12 @@
                     } else {
                         data.route_mode = 'branch';
                     }
+                    
+                    // Konversi created_at (YYYY-MM-DD HH:MM:SS) ke format datetime-local (YYYY-MM-DDThh:mm:ss)
+                    if (data.created_at) {
+                        data.created_at = data.created_at.replace(' ', 'T');
+                    }
+                    
                     // Save actual sender info before spread (watch may overwrite it)
                     const senderName    = data.sender_name    || '';
                     const senderPhone   = data.sender_phone   || '';

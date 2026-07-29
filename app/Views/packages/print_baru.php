@@ -54,7 +54,7 @@
             margin-top: 5px;
         }
         
-        .route { font-size: 11px; font-weight: bold; padding: 5px 0; border-top: 2px solid #000; border-bottom: 2px solid #000; margin: 5px 0; text-transform: uppercase; }
+        .route { font-size: 9px; font-weight: bold; padding: 5px 0; border-top: 2px solid #000; border-bottom: 2px solid #000; margin: 5px 0; text-transform: uppercase; }
         
     </style>
 </head>

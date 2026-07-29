@@ -279,6 +279,10 @@ class PackageController extends BaseController
             'price'                 => $request->get('price', 0),
         ];
 
+        if ($request->get('created_at')) {
+            $data['created_at'] = $request->get('created_at');
+        }
+
         $oldData = $packageModel->find($id);
 
         if ($packageModel->update($id, $data)) {
