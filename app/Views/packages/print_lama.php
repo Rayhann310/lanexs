@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Cetak Resi Lama</title>
     <style>
-        @page { margin: 5px; }
+        @page { margin: 2px; }
         body { font-family: 'Times New Roman', Times, serif; font-size: 11px; margin: 0; padding: 0; }
         .page-break { page-break-after: always; }
         .wrapper { width: 100%; border: 2px solid #000; box-sizing: border-box; margin-bottom: 0; }
@@ -45,7 +45,7 @@
                     ?>
                 </td>
                 <td style="width: 70%; border: none; border-bottom: 2px solid #000; font-size: 16px; font-weight: bold;">
-                    PT. LINTAS AREA NUSANTARA
+                    PT. LINTAS AREA NUSANTARA EXPRESS
                 </td>
             </tr>
         </table>

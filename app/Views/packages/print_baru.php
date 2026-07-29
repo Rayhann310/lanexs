@@ -5,7 +5,7 @@
     <title>Cetak Resi Baru</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-        @page { margin: 5px; }
+        @page { margin: 2px; }
         body {
             font-family: 'Inter', sans-serif;
             font-size: 11px;
@@ -18,7 +18,7 @@
             width: 100%;
             border: 2px solid #000;
             margin-bottom: 0;
-            padding: 5px;
+            padding: 2px;
             box-sizing: border-box;
         }
         .text-center { text-align: center; }
@@ -44,7 +44,7 @@
         table { width: 100%; border-collapse: collapse; }
         td { vertical-align: top; padding: 2px 0; }
         
-        .barcode { text-align: center; margin: 10px 0; }
+        .barcode { text-align: center; margin: 5px 0; }
         .barcode img { max-width: 100%; height: 40px; }
         
         .box {
@@ -54,7 +54,7 @@
             margin-top: 5px;
         }
         
-        .route { font-size: 14px; font-weight: bold; padding: 5px 0; border-top: 2px solid #000; border-bottom: 2px solid #000; margin: 10px 0; text-transform: uppercase; }
+        .route { font-size: 11px; font-weight: bold; padding: 5px 0; border-top: 2px solid #000; border-bottom: 2px solid #000; margin: 5px 0; text-transform: uppercase; }
         
     </style>
 </head>
@@ -75,7 +75,7 @@
                     echo '<h2 style="margin:0;">LANEXS</h2>';
                 }
             ?>
-            <div class="font-bold text-sm">PT. LINTAS AREA NUSANTARA</div>
+            <div class="font-bold text-sm">PT. LINTAS AREA NUSANTARA EXPRESS</div>
             <div class="text-xs text-center mt-1">
                 Tgl Kirim: <?= date('d M Y', strtotime($pkg['created_at'])) ?>
             </div>
