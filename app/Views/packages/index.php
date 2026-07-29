@@ -710,23 +710,38 @@
 <?php \App\Helpers\View::endSection(); ?>
 
 <?php \App\Helpers\View::section('scripts'); ?>
-    <script src="<?= BASE_URL ?>/js/import-mixin.js"></script>
-
-    <!-- Tom Select Initializations -->
-    
     <!-- Datalist for Mass Resi City Inputs -->
+    <script src="<?= BASE_URL ?>/js/import-mixin.js"></script>
     <datalist id="indonesia_city_list"></datalist>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof INDONESIA_CITIES !== 'undefined') {
-                const dl = document.getElementById('indonesia_city_list');
+        window.INDONESIA_CITIES = [];
+        // Menggunakan CDN saja untuk data kota
+        fetch('https://raw.githubusercontent.com/mtegarsantosa/json-nama-daerah-indonesia/master/regions.json')
+            .then(res => res.json())
+            .then(data => {
+                let cities = [];
                 let options = '';
-                INDONESIA_CITIES.forEach(c => {
-                    options += `<option value="${c.value}">${c.label}</option>`;
+                data.forEach(prov => {
+                    prov.kota.forEach(kota => {
+                        let label = kota + ' (' + prov.provinsi + ')';
+                        cities.push({ value: label, label: label });
+                        options += `<option value="${label}">${label}</option>`;
+                    });
                 });
-                dl.innerHTML = options;
-            }
-        });
+                window.INDONESIA_CITIES = cities;
+                
+                const dl = document.getElementById('indonesia_city_list');
+                if (dl) dl.innerHTML = options;
+
+                // Update TomSelect if already initialized
+                ['select_origin_city', 'select_dest_city'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el && el.tomselect) {
+                        el.tomselect.addOption(cities);
+                    }
+                });
+            })
+            .catch(err => console.error('Gagal mengambil data kota dari CDN:', err));
     </script>
 <script>
         document.addEventListener('alpine:init', () => {
@@ -737,7 +752,7 @@
                     const el = document.getElementById(id);
                     if (el && !el.tomselect) {
                         new TomSelect(el, {
-                            options: typeof INDONESIA_CITIES !== 'undefined' ? INDONESIA_CITIES : [],
+                            options: window.INDONESIA_CITIES || [],
                             valueField: 'value',
                             labelField: 'label',
                             searchField: 'label',
@@ -963,7 +978,9 @@
             
             // Mass Package Methods
             openMassModal() {
-                this.massPackages = [ { ...this.defaultFormData, route_mode: 'branch' } ];
+                if (!this.massPackages || this.massPackages.length === 0) {
+                    this.massPackages = [ { ...this.defaultFormData, route_mode: 'branch' } ];
+                }
                 this.massModal = true;
             },
             addMassRouteField(pkg) {
@@ -1027,7 +1044,19 @@
                 this.modalTitle = 'Buat Resi Baru';
                 this.formAction = '<?= BASE_URL ?>/packages';
                 this.submitLabel = 'Simpan';
-                this.formData = { ...this.defaultFormData };
+                
+                // Hanya reset jika sebelumnya mengedit paket (id tidak kosong)
+                if (this.formData.id !== '') {
+                    this.formData = { ...this.defaultFormData };
+                    
+                    this.$nextTick(() => {
+                        const elOrig = document.getElementById('select_origin_city');
+                        if (elOrig && elOrig.tomselect) elOrig.tomselect.setValue('');
+                        const elDest = document.getElementById('select_dest_city');
+                        if (elDest && elDest.tomselect) elDest.tomselect.setValue('');
+                    });
+                }
+                
                 this.packageModal = true;
             },
             
@@ -1035,31 +1064,36 @@
                 this.modalTitle = 'Edit Data Paket';
                 this.formAction = '<?= BASE_URL ?>/packages/update/' + data.id;
                 this.submitLabel = 'Simpan Perubahan';
-                if (!data.origin_branch_id && data.origin_city) {
-                    data.route_mode = 'city';
-                } else {
-                    data.route_mode = 'branch';
-                }
-                // Save actual sender info before spread (watch may overwrite it)
-                const senderName    = data.sender_name    || '';
-                const senderPhone   = data.sender_phone   || '';
-                const senderAddress = data.sender_address || '';
                 
-                this.formData = { ...data };
-                this.packageModal = true;
-                
-                // Restore sender fields AFTER Alpine's $watch fires (it runs synchronously on assignment)
-                this.$nextTick(() => {
-                    this.formData.sender_name    = senderName;
-                    this.formData.sender_phone   = senderPhone;
-                    this.formData.sender_address = senderAddress;
+                // Hanya overwrite jika paket yang diedit berbeda (mencegah data hilang jika modal ter-close)
+                if (this.formData.id !== data.id) {
+                    if (!data.origin_branch_id && data.origin_city) {
+                        data.route_mode = 'city';
+                    } else {
+                        data.route_mode = 'branch';
+                    }
+                    // Save actual sender info before spread (watch may overwrite it)
+                    const senderName    = data.sender_name    || '';
+                    const senderPhone   = data.sender_phone   || '';
+                    const senderAddress = data.sender_address || '';
                     
-                    // Populate city TomSelects
-                    const elOrig = document.getElementById('select_origin_city');
-                    if (elOrig && elOrig.tomselect) elOrig.tomselect.setValue(data.origin_city || '');
-                    const elDest = document.getElementById('select_dest_city');
-                    if (elDest && elDest.tomselect) elDest.tomselect.setValue(data.destination_city || '');
-                });
+                    this.formData = { ...data };
+                    
+                    // Restore sender fields AFTER Alpine's $watch fires
+                    this.$nextTick(() => {
+                        this.formData.sender_name    = senderName;
+                        this.formData.sender_phone   = senderPhone;
+                        this.formData.sender_address = senderAddress;
+                        
+                        // Populate city TomSelects
+                        const elOrig = document.getElementById('select_origin_city');
+                        if (elOrig && elOrig.tomselect) elOrig.tomselect.setValue(data.origin_city || '');
+                        const elDest = document.getElementById('select_dest_city');
+                        if (elDest && elDest.tomselect) elDest.tomselect.setValue(data.destination_city || '');
+                    });
+                }
+                
+                this.packageModal = true;
             },
             
             openStatusModal(data) {
