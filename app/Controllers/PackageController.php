@@ -382,11 +382,7 @@ class PackageController extends BaseController
             
             $dompdf = new \Dompdf\Dompdf($options);
             $dompdf->loadHtml($html);
-            if ($type === 'baru') {
-                $dompdf->setPaper([0, 0, 226.77, 800], 'portrait'); // 80mm thermal
-            } else {
-                $dompdf->setPaper([0, 0, 396.85, 595.28], 'portrait'); // A5 size for old format to fit table
-            }
+            $dompdf->setPaper([0, 0, 396.85, 595.28], 'portrait'); // A5 size for old format to fit table
             $dompdf->render();
             $dompdf->stream("Resi_{$package['resi']}.pdf", ["Attachment" => false]);
             exit;
@@ -445,11 +441,7 @@ class PackageController extends BaseController
             
             $dompdf = new \Dompdf\Dompdf($options);
             $dompdf->loadHtml($html);
-            if ($type === 'baru') {
-                $dompdf->setPaper([0, 0, 226.77, 800], 'portrait'); // 80mm thermal
-            } else {
-                $dompdf->setPaper([0, 0, 396.85, 595.28], 'portrait'); // A5 size
-            }
+            $dompdf->setPaper([0, 0, 396.85, 595.28], 'portrait'); // A5 size
             $dompdf->render();
             $dompdf->stream("Mass_Resi_" . date('Ymd_His') . ".pdf", ["Attachment" => false]);
             exit;
