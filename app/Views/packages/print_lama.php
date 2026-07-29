@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>Cetak Resi Lama</title>
     <style>
-        body { font-family: 'Times New Roman', Times, serif; font-size: 11px; }
+        @page { margin: 5px; }
+        body { font-family: 'Times New Roman', Times, serif; font-size: 11px; margin: 0; padding: 0; }
         .page-break { page-break-after: always; }
-        .wrapper { width: 100%; border: 2px solid #000; box-sizing: border-box; margin-bottom: 20px; }
+        .wrapper { width: 100%; border: 2px solid #000; box-sizing: border-box; margin-bottom: 0; }
         .header { display: flex; border-bottom: 2px solid #000; }
         .logo { width: 30%; border-right: 2px solid #000; text-align: center; padding: 5px; }
         .logo img { max-height: 50px; }

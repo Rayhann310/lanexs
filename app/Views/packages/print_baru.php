@@ -5,6 +5,7 @@
     <title>Cetak Resi Baru</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        @page { margin: 5px; }
         body {
             font-family: 'Inter', sans-serif;
             font-size: 11px;
@@ -16,7 +17,7 @@
         .wrapper {
             width: 100%;
             border: 2px solid #000;
-            margin-bottom: 20px;
+            margin-bottom: 0;
             padding: 5px;
             box-sizing: border-box;
         }
