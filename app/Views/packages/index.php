@@ -93,7 +93,7 @@
          style="display: none;"
          class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center overflow-y-auto pt-10 pb-10"
          x-transition.opacity>
-        <div @click.away="packageModal = false"
+        <div 
              class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl mx-4 relative my-auto"
              x-show="packageModal"
              x-transition:enter="transition ease-out duration-300"
@@ -297,8 +297,7 @@
          style="display: none;"
          class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center"
          x-transition.opacity>
-        <div @click.away="statusModal = false"
-             class="bg-white rounded-2xl shadow-2xl w-full max-w-xl mx-4"
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl mx-4"
              x-show="statusModal"
              x-transition:enter="transition ease-out duration-300"
              x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
@@ -487,8 +486,7 @@
          style="display: none;"
          class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-start justify-center overflow-y-auto p-4 sm:p-6"
          id="massModalWrapper">
-        <div @click.away="massModal = false"
-             class="bg-white rounded-2xl shadow-2xl w-full max-w-7xl mx-auto my-8 relative">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-7xl mx-auto my-8 relative">
             
             <div class="p-6 border-b border-slate-100 flex justify-between items-center">
                 <h3 class="text-xl font-bold text-slate-800">Buat Resi Masal</h3>
