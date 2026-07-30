@@ -42,6 +42,10 @@ ob_start();
     color: #475569;
     margin-bottom: 1.25rem;
 }
+@media (min-width: 768px) {
+    .prose-content p { font-size: 1.05rem; line-height: 1.8; }
+    .prose-content ul li { font-size: 1.05rem !important; }
+}
 .dark .prose-content p { color: #cbd5e1; }
 .prose-content ul { list-style-type: none; padding-left: 0.5rem; margin-bottom: 1.5rem; }
 .prose-content ul li { position: relative; padding-left: 1.25rem; margin-bottom: 0.5rem; color: #475569; line-height: 1.6; font-size: 0.95rem;}
@@ -91,20 +95,20 @@ ob_start();
 </section>
 
 <!-- Stats Bar -->
-<div class="relative z-20 -mt-12 mb-12">
+<div class="relative z-20 -mt-8 md:-mt-12 mb-12">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-700 p-8 grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slate-100 dark:divide-slate-700 transition-colors">
-            <div data-aos="fade-up" data-aos-delay="100">
-                <p class="text-4xl font-black text-slate-800 dark:text-white font-heading"><?= htmlspecialchars($stat_branches) ?></p>
-                <p class="text-sm font-bold text-slate-400 uppercase tracking-widest mt-2">Cabang & Agen</p>
+        <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-3xl shadow-2xl shadow-primary/10 dark:shadow-none border border-white/50 dark:border-slate-700/50 p-6 md:p-8 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slate-100 dark:divide-slate-700 transition-all hover:shadow-3xl hover:-translate-y-1 duration-500">
+            <div data-aos="fade-up" data-aos-delay="100" class="group">
+                <p class="text-3xl md:text-5xl font-black text-slate-800 dark:text-white font-heading group-hover:scale-110 transition-transform duration-300 inline-block"><?= htmlspecialchars($stat_branches) ?></p>
+                <p class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-widest mt-2 group-hover:text-primary transition-colors">Cabang & Agen</p>
             </div>
-            <div data-aos="fade-up" data-aos-delay="200" class="pt-8 md:pt-0">
-                <p class="text-4xl font-black text-primary font-heading"><?= htmlspecialchars($stat_packages) ?></p>
-                <p class="text-sm font-bold text-slate-400 uppercase tracking-widest mt-2">Paket Terkirim</p>
+            <div data-aos="fade-up" data-aos-delay="200" class="pt-6 md:pt-0 group">
+                <p class="text-3xl md:text-5xl font-black text-primary font-heading group-hover:scale-110 transition-transform duration-300 inline-block"><?= htmlspecialchars($stat_packages) ?></p>
+                <p class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-widest mt-2 group-hover:text-primary transition-colors">Paket Terkirim</p>
             </div>
-            <div data-aos="fade-up" data-aos-delay="300" class="pt-8 md:pt-0">
-                <p class="text-4xl font-black text-slate-800 dark:text-white font-heading"><?= htmlspecialchars($stat_cities) ?></p>
-                <p class="text-sm font-bold text-slate-400 uppercase tracking-widest mt-2">Provinsi Jangkauan</p>
+            <div data-aos="fade-up" data-aos-delay="300" class="pt-6 md:pt-0 group">
+                <p class="text-3xl md:text-5xl font-black text-slate-800 dark:text-white font-heading group-hover:scale-110 transition-transform duration-300 inline-block"><?= htmlspecialchars($stat_cities) ?></p>
+                <p class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-widest mt-2 group-hover:text-primary transition-colors">Provinsi Jangkauan</p>
             </div>
         </div>
     </div>
@@ -150,9 +154,9 @@ ob_start();
                     
                     <div class="relative space-y-8">
                         <!-- Milestone 1 -->
-                        <div class="relative timeline-item flex gap-4 md:gap-6">
-                            <div class="w-5 h-5 md:w-6 md:h-6 bg-primary rounded-full border-4 border-white dark:border-slate-800 flex-shrink-0 relative z-10 shadow-sm mt-1"></div>
-                            <div>
+                        <div class="relative timeline-item flex gap-4 md:gap-6 group">
+                            <div class="w-5 h-5 md:w-6 md:h-6 bg-primary rounded-full border-4 border-white dark:border-slate-800 flex-shrink-0 relative z-10 shadow-sm mt-1 group-hover:scale-125 transition-transform duration-300"></div>
+                            <div class="group-hover:translate-x-1 transition-transform duration-300">
                                 <span class="text-primary font-bold text-base md:text-lg"><?= htmlspecialchars($m1_year) ?></span>
                                 <h4 class="font-bold text-slate-800 dark:text-white text-lg md:text-xl mt-1"><?= htmlspecialchars($m1_title) ?></h4>
                                 <p class="text-slate-500 dark:text-slate-400 mt-1 md:mt-2 text-sm md:text-base leading-relaxed"><?= htmlspecialchars($m1_desc) ?></p>
@@ -160,9 +164,9 @@ ob_start();
                         </div>
                         
                         <!-- Milestone 2 -->
-                        <div class="relative timeline-item flex gap-4 md:gap-6">
-                            <div class="w-5 h-5 md:w-6 md:h-6 bg-blue-500 rounded-full border-4 border-white dark:border-slate-800 flex-shrink-0 relative z-10 shadow-sm mt-1"></div>
-                            <div>
+                        <div class="relative timeline-item flex gap-4 md:gap-6 group">
+                            <div class="w-5 h-5 md:w-6 md:h-6 bg-blue-500 rounded-full border-4 border-white dark:border-slate-800 flex-shrink-0 relative z-10 shadow-sm mt-1 group-hover:scale-125 transition-transform duration-300"></div>
+                            <div class="group-hover:translate-x-1 transition-transform duration-300">
                                 <span class="text-blue-500 font-bold text-base md:text-lg"><?= htmlspecialchars($m2_year) ?></span>
                                 <h4 class="font-bold text-slate-800 dark:text-white text-lg md:text-xl mt-1"><?= htmlspecialchars($m2_title) ?></h4>
                                 <p class="text-slate-500 dark:text-slate-400 mt-1 md:mt-2 text-sm md:text-base leading-relaxed"><?= htmlspecialchars($m2_desc) ?></p>
@@ -170,9 +174,9 @@ ob_start();
                         </div>
 
                         <!-- Milestone 3 -->
-                        <div class="relative timeline-item flex gap-4 md:gap-6">
-                            <div class="w-5 h-5 md:w-6 md:h-6 bg-emerald-500 rounded-full border-4 border-white dark:border-slate-800 flex-shrink-0 relative z-10 shadow-sm mt-1"></div>
-                            <div>
+                        <div class="relative timeline-item flex gap-4 md:gap-6 group">
+                            <div class="w-5 h-5 md:w-6 md:h-6 bg-emerald-500 rounded-full border-4 border-white dark:border-slate-800 flex-shrink-0 relative z-10 shadow-sm mt-1 group-hover:scale-125 transition-transform duration-300"></div>
+                            <div class="group-hover:translate-x-1 transition-transform duration-300">
                                 <span class="text-emerald-500 font-bold text-base md:text-lg"><?= htmlspecialchars($m3_year) ?></span>
                                 <h4 class="font-bold text-slate-800 dark:text-white text-lg md:text-xl mt-1"><?= htmlspecialchars($m3_title) ?></h4>
                                 <p class="text-slate-500 dark:text-slate-400 mt-1 md:mt-2 text-sm md:text-base leading-relaxed"><?= htmlspecialchars($m3_desc) ?></p>
@@ -182,13 +186,16 @@ ob_start();
                 </div>
 
                 <!-- Call to Action -->
-                <div class="mt-8 relative overflow-hidden rounded-3xl bg-primary shadow-xl">
-                    <img src="<?= htmlspecialchars($cta_bg) ?>" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay">
-                    <div class="relative p-8 text-center">
-                        <h4 class="text-white font-bold text-xl mb-3">Jadilah Bagian dari Sejarah Kami</h4>
-                        <p class="text-white/80 text-sm mb-6">Percayakan pengiriman bisnis Anda kepada yang terbaik.</p>
-                        <a href="<?= BASE_URL ?>/page/layanan-pengiriman" class="inline-block bg-white text-primary font-bold px-6 py-3 rounded-xl hover:bg-slate-50 transition-colors shadow-lg">
-                            Lihat Layanan Kami
+                <div class="mt-12 relative overflow-hidden rounded-3xl bg-primary shadow-[0_20px_50px_rgba(18,123,142,0.3)] dark:shadow-none group cursor-pointer hover:-translate-y-2 transition-all duration-500">
+                    <img src="<?= htmlspecialchars($cta_bg) ?>" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay group-hover:scale-110 group-hover:opacity-30 transition-all duration-700">
+                    <div class="relative p-8 md:p-12 text-center">
+                        <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-md">
+                            <i class="bi bi-rocket-takeoff text-white text-2xl group-hover:-translate-y-2 group-hover:translate-x-2 transition-transform duration-500"></i>
+                        </div>
+                        <h4 class="text-white font-bold text-2xl md:text-3xl mb-3 font-heading">Jadilah Bagian dari Sejarah</h4>
+                        <p class="text-white/90 text-sm md:text-base mb-8 max-w-md mx-auto">Percayakan pengiriman bisnis Anda kepada yang terbaik.</p>
+                        <a href="<?= BASE_URL ?>/page/layanan-pengiriman" class="inline-flex items-center bg-white text-primary font-bold px-8 py-3.5 rounded-xl hover:bg-slate-50 hover:scale-105 transition-all shadow-lg">
+                            Mulai Sekarang <i class="bi bi-arrow-right-short text-2xl -mr-2 ml-1"></i>
                         </a>
                     </div>
                 </div>
