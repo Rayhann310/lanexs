@@ -5,10 +5,66 @@ $meta = ['icon' => 'bi-diagram-3', 'label' => 'Profil Perusahaan', 'color' => 'f
 
 $settingModel = new \App\Models\Setting();
 $hero_bg = $settingModel->get('page_struktur_organisasi_img', 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop');
-$org_chart = $settingModel->get('org_chart_img', '');
+$org_chart_style = $settingModel->get('org_chart_style', 'model_1');
+$org_chart_data_json = $settingModel->get('org_chart_data', '[{"id":1,"name":"John Doe","title":"Logistics Director","parent_id":null}]');
+$org_nodes = json_decode($org_chart_data_json, true) ?: [];
+
+// Helper function to build tree HTML
+if (!function_exists('buildOrgTree')) {
+    function buildOrgTree($parentId, $nodes) {
+        $children = array_filter($nodes, function($n) use ($parentId) {
+            return $n['parent_id'] == $parentId;
+        });
+        
+        if (empty($children)) return '';
+        
+        $html = '<ul>';
+        foreach ($children as $child) {
+            $html .= '<li>
+                <div class="node-card">
+                    <span class="node-name">' . htmlspecialchars($child['name']) . '</span>
+                    <span class="node-title">' . htmlspecialchars($child['title']) . '</span>
+                </div>' . buildOrgTree($child['id'], $nodes) . '
+            </li>';
+        }
+        $html .= '</ul>';
+        return $html;
+    }
+}
 
 ob_start();
 ?>
+<style>
+/* CSS Tree Logic */
+.org-tree * { margin: 0; padding: 0; box-sizing: border-box; }
+.org-tree { display: flex; justify-content: center; width: max-content; margin: 0 auto; padding: 20px;}
+.org-tree ul { padding-top: 20px; position: relative; transition: all 0.5s; display: flex; justify-content: center; }
+.org-tree li { float: left; text-align: center; list-style-type: none; position: relative; padding: 20px 5px 0 5px; transition: all 0.5s; }
+.org-tree li::before, .org-tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid #cbd5e1; width: 50%; height: 20px; }
+.org-tree li::after { right: auto; left: 50%; border-left: 2px solid #cbd5e1; }
+.org-tree li:only-child::after, .org-tree li:only-child::before { display: none; }
+.org-tree li:only-child { padding-top: 0; }
+.org-tree li:first-child::before, .org-tree li:last-child::after { border: 0 none; }
+.org-tree li:last-child::before { border-right: 2px solid #cbd5e1; border-radius: 0 5px 0 0; }
+.org-tree li:first-child::after { border-radius: 5px 0 0 0; }
+.org-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #cbd5e1; width: 0; height: 20px; }
+.org-tree .node-card { display: inline-block; padding: 12px 20px; text-decoration: none; transition: all 0.3s; min-width: 140px; }
+.org-tree .node-name { font-weight: 700; font-size: 0.95rem; display: block; margin-bottom: 2px; }
+.org-tree .node-title { font-size: 0.8rem; display: block; opacity: 0.9;}
+
+/* Styles */
+/* Model 1: Corporate Blue */
+.org-tree.model_1 .node-card { background: #0f172a; color: #fff; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); border: 2px solid #1e293b; }
+.org-tree.model_1 .node-title { color: #94a3b8; }
+/* Model 2: Modern Card */
+.org-tree.model_2 .node-card { background: #fff; color: #334155; border-radius: 12px; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); border: 1px solid #e2e8f0; border-top: 4px solid #3b82f6; }
+.org-tree.model_2 .node-title { color: #64748b; font-weight: 500;}
+/* Model 3: Minimalist */
+.org-tree.model_3 .node-card { background: transparent; color: #334155; border: 1px solid #cbd5e1; border-radius: 0; }
+.org-tree.model_3 .node-name { color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em;}
+.dark .org-tree.model_3 .node-name { color: #f8fafc; }
+.dark .org-tree.model_3 .node-title { color: #94a3b8; }
+</style>
 
 <!-- Page Hero Banner -->
 <section class="pt-32 pb-24 bg-white dark:bg-slate-900 relative overflow-hidden transition-colors border-b border-slate-200 dark:border-slate-800">
@@ -48,16 +104,36 @@ ob_start();
                 <div class="absolute -top-32 -right-32 w-64 h-64 bg-primary/20 rounded-full blur-3xl pointer-events-none group-hover:scale-150 transition-transform duration-700"></div>
                 <div class="absolute -bottom-32 -left-32 w-64 h-64 bg-secondary/20 rounded-full blur-3xl pointer-events-none group-hover:scale-150 transition-transform duration-700 delay-100"></div>
                 
-                <div class="relative z-10 text-center">
-                    <?php if (!empty($org_chart)): ?>
-                        <div class="inline-block p-4 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 mb-8 w-full transition-transform duration-500 hover:scale-[1.02]">
-                            <img src="<?= htmlspecialchars($org_chart) ?>" alt="Struktur Organisasi" class="w-full h-auto rounded-xl">
+                <div class="relative z-10 text-center overflow-x-auto pb-8">
+                    <?php if (!empty($org_nodes)): ?>
+                        <div class="org-tree <?= htmlspecialchars($org_chart_style) ?> w-full">
+                            <ul>
+                                <?php 
+                                // Find roots
+                                $roots = array_filter($org_nodes, function($n) use ($org_nodes) {
+                                    $hasParent = false;
+                                    foreach($org_nodes as $p) {
+                                        if($p['id'] == $n['parent_id']) $hasParent = true;
+                                    }
+                                    return empty($n['parent_id']) || !$hasParent;
+                                });
+                                
+                                foreach($roots as $root): ?>
+                                    <li>
+                                        <div class="node-card">
+                                            <span class="node-name"><?= htmlspecialchars($root['name']) ?></span>
+                                            <span class="node-title"><?= htmlspecialchars($root['title']) ?></span>
+                                        </div>
+                                        <?= buildOrgTree($root['id'], $org_nodes) ?>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
                         </div>
                     <?php else: ?>
                         <div class="text-center py-16 px-4 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-2xl mb-8">
                             <i class="bi bi-diagram-3 text-5xl text-slate-300 dark:text-slate-600 mb-4 block"></i>
                             <h3 class="text-lg font-bold text-slate-700 dark:text-slate-300 mb-2">Bagan Struktur Belum Tersedia</h3>
-                            <p class="text-slate-500 dark:text-slate-400">Silakan unggah gambar struktur organisasi melalui halaman admin.</p>
+                            <p class="text-slate-500 dark:text-slate-400">Silakan buat struktur organisasi melalui halaman admin.</p>
                         </div>
                     <?php endif; ?>
 

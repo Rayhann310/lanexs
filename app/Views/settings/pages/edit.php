@@ -249,33 +249,226 @@
                 <?php
                 $settingModel = new \App\Models\Setting();
                 $hero_bg = $settingModel->get('page_struktur_organisasi_img', 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop');
-                $org_chart = $settingModel->get('org_chart_img', '');
+                $org_chart_style = $settingModel->get('org_chart_style', 'model_1');
+                $org_chart_data = $settingModel->get('org_chart_data', '[{"id":1,"name":"John Doe","title":"Logistics Director","parent_id":null}]');
                 ?>
                 <div class="p-6 border-t border-slate-100 bg-slate-50/50">
                     <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
                         <i class="bi bi-diagram-3 mr-2 text-primary"></i> Pengaturan Struktur Organisasi
                     </h3>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="grid grid-cols-1 gap-6 mb-8">
                         <div>
                             <label class="block text-sm font-medium text-slate-600 mb-2">Gambar Background Header</label>
                             <?php if ($hero_bg): ?>
-                                <img src="<?= htmlspecialchars($hero_bg) ?>" class="h-24 w-full object-cover rounded-lg mb-2 shadow-sm border border-slate-200">
+                                <img src="<?= htmlspecialchars($hero_bg) ?>" class="h-24 w-full md:w-1/2 object-cover rounded-lg mb-2 shadow-sm border border-slate-200">
                             <?php endif; ?>
                             <input type="file" name="page_struktur_organisasi_img" accept="image/*" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20">
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-600 mb-2">Bagan / Bagan Struktur (Wajib Gambar)</label>
-                            <?php if ($org_chart): ?>
-                                <img src="<?= htmlspecialchars($org_chart) ?>" class="h-24 w-full object-contain bg-white rounded-lg mb-2 shadow-sm border border-slate-200">
-                            <?php else: ?>
-                                <div class="h-24 w-full bg-slate-100 border-2 border-dashed border-slate-300 rounded-lg mb-2 flex items-center justify-center text-slate-400 text-sm">Belum ada bagan</div>
-                            <?php endif; ?>
-                            <input type="file" name="org_chart_img" accept="image/*" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20">
-                            <p class="text-xs text-slate-400 mt-1">Upload gambar hierarki (PNG/JPG).</p>
+                    </div>
+
+                    <!-- Dynamic Org Chart Builder -->
+                    <div class="border border-slate-200 bg-white rounded-xl overflow-hidden shadow-sm">
+                        <div class="p-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
+                            <h4 class="font-bold text-slate-700">Builder Bagan Struktur</h4>
+                            <select name="org_chart_style" id="orgChartStyle" class="text-sm px-3 py-1.5 border border-slate-300 rounded-lg outline-none focus:border-primary">
+                                <option value="model_1" <?= $org_chart_style === 'model_1' ? 'selected' : '' ?>>Model 1 (Corporate Blue)</option>
+                                <option value="model_2" <?= $org_chart_style === 'model_2' ? 'selected' : '' ?>>Model 2 (Modern Card)</option>
+                                <option value="model_3" <?= $org_chart_style === 'model_3' ? 'selected' : '' ?>>Model 3 (Minimalist Minimal)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-slate-200">
+                            <!-- Node Editor List -->
+                            <div class="p-4 lg:col-span-1 bg-slate-50/30 max-h-[500px] overflow-y-auto">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h5 class="text-sm font-semibold text-slate-600">Daftar Jabatan</h5>
+                                    <button type="button" id="btnAddNode" class="px-3 py-1 bg-primary text-white text-xs font-semibold rounded hover:bg-primaryHover transition-colors"><i class="bi bi-plus-lg"></i> Tambah</button>
+                                </div>
+                                <div id="nodeList" class="space-y-3">
+                                    <!-- Nodes will be injected here via JS -->
+                                </div>
+                            </div>
+
+                            <!-- Preview Area -->
+                            <div class="p-6 lg:col-span-2 overflow-x-auto min-h-[400px] bg-[#f8fafc] flex justify-center">
+                                <div id="orgChartPreview" class="org-tree w-full">
+                                    <!-- Tree will be rendered here -->
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    
+                    <input type="hidden" name="org_chart_data" id="orgChartData" value="<?= htmlspecialchars($org_chart_data) ?>">
                 </div>
+
+<style>
+/* CSS Tree Logic for Preview */
+.org-tree * { margin: 0; padding: 0; box-sizing: border-box; }
+.org-tree { display: flex; justify-content: center; width: max-content; margin: 0 auto; padding: 20px;}
+.org-tree ul { padding-top: 20px; position: relative; transition: all 0.5s; display: flex; justify-content: center; }
+.org-tree li { float: left; text-align: center; list-style-type: none; position: relative; padding: 20px 5px 0 5px; transition: all 0.5s; }
+.org-tree li::before, .org-tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid #cbd5e1; width: 50%; height: 20px; }
+.org-tree li::after { right: auto; left: 50%; border-left: 2px solid #cbd5e1; }
+.org-tree li:only-child::after, .org-tree li:only-child::before { display: none; }
+.org-tree li:only-child { padding-top: 0; }
+.org-tree li:first-child::before, .org-tree li:last-child::after { border: 0 none; }
+.org-tree li:last-child::before { border-right: 2px solid #cbd5e1; border-radius: 0 5px 0 0; }
+.org-tree li:first-child::after { border-radius: 5px 0 0 0; }
+.org-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #cbd5e1; width: 0; height: 20px; }
+.org-tree .node-card { display: inline-block; padding: 12px 20px; text-decoration: none; transition: all 0.3s; min-width: 140px; }
+.org-tree .node-name { font-weight: 700; font-size: 0.95rem; display: block; margin-bottom: 2px; }
+.org-tree .node-title { font-size: 0.8rem; display: block; opacity: 0.9;}
+
+/* Styles */
+/* Model 1: Corporate Blue */
+.org-tree.model_1 .node-card { background: #0f172a; color: #fff; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); border: 2px solid #1e293b; }
+.org-tree.model_1 .node-title { color: #94a3b8; }
+/* Model 2: Modern Card */
+.org-tree.model_2 .node-card { background: #fff; color: #334155; border-radius: 12px; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); border: 1px solid #e2e8f0; border-top: 4px solid #3b82f6; }
+.org-tree.model_2 .node-title { color: #64748b; font-weight: 500;}
+/* Model 3: Minimalist */
+.org-tree.model_3 .node-card { background: transparent; color: #334155; border: 1px solid #cbd5e1; border-radius: 0; }
+.org-tree.model_3 .node-name { color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em;}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const rawData = document.getElementById('orgChartData').value;
+    let nodes = [];
+    try { nodes = JSON.parse(rawData); } catch(e) { nodes = []; }
+    if(!Array.isArray(nodes) || nodes.length === 0) {
+        nodes = [{id: 1, name: "Nama", title: "Jabatan", parent_id: null}];
+    }
+
+    const nodeListEl = document.getElementById('nodeList');
+    const previewEl = document.getElementById('orgChartPreview');
+    const dataInput = document.getElementById('orgChartData');
+    const styleSelect = document.getElementById('orgChartStyle');
+
+    function renderNodeList() {
+        nodeListEl.innerHTML = '';
+        nodes.forEach(node => {
+            const div = document.createElement('div');
+            div.className = 'bg-white p-3 border border-slate-200 rounded-lg shadow-sm text-sm relative group';
+            
+            // Delete button (prevent deleting the root node if it's the only one)
+            let deleteBtn = '';
+            if(nodes.length > 1) {
+                deleteBtn = `<button type="button" class="absolute top-2 right-2 text-red-400 hover:text-red-600 hidden group-hover:block" onclick="deleteNode(${node.id})"><i class="bi bi-trash"></i></button>`;
+            }
+
+            // Options for parent
+            let parentOpts = `<option value="">-- Tidak ada (Root) --</option>`;
+            nodes.forEach(n => {
+                if(n.id !== node.id) {
+                    parentOpts += `<option value="${n.id}" ${node.parent_id == n.id ? 'selected' : ''}>${n.name} (${n.title})</option>`;
+                }
+            });
+
+            div.innerHTML = `
+                ${deleteBtn}
+                <div class="mb-2">
+                    <label class="block text-xs text-slate-500 mb-1">Nama</label>
+                    <input type="text" class="w-full border-b border-slate-300 outline-none px-1 py-0.5 focus:border-primary" value="${node.name}" onchange="updateNode(${node.id}, 'name', this.value)">
+                </div>
+                <div class="mb-2">
+                    <label class="block text-xs text-slate-500 mb-1">Jabatan</label>
+                    <input type="text" class="w-full border-b border-slate-300 outline-none px-1 py-0.5 focus:border-primary" value="${node.title}" onchange="updateNode(${node.id}, 'title', this.value)">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-500 mb-1">Atasan</label>
+                    <select class="w-full border-b border-slate-300 outline-none px-1 py-0.5 focus:border-primary" onchange="updateNode(${node.id}, 'parent_id', this.value)">
+                        ${parentOpts}
+                    </select>
+                </div>
+            `;
+            nodeListEl.appendChild(div);
+        });
+    }
+
+    window.updateNode = function(id, field, value) {
+        const node = nodes.find(n => n.id == id);
+        if(node) {
+            node[field] = field === 'parent_id' ? (value ? parseInt(value) : null) : value;
+            saveAndRender();
+        }
+    };
+
+    window.deleteNode = function(id) {
+        if(confirm('Hapus posisi ini? Posisi di bawahnya (jika ada) akan kehilangan atasan.')) {
+            nodes = nodes.filter(n => n.id != id);
+            // Reset parent_id for orphaned children
+            nodes.forEach(n => { if(n.parent_id == id) n.parent_id = null; });
+            saveAndRender();
+        }
+    };
+
+    document.getElementById('btnAddNode').addEventListener('click', () => {
+        const newId = nodes.length > 0 ? Math.max(...nodes.map(n => n.id)) + 1 : 1;
+        // Default parent to the first node
+        const defaultParent = nodes.length > 0 ? nodes[0].id : null;
+        nodes.push({id: newId, name: "Nama Baru", title: "Jabatan Baru", parent_id: defaultParent});
+        saveAndRender();
+    });
+
+    styleSelect.addEventListener('change', () => {
+        saveAndRender();
+    });
+
+    function buildTreeHTML(parentId) {
+        const children = nodes.filter(n => n.parent_id == parentId);
+        if(children.length === 0) return '';
+        let html = '<ul>';
+        children.forEach(child => {
+            html += `<li>
+                <div class="node-card">
+                    <span class="node-name">${child.name}</span>
+                    <span class="node-title">${child.title}</span>
+                </div>
+                ${buildTreeHTML(child.id)}
+            </li>`;
+        });
+        html += '</ul>';
+        return html;
+    }
+
+    function saveAndRender() {
+        dataInput.value = JSON.stringify(nodes);
+        
+        // Find roots (nodes with no valid parent)
+        const roots = nodes.filter(n => !n.parent_id || !nodes.find(p => p.id == n.parent_id));
+        
+        let previewHTML = '';
+        if(roots.length > 0) {
+            previewHTML = '<ul>';
+            roots.forEach(root => {
+                previewHTML += `<li>
+                    <div class="node-card">
+                        <span class="node-name">${root.name}</span>
+                        <span class="node-title">${root.title}</span>
+                    </div>
+                    ${buildTreeHTML(root.id)}
+                </li>`;
+            });
+            previewHTML += '</ul>';
+        } else {
+            previewHTML = '<div class="text-slate-400 mt-10">Tidak ada data.</div>';
+        }
+
+        previewEl.innerHTML = previewHTML;
+        previewEl.className = 'org-tree w-full ' + styleSelect.value;
+        
+        // Only re-render node list to update parent dropdowns if needed, but it causes input blur.
+        // For simplicity, we re-render everything when a node is added/deleted or parent changed.
+        // We handle input changes via onchange which fires on blur.
+        renderNodeList();
+    }
+
+    // Initial render
+    saveAndRender();
+});
+</script>
             <?php elseif (in_array($page['slug'], ['layanan-pengiriman', 'layanan-pengemasan', 'layanan-tracking', 'experience'])): ?>
                 <?php
                 $settingModel = new \App\Models\Setting();
