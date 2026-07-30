@@ -70,7 +70,112 @@
                 <input type="hidden" name="content" id="quill-content">
             </div>
 
-            <div class="px-6 pb-6 flex items-center space-x-4">
+            <?php if ($page['slug'] === 'sejarah-perusahaan'): ?>
+                <?php
+                $settingModel = new \App\Models\Setting();
+                $hero_bg = $settingModel->get('sejarah_hero_bg', 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070&auto=format&fit=crop');
+                $cta_bg = $settingModel->get('sejarah_cta_bg', 'https://images.unsplash.com/photo-1519003722824-194d4455a60c?q=80&w=2075&auto=format&fit=crop');
+                $stat_branches = $settingModel->get('sejarah_stat_branches', '150+');
+                $stat_packages = $settingModel->get('sejarah_stat_packages', '5M+');
+                $stat_cities = $settingModel->get('sejarah_stat_cities', '38');
+                $m1_year = $settingModel->get('sejarah_m1_year', '2025');
+                $m1_title = $settingModel->get('sejarah_m1_title', 'Peresmian LANEXS');
+                $m1_desc = $settingModel->get('sejarah_m1_desc', 'Didirikan di Bekasi dengan visi menjadi pilar logistik Indonesia.');
+                $m2_year = $settingModel->get('sejarah_m2_year', '2026');
+                $m2_title = $settingModel->get('sejarah_m2_title', 'Ekspansi Darat & Laut');
+                $m2_desc = $settingModel->get('sejarah_m2_desc', 'Membuka rute ke seluruh pulau Jawa dan Sumatera.');
+                $m3_year = $settingModel->get('sejarah_m3_year', '2028');
+                $m3_title = $settingModel->get('sejarah_m3_title', 'Jaringan Nasional');
+                $m3_desc = $settingModel->get('sejarah_m3_desc', 'Menjangkau 38 Provinsi dengan teknologi pelacakan real-time mutakhir.');
+                ?>
+                <div class="p-6 border-t border-slate-100 bg-slate-50/50">
+                    <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
+                        <i class="bi bi-sliders mr-2 text-primary"></i> Pengaturan Khusus (Sejarah Perusahaan)
+                    </h3>
+                    
+                    <h4 class="font-semibold text-slate-700 mb-3 border-b pb-2">Gambar Background</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Banner Utama (URL)</label>
+                            <input type="text" name="sejarah_hero_bg" value="<?= htmlspecialchars($hero_bg) ?>" class="w-full px-4 py-2 border border-slate-200 rounded-lg outline-none focus:border-primary">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Banner CTA Bawah (URL)</label>
+                            <input type="text" name="sejarah_cta_bg" value="<?= htmlspecialchars($cta_bg) ?>" class="w-full px-4 py-2 border border-slate-200 rounded-lg outline-none focus:border-primary">
+                        </div>
+                    </div>
+
+                    <h4 class="font-semibold text-slate-700 mb-3 border-b pb-2">Statistik Pencapaian</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Total Cabang</label>
+                            <input type="text" name="sejarah_stat_branches" value="<?= htmlspecialchars($stat_branches) ?>" class="w-full px-4 py-2 border border-slate-200 rounded-lg outline-none focus:border-primary">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Paket Terkirim</label>
+                            <input type="text" name="sejarah_stat_packages" value="<?= htmlspecialchars($stat_packages) ?>" class="w-full px-4 py-2 border border-slate-200 rounded-lg outline-none focus:border-primary">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Provinsi Jangkauan</label>
+                            <input type="text" name="sejarah_stat_cities" value="<?= htmlspecialchars($stat_cities) ?>" class="w-full px-4 py-2 border border-slate-200 rounded-lg outline-none focus:border-primary">
+                        </div>
+                    </div>
+
+                    <h4 class="font-semibold text-slate-700 mb-3 border-b pb-2">Tonggak Sejarah (Timeline)</h4>
+                    <div class="space-y-6">
+                        <!-- M1 -->
+                        <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                            <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                                <div class="md:col-span-2">
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">Tahun ke-1</label>
+                                    <input type="text" name="sejarah_m1_year" value="<?= htmlspecialchars($m1_year) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                                </div>
+                                <div class="md:col-span-10">
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">Judul Momen</label>
+                                    <input type="text" name="sejarah_m1_title" value="<?= htmlspecialchars($m1_title) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm mb-2">
+                                    
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">Deskripsi Momen</label>
+                                    <textarea name="sejarah_m1_desc" rows="2" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm"><?= htmlspecialchars($m1_desc) ?></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- M2 -->
+                        <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                            <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                                <div class="md:col-span-2">
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">Tahun ke-2</label>
+                                    <input type="text" name="sejarah_m2_year" value="<?= htmlspecialchars($m2_year) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                                </div>
+                                <div class="md:col-span-10">
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">Judul Momen</label>
+                                    <input type="text" name="sejarah_m2_title" value="<?= htmlspecialchars($m2_title) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm mb-2">
+                                    
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">Deskripsi Momen</label>
+                                    <textarea name="sejarah_m2_desc" rows="2" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm"><?= htmlspecialchars($m2_desc) ?></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- M3 -->
+                        <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                            <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                                <div class="md:col-span-2">
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">Tahun ke-3</label>
+                                    <input type="text" name="sejarah_m3_year" value="<?= htmlspecialchars($m3_year) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm">
+                                </div>
+                                <div class="md:col-span-10">
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">Judul Momen</label>
+                                    <input type="text" name="sejarah_m3_title" value="<?= htmlspecialchars($m3_title) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm mb-2">
+                                    
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">Deskripsi Momen</label>
+                                    <textarea name="sejarah_m3_desc" rows="2" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm"><?= htmlspecialchars($m3_desc) ?></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+            <div class="px-6 pb-6 pt-4 flex items-center space-x-4 border-t border-slate-100">
                 <button type="submit" id="save-btn" class="bg-primary hover:bg-blue-700 text-white font-bold py-2.5 px-8 rounded-xl shadow-md transition-all active:scale-95 flex items-center">
                     <i class="bi bi-save mr-2"></i> Simpan Perubahan
                 </button>

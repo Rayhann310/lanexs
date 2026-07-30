@@ -9,6 +9,9 @@ $stat_branches = $settingModel->get('sejarah_stat_branches', '150+');
 $stat_packages = $settingModel->get('sejarah_stat_packages', '5M+');
 $stat_cities = $settingModel->get('sejarah_stat_cities', '38');
 
+$hero_bg = $settingModel->get('sejarah_hero_bg', 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070&auto=format&fit=crop');
+$cta_bg = $settingModel->get('sejarah_cta_bg', 'https://images.unsplash.com/photo-1519003722824-194d4455a60c?q=80&w=2075&auto=format&fit=crop');
+
 $m1_year = $settingModel->get('sejarah_m1_year', '2025');
 $m1_title = $settingModel->get('sejarah_m1_title', 'Peresmian LANEXS');
 $m1_desc = $settingModel->get('sejarah_m1_desc', 'Didirikan di Bekasi dengan visi menjadi pilar logistik Indonesia.');
@@ -62,7 +65,7 @@ ob_start();
 <!-- Page Hero Banner -->
 <section class="pt-32 pb-24 bg-slate-900 relative overflow-hidden">
     <!-- Logistics Background Graphic -->
-    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay">
+    <img src="<?= htmlspecialchars($hero_bg) ?>" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay">
     <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent"></div>
     <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(white 1px, transparent 1px); background-size: 28px 28px;"></div>
     
@@ -180,7 +183,7 @@ ob_start();
 
                 <!-- Call to Action -->
                 <div class="mt-8 relative overflow-hidden rounded-3xl bg-primary shadow-xl">
-                    <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?q=80&w=2075&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay">
+                    <img src="<?= htmlspecialchars($cta_bg) ?>" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay">
                     <div class="relative p-8 text-center">
                         <h4 class="text-white font-bold text-xl mb-3">Jadilah Bagian dari Sejarah Kami</h4>
                         <p class="text-white/80 text-sm mb-6">Percayakan pengiriman bisnis Anda kepada yang terbaik.</p>

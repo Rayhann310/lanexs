@@ -46,6 +46,14 @@ class LandingPageController extends BaseController
             'title'   => $request->get('title'),
             'content' => $request->get('content'), // raw HTML from QuillJS
         ];
+
+        // Save extra settings for specific pages (like sejarah-perusahaan)
+        $settingModel = new \App\Models\Setting();
+        foreach ($_POST as $key => $value) {
+            if (strpos($key, 'sejarah_') === 0) {
+                $settingModel->set($key, $value);
+            }
+        }
         if ($model->update($id, $data)) {
             $_SESSION['success'] = "Halaman berhasil diperbarui.";
         } else {
