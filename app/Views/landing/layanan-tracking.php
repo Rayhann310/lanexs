@@ -291,7 +291,7 @@ ob_start();
         <h2 class="text-3xl md:text-5xl font-heading font-black text-slate-900 dark:text-white mb-4"><?= htmlspecialchars($cta_title) ?></h2>
         <p class="text-slate-500 dark:text-slate-400 text-lg mb-10 max-w-2xl mx-auto"><?= htmlspecialchars($cta_desc) ?></p>
         
-        <form action="<?= BASE_URL ?>/tracking/result" method="GET" class="max-w-xl mx-auto relative group">
+        <form action="<?= BASE_URL ?>/tracking" method="GET" class="max-w-xl mx-auto relative group">
             <div class="absolute -inset-1 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
             <div class="relative flex items-center bg-white dark:bg-slate-800 rounded-2xl p-2 shadow-xl border border-slate-200 dark:border-slate-700">
                 <div class="pl-4 text-slate-400"><i class="bi bi-upc-scan text-xl"></i></div>
