@@ -44,7 +44,7 @@ ob_start();
                     </span>
                 </h1>
                 
-                <p class="text-base md:text-xl text-slate-600 dark:text-slate-400 mb-8 md:mb-12 leading-relaxed font-light max-w-2xl mx-auto px-4 transition-colors">
+                <p class="text-sm sm:text-base md:text-xl text-slate-600 dark:text-slate-400 mb-8 md:mb-12 leading-relaxed font-light max-w-2xl mx-auto px-4 transition-colors">
                     <?= htmlspecialchars($heroSubtitle) ?>
                 </p>
                 
@@ -62,20 +62,20 @@ ob_start();
                     </form>
                 </div>
                 <!-- Feature Badges -->
-                <div class="mt-16 flex flex-nowrap md:flex-wrap md:justify-center items-center gap-4 md:gap-8 text-sm font-semibold text-slate-700 dark:text-slate-300 transition-colors overflow-x-auto snap-x snap-mandatory hide-scrollbar -mx-4 px-4 md:mx-0 md:px-0 pb-4 md:pb-0" style="scrollbar-width: none; -ms-overflow-style: none;">
+                <div class="mt-8 md:mt-16 flex flex-nowrap md:flex-wrap md:justify-center items-center gap-3 md:gap-8 text-xs md:text-sm font-semibold text-slate-700 dark:text-slate-300 transition-colors overflow-x-auto snap-x snap-mandatory hide-scrollbar -mx-4 px-4 md:mx-0 md:px-0 pb-4 md:pb-0" style="scrollbar-width: none; -ms-overflow-style: none;">
                     <style>
                         .hide-scrollbar::-webkit-scrollbar { display: none; }
                     </style>
-                    <div class="flex-none snap-center flex items-center bg-white/50 dark:bg-slate-800/50 backdrop-blur-md px-6 py-3 rounded-2xl border border-white/60 dark:border-slate-700/50 shadow-sm hover:bg-white/80 transition-colors" data-aos="fade-up" data-aos-delay="200">
-                        <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mr-3"><i class="bi bi-shield-check text-primary text-lg"></i></div>
+                    <div class="flex-none snap-center flex items-center bg-white/50 dark:bg-slate-800/50 backdrop-blur-md px-4 py-2.5 md:px-6 md:py-3 rounded-2xl border border-white/60 dark:border-slate-700/50 shadow-sm hover:bg-white/80 transition-colors" data-aos="fade-up" data-aos-delay="200">
+                        <div class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary/10 flex items-center justify-center mr-2 md:mr-3"><i class="bi bi-shield-check text-primary text-base md:text-lg"></i></div>
                         Keamanan Ekstra
                     </div>
-                    <div class="flex-none snap-center flex items-center bg-white/50 dark:bg-slate-800/50 backdrop-blur-md px-6 py-3 rounded-2xl border border-white/60 dark:border-slate-700/50 shadow-sm hover:bg-white/80 transition-colors" data-aos="fade-up" data-aos-delay="300">
-                        <div class="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center mr-3"><i class="bi bi-clock-history text-secondary text-lg"></i></div>
+                    <div class="flex-none snap-center flex items-center bg-white/50 dark:bg-slate-800/50 backdrop-blur-md px-4 py-2.5 md:px-6 md:py-3 rounded-2xl border border-white/60 dark:border-slate-700/50 shadow-sm hover:bg-white/80 transition-colors" data-aos="fade-up" data-aos-delay="300">
+                        <div class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-secondary/10 flex items-center justify-center mr-2 md:mr-3"><i class="bi bi-clock-history text-secondary text-base md:text-lg"></i></div>
                         99% SLA Presisi
                     </div>
-                    <div class="flex-none snap-center flex items-center bg-white/50 dark:bg-slate-800/50 backdrop-blur-md px-6 py-3 rounded-2xl border border-white/60 dark:border-slate-700/50 shadow-sm hover:bg-white/80 transition-colors" data-aos="fade-up" data-aos-delay="400">
-                        <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center mr-3"><i class="bi bi-globe text-primary text-lg"></i></div>
+                    <div class="flex-none snap-center flex items-center bg-white/50 dark:bg-slate-800/50 backdrop-blur-md px-4 py-2.5 md:px-6 md:py-3 rounded-2xl border border-white/60 dark:border-slate-700/50 shadow-sm hover:bg-white/80 transition-colors" data-aos="fade-up" data-aos-delay="400">
+                        <div class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary/10 flex items-center justify-center mr-2 md:mr-3"><i class="bi bi-globe text-primary text-base md:text-lg"></i></div>
                         Seluruh Indonesia
                     </div>
                 </div>
