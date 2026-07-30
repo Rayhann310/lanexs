@@ -1205,7 +1205,7 @@
                     "data": "resi", 
                     "className": "px-4 py-3 font-semibold text-primary text-sm cursor-pointer hover:text-indigo-700 transition whitespace-nowrap",
                     "render": function(data, type, row) {
-                        return '<div class="flex items-center gap-2"><i class="bi bi-chevron-down text-slate-400 text-[10px] toggle-icon"></i>' + escapeHtml(data) + '</div>';
+                        return '<div class="flex items-center gap-2 toggle-icon-container"><i class="bi bi-chevron-down text-slate-400 text-[10px] toggle-icon"></i>' + escapeHtml(data) + '</div>';
                     }
                 },
                 { 
