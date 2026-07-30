@@ -245,7 +245,38 @@
                         </div>
                     </div>
                 </div>
-            <?php elseif (in_array($page['slug'], ['layanan-pengiriman', 'layanan-pengemasan', 'layanan-tracking', 'experience', 'struktur-organisasi'])): ?>
+            <?php elseif ($page['slug'] === 'struktur-organisasi'): ?>
+                <?php
+                $settingModel = new \App\Models\Setting();
+                $hero_bg = $settingModel->get('page_struktur_organisasi_img', 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop');
+                $org_chart = $settingModel->get('org_chart_img', '');
+                ?>
+                <div class="p-6 border-t border-slate-100 bg-slate-50/50">
+                    <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
+                        <i class="bi bi-diagram-3 mr-2 text-primary"></i> Pengaturan Struktur Organisasi
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-2">Gambar Background Header</label>
+                            <?php if ($hero_bg): ?>
+                                <img src="<?= htmlspecialchars($hero_bg) ?>" class="h-24 w-full object-cover rounded-lg mb-2 shadow-sm border border-slate-200">
+                            <?php endif; ?>
+                            <input type="file" name="page_struktur_organisasi_img" accept="image/*" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-2">Bagan / Bagan Struktur (Wajib Gambar)</label>
+                            <?php if ($org_chart): ?>
+                                <img src="<?= htmlspecialchars($org_chart) ?>" class="h-24 w-full object-contain bg-white rounded-lg mb-2 shadow-sm border border-slate-200">
+                            <?php else: ?>
+                                <div class="h-24 w-full bg-slate-100 border-2 border-dashed border-slate-300 rounded-lg mb-2 flex items-center justify-center text-slate-400 text-sm">Belum ada bagan</div>
+                            <?php endif; ?>
+                            <input type="file" name="org_chart_img" accept="image/*" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20">
+                            <p class="text-xs text-slate-400 mt-1">Upload gambar hierarki (PNG/JPG).</p>
+                        </div>
+                    </div>
+                </div>
+            <?php elseif (in_array($page['slug'], ['layanan-pengiriman', 'layanan-pengemasan', 'layanan-tracking', 'experience'])): ?>
                 <?php
                 $settingModel = new \App\Models\Setting();
                 $prefix = 'page_' . str_replace('-', '_', $page['slug']);
