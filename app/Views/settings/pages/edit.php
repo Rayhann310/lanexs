@@ -39,7 +39,7 @@
                     required>
             </div>
 
-            <?php if ($page['slug'] !== 'visi-misi'): ?>
+            <?php if (!in_array($page['slug'], ['visi-misi', 'struktur-organisasi'])): ?>
             <div class="p-6">
                 <label class="block text-sm font-semibold text-slate-700 mb-3">Konten Halaman</label>
                 <!-- Quill Editor Toolbar -->
@@ -301,6 +301,28 @@
                     
                     <input type="hidden" name="org_chart_data" id="orgChartData" value="<?= htmlspecialchars($org_chart_data) ?>">
                 </div>
+                
+                <?php $org_team_data = $settingModel->get('org_team_data', '[]'); ?>
+                <div class="p-6 border-t border-slate-100 bg-slate-50/50 mt-6">
+                    <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
+                        <i class="bi bi-people mr-2 text-primary"></i> Pengaturan Anggota Tim (Our Team)
+                    </h3>
+                    
+                    <div class="border border-slate-200 bg-white rounded-xl overflow-hidden shadow-sm">
+                        <div class="p-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
+                            <h4 class="font-bold text-slate-700">Daftar Anggota</h4>
+                            <button type="button" id="btnAddTeam" class="px-3 py-1.5 bg-primary text-white text-xs font-semibold rounded-lg hover:bg-primaryHover transition-colors"><i class="bi bi-person-plus"></i> Tambah Anggota</button>
+                        </div>
+                        
+                        <div class="p-6">
+                            <div id="teamList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <!-- Team members injected via JS -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <input type="hidden" name="org_team_data" id="orgTeamData" value="<?= htmlspecialchars($org_team_data) ?>">
+                </div>
 
 <style>
 /* CSS Tree Logic for Preview */
@@ -369,10 +391,6 @@ document.addEventListener('DOMContentLoaded', () => {
             div.innerHTML = `
                 ${deleteBtn}
                 <div class="mb-2">
-                    <label class="block text-xs text-slate-500 mb-1">Nama</label>
-                    <input type="text" class="w-full border-b border-slate-300 outline-none px-1 py-0.5 focus:border-primary" value="${node.name}" onchange="updateNode(${node.id}, 'name', this.value)">
-                </div>
-                <div class="mb-2">
                     <label class="block text-xs text-slate-500 mb-1">Jabatan</label>
                     <input type="text" class="w-full border-b border-slate-300 outline-none px-1 py-0.5 focus:border-primary" value="${node.title}" onchange="updateNode(${node.id}, 'title', this.value)">
                 </div>
@@ -408,7 +426,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const newId = nodes.length > 0 ? Math.max(...nodes.map(n => n.id)) + 1 : 1;
         // Default parent to the first node
         const defaultParent = nodes.length > 0 ? nodes[0].id : null;
-        nodes.push({id: newId, name: "Nama Baru", title: "Jabatan Baru", parent_id: defaultParent});
+        nodes.push({id: newId, title: "Jabatan Baru", parent_id: defaultParent});
         saveAndRender();
     });
 
@@ -423,7 +441,6 @@ document.addEventListener('DOMContentLoaded', () => {
         children.forEach(child => {
             html += `<li>
                 <div class="node-card">
-                    <span class="node-name">${child.name}</span>
                     <span class="node-title">${child.title}</span>
                 </div>
                 ${buildTreeHTML(child.id)}
@@ -445,7 +462,6 @@ document.addEventListener('DOMContentLoaded', () => {
             roots.forEach(root => {
                 previewHTML += `<li>
                     <div class="node-card">
-                        <span class="node-name">${root.name}</span>
                         <span class="node-title">${root.title}</span>
                     </div>
                     ${buildTreeHTML(root.id)}
@@ -467,6 +483,74 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial render
     saveAndRender();
+
+    // ==========================================
+    // TEAM BUILDER LOGIC
+    // ==========================================
+    const rawTeamData = document.getElementById('orgTeamData').value;
+    let team = [];
+    try { team = JSON.parse(rawTeamData); } catch(e) { team = []; }
+
+    const teamListEl = document.getElementById('teamList');
+    const teamDataInput = document.getElementById('orgTeamData');
+
+    function renderTeamList() {
+        teamListEl.innerHTML = '';
+        if(team.length === 0) {
+            teamListEl.innerHTML = '<div class="col-span-full text-center py-8 text-slate-400">Belum ada anggota tim. Klik Tambah Anggota.</div>';
+        }
+        team.forEach(member => {
+            const div = document.createElement('div');
+            div.className = 'bg-slate-50 p-4 border border-slate-200 rounded-xl relative group';
+            
+            div.innerHTML = `
+                <button type="button" class="absolute -top-2 -right-2 bg-red-100 text-red-500 hover:bg-red-500 hover:text-white rounded-full w-8 h-8 flex items-center justify-center shadow-sm transition-colors" onclick="deleteTeam(${member.id})"><i class="bi bi-x-lg text-sm"></i></button>
+                
+                <div class="mb-3 text-center">
+                    <label class="block text-xs font-medium text-slate-500 mb-2">Foto Profil (Opsional)</label>
+                    <input type="file" name="org_team_photo_${member.id}" accept="image/*" class="w-full text-xs text-slate-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-slate-200 hover:file:bg-slate-300 transition-colors">
+                    <p class="text-[10px] text-slate-400 mt-1">Upload gambar baru untuk menimpa foto lama jika ada.</p>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="block text-xs font-medium text-slate-500 mb-1">Nama Lengkap</label>
+                    <input type="text" class="w-full border border-slate-300 rounded px-2 py-1.5 text-sm focus:border-primary outline-none" value="${member.name}" onchange="updateTeam(${member.id}, 'name', this.value)" placeholder="Misal: Budi Santoso">
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-medium text-slate-500 mb-1">Jabatan</label>
+                    <input type="text" class="w-full border border-slate-300 rounded px-2 py-1.5 text-sm focus:border-primary outline-none" value="${member.title}" onchange="updateTeam(${member.id}, 'title', this.value)" placeholder="Misal: Manager Operasional">
+                </div>
+            `;
+            teamListEl.appendChild(div);
+        });
+    }
+
+    window.updateTeam = function(id, field, value) {
+        const member = team.find(m => m.id == id);
+        if(member) {
+            member[field] = value;
+            teamDataInput.value = JSON.stringify(team);
+        }
+    };
+
+    window.deleteTeam = function(id) {
+        if(confirm('Hapus anggota tim ini?')) {
+            team = team.filter(m => m.id != id);
+            teamDataInput.value = JSON.stringify(team);
+            renderTeamList();
+        }
+    };
+
+    document.getElementById('btnAddTeam').addEventListener('click', () => {
+        const newId = team.length > 0 ? Math.max(...team.map(m => m.id)) + 1 : 1;
+        team.push({id: newId, name: "", title: ""});
+        teamDataInput.value = JSON.stringify(team);
+        renderTeamList();
+    });
+
+    // Initial render team
+    renderTeamList();
 });
 </script>
             <?php elseif (in_array($page['slug'], ['layanan-pengiriman', 'layanan-pengemasan', 'layanan-tracking', 'experience'])): ?>

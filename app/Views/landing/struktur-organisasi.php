@@ -6,8 +6,11 @@ $meta = ['icon' => 'bi-diagram-3', 'label' => 'Profil Perusahaan', 'color' => 'f
 $settingModel = new \App\Models\Setting();
 $hero_bg = $settingModel->get('page_struktur_organisasi_img', 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop');
 $org_chart_style = $settingModel->get('org_chart_style', 'model_1');
-$org_chart_data_json = $settingModel->get('org_chart_data', '[{"id":1,"name":"John Doe","title":"Logistics Director","parent_id":null}]');
+$org_chart_data_json = $settingModel->get('org_chart_data', '[{"id":1,"title":"Logistics Director","parent_id":null}]');
 $org_nodes = json_decode($org_chart_data_json, true) ?: [];
+
+$org_team_data_json = $settingModel->get('org_team_data', '[]');
+$org_team = json_decode($org_team_data_json, true) ?: [];
 
 // Helper function to build tree HTML
 if (!function_exists('buildOrgTree')) {
@@ -22,7 +25,6 @@ if (!function_exists('buildOrgTree')) {
         foreach ($children as $child) {
             $html .= '<li>
                 <div class="node-card">
-                    <span class="node-name">' . htmlspecialchars($child['name']) . '</span>
                     <span class="node-title">' . htmlspecialchars($child['title']) . '</span>
                 </div>' . buildOrgTree($child['id'], $nodes) . '
             </li>';
@@ -121,7 +123,6 @@ ob_start();
                                 foreach($roots as $root): ?>
                                     <li>
                                         <div class="node-card">
-                                            <span class="node-name"><?= htmlspecialchars($root['name']) ?></span>
                                             <span class="node-title"><?= htmlspecialchars($root['title']) ?></span>
                                         </div>
                                         <?= buildOrgTree($root['id'], $org_nodes) ?>
@@ -157,6 +158,36 @@ ob_start();
 
     </div>
 </section>
+
+<!-- Our Team Section -->
+<?php if (!empty($org_team)): ?>
+<section class="py-24 bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-colors">
+    <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto text-center mb-16" data-aos="fade-up">
+            <h2 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white mb-4">Our Team</h2>
+            <div class="w-20 h-1 bg-primary mx-auto rounded-full mb-6"></div>
+            <p class="text-slate-600 dark:text-slate-400">Orang-orang hebat di balik operasional logistik kami.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <?php foreach ($org_team as $member): 
+                $photo = $settingModel->get('org_team_photo_' . $member['id'], 'https://ui-avatars.com/api/?name=' . urlencode($member['name']) . '&background=0D8ABC&color=fff&size=256');
+            ?>
+            <div class="group bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 dark:border-slate-700 transform hover:-translate-y-2" data-aos="fade-up">
+                <div class="aspect-w-1 aspect-h-1 w-full bg-slate-100 dark:bg-slate-700 overflow-hidden relative">
+                    <img src="<?= htmlspecialchars($photo) ?>" alt="<?= htmlspecialchars($member['name']) ?>" class="w-full h-64 object-cover object-top group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                <div class="p-6 text-center">
+                    <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-1"><?= htmlspecialchars($member['name']) ?></h3>
+                    <p class="text-sm font-medium text-primary"><?= htmlspecialchars($member['title']) ?></p>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
 
 <?php
 $slot = ob_get_clean();
