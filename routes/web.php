@@ -110,6 +110,12 @@ Router::middleware([AuthMiddleware::class], function() {
     Router::get('/finance/export', [\App\Controllers\FinanceController::class, 'export']);
     Router::post('/finance/cod/settle', [\App\Controllers\FinanceController::class, 'settleCod']);
 
+    // Buku Keuangan
+    Router::get('/buku-keuangan', [\App\Controllers\BukuKeuanganController::class, 'index']);
+    Router::post('/buku-keuangan', [\App\Controllers\BukuKeuanganController::class, 'store']);
+    Router::post('/buku-keuangan/update/{id}', [\App\Controllers\BukuKeuanganController::class, 'update']);
+    Router::post('/buku-keuangan/delete/{id}', [\App\Controllers\BukuKeuanganController::class, 'destroy']);
+
     // B2B Customer Management (Admin)
     Router::get('/customers', [\App\Controllers\CustomerController::class, 'index']);
     Router::post('/customers', [\App\Controllers\CustomerController::class, 'store']);

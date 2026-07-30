@@ -8,6 +8,7 @@ $isManifests    = strpos($uri, '/manifests')    !== false;
 $isScan         = strpos($uri, '/scan')         !== false;
 $isFleet        = strpos($uri, '/fleet')        !== false;
 $isFinance      = strpos($uri, '/finance')      !== false;
+$isBukuKeuangan = strpos($uri, '/buku-keuangan') !== false;
 $isTariffs      = strpos($uri, '/tariffs')      !== false;
 $isServices     = strpos($uri, '/services')     !== false;
 $isCustomers    = strpos($uri, '/customers')    !== false;
@@ -254,6 +255,10 @@ $roleId = $_SESSION['role_id'] ?? 4;
             <a href="<?= BASE_URL ?>/finance" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl transition-all font-medium <?= $isFinance ? 'bg-primary text-white shadow-md shadow-primary/20' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50' ?>">
                 <i class="bi bi-cash-stack w-4 text-center"></i>
                 <span>Keuangan &amp; Kas</span>
+            </a>
+            <a href="<?= BASE_URL ?>/buku-keuangan" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl transition-all font-medium <?= $isBukuKeuangan ? 'bg-primary text-white shadow-md shadow-primary/20' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50' ?>">
+                <i class="bi bi-journal-text w-4 text-center"></i>
+                <span>Buku Keuangan</span>
             </a>
             <?php endif; ?>
 
