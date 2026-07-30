@@ -1,7 +1,7 @@
 <?php \App\Helpers\View::extends('app'); ?>
 <?php \App\Helpers\View::section('content'); ?>
 
-<div class="px-8 py-8">
+<div class="px-4 md:px-8 py-8 w-full">
     <div class="mb-6 flex items-center space-x-4">
         <a href="<?= BASE_URL ?>/settings/pages" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors">
             <i class="bi bi-arrow-left"></i>
@@ -39,7 +39,7 @@
                     required>
             </div>
 
-            <?php if (!in_array($page['slug'], ['visi-misi', 'struktur-organisasi', 'kontak-kami', 'experience'])): ?>
+            <?php if (!in_array($page['slug'], ['visi-misi', 'struktur-organisasi', 'kontak-kami', 'experience', 'layanan-tracking', 'layanan-pengiriman', 'layanan-pengemasan'])): ?>
             <div class="p-6">
                 <label class="block text-sm font-semibold text-slate-700 mb-3">Konten Halaman</label>
                 <!-- Quill Editor Toolbar -->
@@ -632,7 +632,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTeamList();
 });
 </script>
-            <?php elseif (in_array($page['slug'], ['layanan-pengiriman', 'layanan-pengemasan', 'layanan-tracking', 'experience', 'kontak-kami'])): ?>
+            <?php elseif (in_array($page['slug'], ['layanan-pengiriman', 'layanan-pengemasan'])): ?>
                 <?php
                 $settingModel = new \App\Models\Setting();
                 $prefix = 'page_' . str_replace('-', '_', $page['slug']);
