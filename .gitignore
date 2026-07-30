@@ -4,6 +4,14 @@
 /storage/logs/*.log
 /storage/uploads/*
 !/storage/uploads/.gitkeep
+
+# User-uploaded files — NEVER delete these on git pull/reset
 /public/assets/uploads/*
 !/public/assets/uploads/.gitkeep
+/public/assets/images/partners/*
+!/public/assets/images/partners/.gitkeep
+/public/assets/images/testimonials/*
+!/public/assets/images/testimonials/.gitkeep
+/public/assets/images/hero/*
+!/public/assets/images/hero/.gitkeep
 .DS_Store
