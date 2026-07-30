@@ -39,7 +39,7 @@
                     required>
             </div>
 
-            <?php if (!in_array($page['slug'], ['visi-misi', 'struktur-organisasi'])): ?>
+            <?php if (!in_array($page['slug'], ['visi-misi', 'struktur-organisasi', 'kontak-kami', 'experience'])): ?>
             <div class="p-6">
                 <label class="block text-sm font-semibold text-slate-700 mb-3">Konten Halaman</label>
                 <!-- Quill Editor Toolbar -->
