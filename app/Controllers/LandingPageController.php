@@ -50,7 +50,7 @@ class LandingPageController extends BaseController
         // Save extra settings for specific pages (like sejarah-perusahaan or page_xxx)
         $settingModel = new \App\Models\Setting();
         foreach ($_POST as $key => $value) {
-            if (strpos($key, 'sejarah_') === 0 || strpos($key, 'page_') === 0 || strpos($key, 'vm_') === 0 || strpos($key, 'org_') === 0 || strpos($key, 'exp_') === 0) {
+            if (strpos($key, 'sejarah_') === 0 || strpos($key, 'page_') === 0 || strpos($key, 'vm_') === 0 || strpos($key, 'org_') === 0 || strpos($key, 'exp_') === 0 || strpos($key, 'kontak_kami_') === 0) {
                 $settingModel->set($key, $value);
             }
         }

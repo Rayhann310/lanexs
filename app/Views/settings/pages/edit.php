@@ -933,7 +933,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 </script>
 
                 <?php elseif ($page['slug'] === 'kontak-kami'): ?>
-                <?php $prefix = 'page_kontak_kami'; ?>
+                <?php 
+                    $settingModel = new \App\Models\Setting();
+                    $prefix = 'kontak_kami';
+                ?>
                 <div class="p-6 border-t border-slate-100 bg-slate-50/50 space-y-6">
                     <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
                         <i class="bi bi-envelope-paper mr-2 text-rose-600"></i> Pengaturan Halaman Kontak
