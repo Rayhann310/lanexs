@@ -16,6 +16,62 @@ $meta = $slugMeta[$page['slug']] ?? ['icon' => 'bi-file-earmark-text', 'label' =
 // Build layout slot
 ob_start();
 ?>
+<style>
+.prose-content h1, .prose-content h2, .prose-content h3 {
+    font-family: 'Outfit', sans-serif;
+    color: #0f172a;
+    font-weight: 800;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+}
+.dark .prose-content h1, .dark .prose-content h2, .dark .prose-content h3 {
+    color: #f8fafc;
+}
+.prose-content h2 { font-size: 1.875rem; }
+.prose-content h3 { font-size: 1.5rem; }
+.prose-content p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #475569;
+    margin-bottom: 1.5rem;
+}
+.dark .prose-content p {
+    color: #cbd5e1;
+}
+.prose-content ul {
+    list-style-type: none;
+    padding-left: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+.prose-content ul li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #475569;
+    line-height: 1.7;
+}
+.dark .prose-content ul li { color: #cbd5e1; }
+.prose-content ul li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #127B8E; /* Primary Color */
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.prose-content img {
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+.prose-content img:hover {
+    transform: translateY(-5px);
+}
+</style>
 
 <!-- Page Hero Banner -->
 <section class="pt-32 pb-16 bg-gradient-to-br <?= $meta['color'] ?> relative overflow-hidden">
