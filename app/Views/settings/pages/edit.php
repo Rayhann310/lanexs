@@ -857,8 +857,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
 
-                </div>
-
                 <?php elseif ($page['slug'] === 'experience'): ?>
                 <?php 
                     $exp_gallery_data = $settingModel->get('exp_gallery_data', '[]');
