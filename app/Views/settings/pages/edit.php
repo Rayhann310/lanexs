@@ -632,7 +632,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTeamList();
 });
 </script>
-            <?php elseif (in_array($page['slug'], ['layanan-pengiriman', 'layanan-pengemasan'])): ?>
+            <?php elseif (in_array($page['slug'], ['layanan-pengiriman', 'layanan-pengemasan', 'layanan-tracking', 'experience', 'kontak-kami'])): ?>
                 <?php
                 $settingModel = new \App\Models\Setting();
                 $prefix = 'page_' . str_replace('-', '_', $page['slug']);
