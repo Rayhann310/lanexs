@@ -705,6 +705,124 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
 
+                <?php elseif ($page['slug'] === 'layanan-tracking'): ?>
+                <div class="p-6 border-t border-slate-100 bg-slate-50/50 space-y-6">
+                    <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
+                        <i class="bi bi-geo-alt-fill mr-2 text-teal-600"></i> Pengaturan Halaman Tracking
+                    </h3>
+                    
+                    <!-- Hero Section -->
+                    <div>
+                        <h4 class="font-bold text-slate-700 mb-4 flex items-center gap-2"><i class="bi bi-image text-teal-600"></i> Bagian Header (Hero)</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white rounded-xl p-4 border border-slate-200">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-600 mb-1">Tagline</label>
+                                <input type="text" name="<?= $prefix ?>_tagline" value="<?= htmlspecialchars($settingModel->get($prefix . '_tagline', '')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-teal-600 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-600 mb-1">Deskripsi Singkat</label>
+                                <input type="text" name="<?= $prefix ?>_desc" value="<?= htmlspecialchars($settingModel->get($prefix . '_desc', '')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-teal-600 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-600 mb-1">Judul Gambar</label>
+                                <input type="text" name="<?= $prefix ?>_title" value="<?= htmlspecialchars($title) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-teal-600 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-600 mb-1">Sub-judul Gambar</label>
+                                <input type="text" name="<?= $prefix ?>_subtitle" value="<?= htmlspecialchars($subtitle) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-teal-600 text-sm">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-slate-600 mb-1">Gambar Hero (Upload)</label>
+                                <?php if ($img): ?>
+                                    <img src="<?= htmlspecialchars($img) ?>" class="h-20 object-cover rounded-lg mb-2 shadow-sm border border-slate-200">
+                                <?php endif; ?>
+                                <input type="file" name="<?= $prefix ?>_img" accept="image/*" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Statistics -->
+                    <div>
+                        <h4 class="font-bold text-slate-700 mb-4 flex items-center gap-2"><i class="bi bi-graph-up text-teal-600"></i> Statistik (Mengambang)</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white rounded-xl p-4 border border-slate-200">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-600 mb-1">Stat 1 Angka</label>
+                                <input type="text" name="<?= $prefix ?>_stat1_num" value="<?= htmlspecialchars($settingModel->get($prefix . '_stat1_num', '')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-teal-600 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-600 mb-1">Stat 1 Label</label>
+                                <input type="text" name="<?= $prefix ?>_stat1_label" value="<?= htmlspecialchars($settingModel->get($prefix . '_stat1_label', '')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-teal-600 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-600 mb-1">Stat 2 Angka</label>
+                                <input type="text" name="<?= $prefix ?>_stat2_num" value="<?= htmlspecialchars($settingModel->get($prefix . '_stat2_num', '')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-teal-600 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-600 mb-1">Stat 2 Label</label>
+                                <input type="text" name="<?= $prefix ?>_stat2_label" value="<?= htmlspecialchars($settingModel->get($prefix . '_stat2_label', '')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-teal-600 text-sm">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Features -->
+                    <div>
+                        <h4 class="font-bold text-slate-700 mb-4 flex items-center gap-2"><i class="bi bi-grid-fill text-teal-600"></i> Fitur Utama (4 Item)</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <?php for($i=1; $i<=4; $i++): ?>
+                            <div class="bg-white rounded-xl p-4 border border-slate-200">
+                                <label class="block text-sm font-bold text-slate-800 mb-2">Fitur <?= $i ?></label>
+                                <div class="mb-2">
+                                    <label class="block text-xs font-medium text-slate-600 mb-1">Judul</label>
+                                    <input type="text" name="<?= $prefix ?>_feat<?= $i ?>_title" value="<?= htmlspecialchars($settingModel->get($prefix . "_feat{$i}_title", '')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-teal-600 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-600 mb-1">Deskripsi</label>
+                                    <input type="text" name="<?= $prefix ?>_feat<?= $i ?>_desc" value="<?= htmlspecialchars($settingModel->get($prefix . "_feat{$i}_desc", '')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-teal-600 text-sm">
+                                </div>
+                            </div>
+                            <?php endfor; ?>
+                        </div>
+                    </div>
+
+                    <!-- FAQ -->
+                    <div>
+                        <h4 class="font-bold text-slate-700 mb-4 flex items-center gap-2"><i class="bi bi-patch-question-fill text-teal-600"></i> Tanya Jawab (FAQ)</h4>
+                        <p class="text-sm text-slate-500 mb-4">Biarkan kosong jika tidak ingin menampilkan slot FAQ tersebut.</p>
+                        <div class="space-y-4">
+                            <?php for($i=1; $i<=5; $i++): ?>
+                            <div class="bg-white rounded-xl p-4 border border-slate-200">
+                                <label class="block text-sm font-bold text-slate-800 mb-2">Pertanyaan <?= $i ?></label>
+                                <div class="mb-2">
+                                    <input type="text" name="<?= $prefix ?>_q<?= $i ?>" value="<?= htmlspecialchars($settingModel->get($prefix . "_q{$i}", '')) ?>" placeholder="Ketik pertanyaan di sini..." class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-teal-600 text-sm">
+                                </div>
+                                <div>
+                                    <textarea name="<?= $prefix ?>_a<?= $i ?>" placeholder="Jawaban..." class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-teal-600 text-sm h-20"><?= htmlspecialchars($settingModel->get($prefix . "_a{$i}", '')) ?></textarea>
+                                </div>
+                            </div>
+                            <?php endfor; ?>
+                        </div>
+                    </div>
+
+                    <!-- CTA -->
+                    <div>
+                        <h4 class="font-bold text-slate-700 mb-4 flex items-center gap-2"><i class="bi bi-megaphone-fill text-teal-600"></i> Bagian CTA & WhatsApp</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white rounded-xl p-4 border border-slate-200">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-600 mb-1">Judul CTA Tracking</label>
+                                <input type="text" name="<?= $prefix ?>_cta_title" value="<?= htmlspecialchars($settingModel->get($prefix . '_cta_title', '')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-teal-600 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-600 mb-1">Deskripsi CTA Tracking</label>
+                                <input type="text" name="<?= $prefix ?>_cta_desc" value="<?= htmlspecialchars($settingModel->get($prefix . '_cta_desc', '')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-teal-600 text-sm">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-slate-600 mb-1">Nomor WhatsApp (Customer Service)</label>
+                                <input type="text" name="<?= $prefix ?>_wa" value="<?= htmlspecialchars($settingModel->get($prefix . '_wa', '6281234567890')) ?>" placeholder="Misal: 6281234567890" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-teal-600 text-sm">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <?php else: ?>
                 <div class="p-6 border-t border-slate-100 bg-slate-50/50">
                     <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
