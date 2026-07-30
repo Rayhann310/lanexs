@@ -12,12 +12,12 @@ ob_start();
     <section id="beranda" class="relative pt-32 pb-16 lg:pt-40 lg:pb-20 overflow-hidden border-b border-slate-200 dark:border-slate-800 transition-colors flex items-center justify-center min-h-[70vh] lg:min-h-[80vh] max-h-[900px]">
         
         <!-- Hero Background Slider -->
-        <div class="absolute inset-0 z-0" style="height:100%;">
-            <div class="swiper heroSwiper" style="width:100%;height:100%;position:absolute;top:0;left:0;">
-                <div class="swiper-wrapper" style="height:100%;">
+        <div class="absolute inset-0 z-0 hero-bg-container">
+            <div class="swiper heroSwiper">
+                <div class="swiper-wrapper">
                     <?php foreach($heroImages as $img): ?>
-                    <div class="swiper-slide" style="width:100%;height:100%;">
-                        <img src="<?= htmlspecialchars($img) ?>" style="width:100%;height:100%;object-fit:cover;display:block;">
+                    <div class="swiper-slide">
+                        <img src="<?= htmlspecialchars($img) ?>" alt="Hero Background">
                     </div>
                     <?php endforeach; ?>
                 </div>
@@ -161,6 +161,27 @@ ob_start();
     /* Fade edges — dark mode */
     .dark .partners-fade-left  { background: linear-gradient(to right, #0f172a, transparent) !important; }
     .dark .partners-fade-right { background: linear-gradient(to left,  #0f172a, transparent) !important; }
+    
+    /* Force Hero Swiper Height */
+    .hero-bg-container {
+        height: 100% !important;
+        width: 100% !important;
+    }
+    .hero-bg-container .heroSwiper,
+    .hero-bg-container .swiper-wrapper,
+    .hero-bg-container .swiper-slide {
+        height: 100% !important;
+        width: 100% !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+    }
+    .hero-bg-container img {
+        height: 100% !important;
+        width: 100% !important;
+        object-fit: cover !important;
+        display: block !important;
+    }
     </style>
 
     <!-- Statistik Pencapaian (Counter) -->
