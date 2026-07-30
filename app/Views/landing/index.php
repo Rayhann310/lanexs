@@ -91,18 +91,19 @@ ob_start();
     </section>
 
     <!-- Partners Logos -->
-    <section class="py-8 md:py-10 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 transition-colors">
+    <!-- Partners Logos -->
+    <section class="py-12 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 transition-colors relative z-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center" data-aos="fade-up">
-            <p class="text-sm font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-6 transition-colors">Dipercaya Oleh Perusahaan Terkemuka</p>
-            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50 dark:opacity-40 grayscale hover:grayscale-0 dark:hover:opacity-100 transition-all duration-500">
+            <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-8 transition-colors">Dipercaya Oleh Perusahaan Terkemuka</p>
+            <div class="flex flex-wrap justify-center items-center gap-10 md:gap-20 opacity-60 dark:opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
                 <?php if(empty($partners)): ?>
                     <span class="text-xl font-black uppercase tracking-widest font-heading text-slate-800 dark:text-slate-400 transition-colors">Nama Dipercaya Perusahaan</span>
                 <?php else: ?>
                     <?php foreach($partners as $partner): ?>
                         <?php if(!empty($partner['logo_path']) && file_exists(BASE_PATH . '/public' . $partner['logo_path'])): ?>
-                            <img src="<?= BASE_URL . $partner['logo_path'] ?>" alt="<?= htmlspecialchars($partner['name']) ?>" class="h-8 md:h-12 w-auto object-contain dark:brightness-200 dark:contrast-100 transition-all hover:scale-110 duration-300">
+                            <img src="<?= BASE_URL . $partner['logo_path'] ?>" alt="<?= htmlspecialchars($partner['name']) ?>" class="h-8 md:h-10 w-auto object-contain dark:brightness-200 dark:contrast-100 transition-all hover:scale-110 hover:opacity-100 duration-300">
                         <?php else: ?>
-                            <span class="text-lg md:text-xl font-black uppercase tracking-widest font-heading text-slate-800 dark:text-slate-400 transition-colors"><?= htmlspecialchars($partner['name']) ?></span>
+                            <span class="text-lg md:text-xl font-black uppercase tracking-widest font-heading text-slate-800 dark:text-slate-400 transition-colors opacity-70 hover:opacity-100"><?= htmlspecialchars($partner['name']) ?></span>
                         <?php endif; ?>
                     <?php endforeach; ?>
                 <?php endif; ?>
@@ -111,25 +112,25 @@ ob_start();
     </section>
 
     <!-- Statistik Pencapaian (Counter) -->
-    <section class="py-12 bg-white dark:bg-slate-900 border-y border-slate-100 dark:border-slate-800 relative overflow-hidden transition-colors">
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-primary/5 blur-3xl pointer-events-none"></div>
+    <!-- Statistik Pencapaian (Counter) -->
+    <section class="py-16 bg-slate-50 dark:bg-slate-900/50 relative overflow-hidden transition-colors">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-slate-100 dark:divide-slate-800">
-                <div data-aos="fade-up" data-aos-delay="100">
-                    <h4 class="text-3xl md:text-5xl font-black font-heading mb-2 text-slate-900 dark:text-white transition-colors">1M+</h4>
-                    <p class="text-sm text-primary uppercase tracking-widest font-semibold">Paket Terkirim</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div class="bg-white dark:bg-slate-800 p-8 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700/50 hover:-translate-y-2 hover:shadow-xl transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
+                    <h4 class="text-4xl md:text-5xl font-black font-heading mb-3 text-slate-900 dark:text-white transition-colors">1M+</h4>
+                    <p class="text-xs text-primary uppercase tracking-widest font-bold">Paket Terkirim</p>
                 </div>
-                <div data-aos="fade-up" data-aos-delay="200">
-                    <h4 class="text-3xl md:text-5xl font-black font-heading mb-2 text-slate-900 dark:text-white transition-colors">99.9%</h4>
-                    <p class="text-sm text-primary uppercase tracking-widest font-semibold">SLA Tercapai</p>
+                <div class="bg-white dark:bg-slate-800 p-8 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700/50 hover:-translate-y-2 hover:shadow-xl transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
+                    <h4 class="text-4xl md:text-5xl font-black font-heading mb-3 text-slate-900 dark:text-white transition-colors">99.9%</h4>
+                    <p class="text-xs text-primary uppercase tracking-widest font-bold">SLA Tercapai</p>
                 </div>
-                <div data-aos="fade-up" data-aos-delay="300">
-                    <h4 class="text-3xl md:text-5xl font-black font-heading mb-2 text-slate-900 dark:text-white transition-colors">150+</h4>
-                    <p class="text-sm text-primary uppercase tracking-widest font-semibold">Kota Tujuan</p>
+                <div class="bg-white dark:bg-slate-800 p-8 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700/50 hover:-translate-y-2 hover:shadow-xl transition-all duration-300" data-aos="fade-up" data-aos-delay="300">
+                    <h4 class="text-4xl md:text-5xl font-black font-heading mb-3 text-slate-900 dark:text-white transition-colors">150+</h4>
+                    <p class="text-xs text-primary uppercase tracking-widest font-bold">Kota Tujuan</p>
                 </div>
-                <div data-aos="fade-up" data-aos-delay="400">
-                    <h4 class="text-3xl md:text-5xl font-black font-heading mb-2 text-slate-900 dark:text-white transition-colors">24/7</h4>
-                    <p class="text-sm text-primary uppercase tracking-widest font-semibold">Support Klien</p>
+                <div class="bg-white dark:bg-slate-800 p-8 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-700/50 hover:-translate-y-2 hover:shadow-xl transition-all duration-300" data-aos="fade-up" data-aos-delay="400">
+                    <h4 class="text-4xl md:text-5xl font-black font-heading mb-3 text-slate-900 dark:text-white transition-colors">24/7</h4>
+                    <p class="text-xs text-primary uppercase tracking-widest font-bold">Support Klien</p>
                 </div>
             </div>
         </div>
@@ -141,22 +142,22 @@ ob_start();
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 
                 <div class="order-2 lg:order-1" data-aos="fade-up">
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-slate-50 dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 transition-all hover:-translate-y-1 hover:shadow-lg duration-300">
-                            <h4 class="text-4xl font-heading font-black text-primary mb-2">10+</h4>
+                    <div class="grid grid-cols-2 gap-4 lg:gap-6">
+                        <div class="bg-white dark:bg-slate-800 p-6 md:p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700/50 shadow-sm transition-all hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/5 duration-300 group">
+                            <h4 class="text-4xl md:text-5xl font-heading font-black text-primary mb-3 transition-transform group-hover:scale-110 origin-left">10+</h4>
                             <p class="text-sm text-slate-500 dark:text-slate-400 font-medium transition-colors">Tahun Pengalaman Logistik</p>
                         </div>
-                        <div class="bg-slate-50 dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 mt-8 transition-all hover:-translate-y-1 hover:shadow-lg duration-300">
-                            <h4 class="text-4xl font-heading font-black text-primary mb-2">99%</h4>
+                        <div class="bg-white dark:bg-slate-800 p-6 md:p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700/50 shadow-sm mt-8 transition-all hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/5 duration-300 group">
+                            <h4 class="text-4xl md:text-5xl font-heading font-black text-primary mb-3 transition-transform group-hover:scale-110 origin-left">99%</h4>
                             <p class="text-sm text-slate-500 dark:text-slate-400 font-medium transition-colors">SLA Pengiriman Terpenuhi</p>
                         </div>
-                        <div class="bg-slate-50 dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 transition-all hover:-translate-y-1 hover:shadow-lg duration-300">
-                            <h4 class="text-4xl font-heading font-black text-primary mb-2">24/7</h4>
-                            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium transition-colors">Dukungan Pelanggan</p>
+                        <div class="bg-white dark:bg-slate-800 p-6 md:p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700/50 shadow-sm transition-all hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/5 duration-300 group">
+                            <h4 class="text-4xl md:text-5xl font-heading font-black text-primary mb-3 transition-transform group-hover:scale-110 origin-left">24/7</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium transition-colors">Dukungan Pelanggan Prioritas</p>
                         </div>
-                        <div class="bg-slate-50 dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 mt-8 transition-all hover:-translate-y-1 hover:shadow-lg duration-300">
-                            <h4 class="text-4xl font-heading font-black text-primary mb-2">B2B</h4>
-                            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium transition-colors">Fokus Layanan Korporat</p>
+                        <div class="bg-white dark:bg-slate-800 p-6 md:p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700/50 shadow-sm mt-8 transition-all hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/5 duration-300 group">
+                            <h4 class="text-4xl md:text-5xl font-heading font-black text-primary mb-3 transition-transform group-hover:scale-110 origin-left">B2B</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium transition-colors">Fokus Penuh Layanan Korporat</p>
                         </div>
                     </div>
                 </div>
