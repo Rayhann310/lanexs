@@ -150,6 +150,7 @@ Router::middleware([AuthMiddleware::class], function() {
     Router::post('/settings/partners/delete/{id}', [\App\Controllers\LandingPartnerController::class, 'delete']);
     Router::get('/settings/testimonials', [\App\Controllers\LandingTestimonialController::class, 'index']);
     Router::post('/settings/testimonials', [\App\Controllers\LandingTestimonialController::class, 'store']);
+    Router::post('/settings/testimonials/update/{id}', [\App\Controllers\LandingTestimonialController::class, 'update']);
     Router::post('/settings/testimonials/delete/{id}', [\App\Controllers\LandingTestimonialController::class, 'delete']);
     Router::get('/settings/pages', [\App\Controllers\LandingPageController::class, 'index']);
     Router::get('/settings/pages/edit/{id}', [\App\Controllers\LandingPageController::class, 'edit']);

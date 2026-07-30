@@ -369,20 +369,42 @@ ob_start();
                         </div>
                     <?php else: ?>
                         <?php foreach($testimonials as $testi): ?>
-                        <div class="swiper-slide bg-white dark:bg-slate-800 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700 transition-all hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/5 group">
-                            <div class="flex text-secondary mb-5 text-sm gap-1">
-                                <?php for($i=0; $i<$testi['rating']; $i++): ?><i class="bi bi-star-fill"></i><?php endfor; ?>
-                            </div>
-                            <p class="text-slate-700 dark:text-slate-300 font-light text-base leading-relaxed mb-6 transition-colors italic">"<?= htmlspecialchars($testi['content']) ?>"</p>
-                            <div class="flex items-center pt-4 border-t border-slate-100 dark:border-slate-700/50">
-                                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center font-bold text-sm mr-4 uppercase text-primary border border-primary/20"><?= htmlspecialchars($testi['avatar_initials']) ?></div>
-                                <div>
-                                    <h4 class="font-bold text-slate-900 dark:text-white transition-colors"><?= htmlspecialchars($testi['name']) ?></h4>
-                                    <?php if(!empty($testi['position'])): ?>
-                                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium transition-colors"><?= htmlspecialchars($testi['position']) ?></p>
+                        <div class="swiper-slide bg-white dark:bg-slate-800 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700 transition-all hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/5 group flex flex-col h-full">
+                            <?php $type = $testi['display_type'] ?? 'text'; ?>
+                            
+                            <?php if($type === 'logo'): ?>
+                                <div class="flex-1 flex flex-col items-center justify-center p-4">
+                                    <?php if(!empty($testi['logo'])): ?>
+                                        <img src="<?= BASE_URL . $testi['logo'] ?>" alt="<?= htmlspecialchars($testi['name']) ?>" class="max-h-24 max-w-full object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300">
                                     <?php endif; ?>
+                                    <h4 class="font-bold text-slate-900 dark:text-white transition-colors mt-4 text-center group-hover:text-primary"><?= htmlspecialchars($testi['name']) ?></h4>
                                 </div>
-                            </div>
+                            <?php else: ?>
+                                <!-- Text or Both -->
+                                <div class="flex text-secondary mb-5 text-sm gap-1">
+                                    <?php for($i=0; $i<($testi['rating']?:5); $i++): ?><i class="bi bi-star-fill"></i><?php endfor; ?>
+                                </div>
+                                <p class="text-slate-700 dark:text-slate-300 font-light text-base leading-relaxed mb-6 transition-colors italic flex-1">"<?= htmlspecialchars($testi['content']) ?>"</p>
+                                
+                                <div class="flex items-center pt-4 border-t border-slate-100 dark:border-slate-700/50 mt-auto">
+                                    <?php if($type === 'both' && !empty($testi['logo'])): ?>
+                                        <div class="w-16 h-12 mr-4 flex-shrink-0 flex items-center justify-center">
+                                            <img src="<?= BASE_URL . $testi['logo'] ?>" class="max-w-full max-h-full object-contain">
+                                        </div>
+                                    <?php else: ?>
+                                        <div class="w-12 h-12 flex-shrink-0 bg-primary/10 rounded-full flex items-center justify-center font-bold text-sm mr-4 uppercase text-primary border border-primary/20">
+                                            <?= htmlspecialchars($testi['avatar_initials']) ?>
+                                        </div>
+                                    <?php endif; ?>
+                                    
+                                    <div>
+                                        <h4 class="font-bold text-slate-900 dark:text-white transition-colors leading-tight mb-1"><?= htmlspecialchars($testi['name']) ?></h4>
+                                        <?php if(!empty($testi['position'])): ?>
+                                            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium transition-colors"><?= htmlspecialchars($testi['position']) ?></p>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
                         </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
