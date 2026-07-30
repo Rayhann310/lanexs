@@ -30,7 +30,7 @@
         </div>
     <?php endif; ?>
 
-    <form action="<?= BASE_URL ?>/settings/pages/update/<?= $page['id'] ?>" method="POST">
+    <form action="<?= BASE_URL ?>/settings/pages/update/<?= $page['id'] ?>" method="POST" enctype="multipart/form-data">
         <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
             <div class="p-6 border-b border-slate-100">
                 <label class="block text-sm font-semibold text-slate-700 mb-2">Judul Halaman</label>
@@ -96,12 +96,20 @@
                     <h4 class="font-semibold text-slate-700 mb-3 border-b pb-2">Gambar Background</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div>
-                            <label class="block text-sm font-medium text-slate-600 mb-1">Banner Utama (URL)</label>
-                            <input type="text" name="sejarah_hero_bg" value="<?= htmlspecialchars($hero_bg) ?>" class="w-full px-4 py-2 border border-slate-200 rounded-lg outline-none focus:border-primary">
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Banner Utama (URL/Upload)</label>
+                            <?php if ($hero_bg): ?>
+                                <img src="<?= htmlspecialchars($hero_bg) ?>" class="h-24 w-full object-cover rounded-lg mb-2 shadow-sm border border-slate-200">
+                            <?php endif; ?>
+                            <input type="file" name="sejarah_hero_bg" accept="image/*" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20">
+                            <p class="text-xs text-slate-400 mt-1">Kosongkan jika tidak ingin mengubah gambar saat ini.</p>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-slate-600 mb-1">Banner CTA Bawah (URL)</label>
-                            <input type="text" name="sejarah_cta_bg" value="<?= htmlspecialchars($cta_bg) ?>" class="w-full px-4 py-2 border border-slate-200 rounded-lg outline-none focus:border-primary">
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Banner CTA Bawah (URL/Upload)</label>
+                            <?php if ($cta_bg): ?>
+                                <img src="<?= htmlspecialchars($cta_bg) ?>" class="h-24 w-full object-cover rounded-lg mb-2 shadow-sm border border-slate-200">
+                            <?php endif; ?>
+                            <input type="file" name="sejarah_cta_bg" accept="image/*" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20">
+                            <p class="text-xs text-slate-400 mt-1">Kosongkan jika tidak ingin mengubah gambar saat ini.</p>
                         </div>
                     </div>
 
@@ -170,6 +178,49 @@
                                     <textarea name="sejarah_m3_desc" rows="2" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm"><?= htmlspecialchars($m3_desc) ?></textarea>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            <?php elseif (in_array($page['slug'], ['layanan-pengiriman', 'layanan-pengemasan', 'layanan-tracking', 'experience'])): ?>
+                <?php
+                $settingModel = new \App\Models\Setting();
+                $prefix = 'page_' . str_replace('-', '_', $page['slug']);
+                
+                $defaultImg = 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070&auto=format&fit=crop';
+                $defaultSubtitle = 'Layanan Kami';
+                $defaultTitle = 'Kualitas Terbaik';
+                
+                if ($page['slug'] == 'layanan-pengiriman') { $defaultImg = 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070&auto=format&fit=crop'; $defaultSubtitle = 'Jangkauan seluruh nusantara'; $defaultTitle = 'Cepat & Aman'; }
+                if ($page['slug'] == 'layanan-pengemasan') { $defaultImg = 'https://images.unsplash.com/photo-1577705998148-6da4f3963bc8?q=80&w=2070&auto=format&fit=crop'; $defaultSubtitle = 'Perlindungan maksimal'; $defaultTitle = 'Kemasan Kuat'; }
+                if ($page['slug'] == 'layanan-tracking') { $defaultImg = 'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1470&auto=format&fit=crop'; $defaultSubtitle = 'Informasi 24/7'; $defaultTitle = 'Pantau Real-time'; }
+                if ($page['slug'] == 'experience') { $defaultImg = 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070&auto=format&fit=crop'; $defaultSubtitle = 'Portofolio kami'; $defaultTitle = 'Pengalaman Teruji'; }
+                
+                $img = $settingModel->get($prefix . '_img', $defaultImg);
+                $subtitle = $settingModel->get($prefix . '_subtitle', $defaultSubtitle);
+                $title = $settingModel->get($prefix . '_title', $defaultTitle);
+                ?>
+                <div class="p-6 border-t border-slate-100 bg-slate-50/50">
+                    <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
+                        <i class="bi bi-image mr-2 text-primary"></i> Pengaturan Grafis Halaman
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Gambar Layout Samping (Upload)</label>
+                            <?php if ($img): ?>
+                                <img src="<?= htmlspecialchars($img) ?>" class="h-24 w-full object-cover rounded-lg mb-2 shadow-sm border border-slate-200">
+                            <?php endif; ?>
+                            <input type="file" name="<?= $prefix ?>_img" accept="image/*" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20">
+                            <p class="text-xs text-slate-400 mt-1">Biarkan kosong jika tidak ingin mengubah foto.</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Judul Gambar</label>
+                            <input type="text" name="<?= $prefix ?>_title" value="<?= htmlspecialchars($title) ?>" class="w-full px-4 py-2 border border-slate-200 rounded-lg outline-none focus:border-primary">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Sub-judul Gambar</label>
+                            <input type="text" name="<?= $prefix ?>_subtitle" value="<?= htmlspecialchars($subtitle) ?>" class="w-full px-4 py-2 border border-slate-200 rounded-lg outline-none focus:border-primary">
                         </div>
                     </div>
                 </div>
