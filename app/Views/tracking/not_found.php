@@ -32,6 +32,6 @@ ob_start();
 </div>
 
 <?php
-$content = ob_get_clean();
+$slot = ob_get_clean();
 require __DIR__ . '/../landing/layout.php';
 ?>

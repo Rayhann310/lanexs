@@ -217,7 +217,7 @@ ob_start();
 </div>
 
 <?php
-$content = ob_get_clean();
+$slot = ob_get_clean();
 $navbarWhite = true; // Use white navbar since hero is dark
 require __DIR__ . '/layout.php';
 ?>

@@ -57,7 +57,7 @@ ob_start();
 </div>
 
 <?php
-$content = ob_get_clean();
+$slot = ob_get_clean();
 $navbarWhite = true; // Use white navbar text style since the hero background is dark
 require __DIR__ . '/../landing/layout.php';
 ?>
