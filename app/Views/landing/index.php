@@ -118,9 +118,10 @@ ob_start();
                 foreach($partners as $partner):
                     $type = $partner['display_type'] ?? 'logo'; ?>
                     <div class="inline-flex flex-col items-center justify-center gap-1.5 px-8 md:px-12 cursor-default group shrink-0">
-                        <?php if(($type === 'logo' || $type === 'both') && !empty($partner['logo_path']) && file_exists(BASE_PATH . '/public' . $partner['logo_path'])): ?>
+                        <?php if(($type === 'logo' || $type === 'both') && !empty($partner['logo_path'])): ?>
                             <img src="<?= BASE_URL . $partner['logo_path'] ?>" alt="<?= htmlspecialchars($partner['name']) ?>"
-                                 class="h-12 md:h-16 w-auto object-contain dark:brightness-200 transition-all duration-300 group-hover:scale-110">
+                                 class="h-12 md:h-16 w-auto object-contain dark:brightness-200 transition-all duration-300 group-hover:scale-110"
+                                 onerror="this.style.display='none'">
                         <?php endif; ?>
                         <?php if($type === 'text' || $type === 'both'): ?>
                             <span class="text-base md:text-lg font-black uppercase tracking-widest font-heading text-slate-700 dark:text-slate-200 whitespace-nowrap group-hover:text-primary transition-colors duration-300"><?= htmlspecialchars($partner['name']) ?></span>
