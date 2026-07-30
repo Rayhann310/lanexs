@@ -9,7 +9,7 @@ ob_start();
 ?>
 
     <!-- Hero Section -->
-    <section id="beranda" class="relative pt-24 pb-20 lg:pt-48 lg:pb-32 overflow-hidden border-b border-slate-200 dark:border-slate-800 transition-colors flex items-center justify-center min-h-[85vh] lg:min-h-[90vh]">
+    <section id="beranda" class="relative pt-32 pb-16 lg:pt-40 lg:pb-20 overflow-hidden border-b border-slate-200 dark:border-slate-800 transition-colors flex items-center justify-center min-h-[60vh] lg:min-h-[70vh] max-h-[800px]">
         
         <!-- Hero Background Slider -->
         <div class="absolute inset-0 z-0">
