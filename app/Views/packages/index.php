@@ -334,7 +334,7 @@
                 <div class="bg-indigo-50 rounded-xl p-4 border border-indigo-100 flex gap-4">
                     <!-- Image -->
                     <div x-show="lastStatusData.image" class="w-16 h-16 shrink-0 rounded-lg overflow-hidden border border-indigo-200 bg-white">
-                        <img :src="'<?= BASE_URL ?>/uploads/tracking/' + lastStatusData.image" class="w-full h-full object-cover" alt="Bukti">
+                        <img :src="'<?= BASE_URL ?>/' + lastStatusData.image" class="w-full h-full object-cover" alt="Bukti">
                     </div>
                     <div x-show="!lastStatusData.image" class="w-16 h-16 shrink-0 rounded-lg border border-indigo-200 bg-indigo-100/50 flex items-center justify-center text-indigo-300">
                         <i class="bi bi-image text-2xl"></i>
