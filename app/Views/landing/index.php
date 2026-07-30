@@ -95,16 +95,24 @@ ob_start();
     <section class="py-12 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 transition-colors relative z-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center" data-aos="fade-up">
             <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-8 transition-colors">Dipercaya Oleh Perusahaan Terkemuka</p>
-            <div class="flex flex-wrap justify-center items-center gap-10 md:gap-20 opacity-60 dark:opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
+            <div class="flex flex-wrap justify-center items-center gap-10 md:gap-16 opacity-60 dark:opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
                 <?php if(empty($partners)): ?>
                     <span class="text-xl font-black uppercase tracking-widest font-heading text-slate-800 dark:text-slate-400 transition-colors">Nama Dipercaya Perusahaan</span>
                 <?php else: ?>
                     <?php foreach($partners as $partner): ?>
-                        <?php if(!empty($partner['logo_path']) && file_exists(BASE_PATH . '/public' . $partner['logo_path'])): ?>
-                            <img src="<?= BASE_URL . $partner['logo_path'] ?>" alt="<?= htmlspecialchars($partner['name']) ?>" class="h-8 md:h-10 w-auto object-contain dark:brightness-200 dark:contrast-100 transition-all hover:scale-110 hover:opacity-100 duration-300">
-                        <?php else: ?>
-                            <span class="text-lg md:text-xl font-black uppercase tracking-widest font-heading text-slate-800 dark:text-slate-400 transition-colors opacity-70 hover:opacity-100"><?= htmlspecialchars($partner['name']) ?></span>
-                        <?php endif; ?>
+                        <?php $type = $partner['display_type'] ?? 'logo'; ?>
+                        
+                        <div class="flex flex-col items-center justify-center gap-2 group cursor-default transition-all duration-300 hover:scale-105" <?php if(!empty($partner['description'])) echo 'title="'.htmlspecialchars($partner['description']).'"'; ?>>
+                            <?php if($type === 'logo' || $type === 'both'): ?>
+                                <?php if(!empty($partner['logo_path']) && file_exists(BASE_PATH . '/public' . $partner['logo_path'])): ?>
+                                    <img src="<?= BASE_URL . $partner['logo_path'] ?>" alt="<?= htmlspecialchars($partner['name']) ?>" class="h-8 md:h-12 w-auto object-contain dark:brightness-200 dark:contrast-100 transition-all group-hover:opacity-100 duration-300">
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            
+                            <?php if($type === 'text' || $type === 'both'): ?>
+                                <span class="text-sm md:text-base font-bold uppercase tracking-widest font-heading text-slate-800 dark:text-slate-200 transition-colors opacity-70 group-hover:opacity-100 group-hover:text-primary"><?= htmlspecialchars($partner['name']) ?></span>
+                            <?php endif; ?>
+                        </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
             </div>

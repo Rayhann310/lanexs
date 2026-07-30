@@ -32,13 +32,14 @@ class LandingPartnerController extends BaseController
         $model = new LandingPartner();
         
         $data = [
-            'name' => $request->get('name')
+            'name' => $request->get('name'),
+            'display_type' => $request->get('display_type') ?? 'logo',
+            'description' => $request->get('description') ?? ''
         ];
 
         if (isset($_FILES['logo']) && $_FILES['logo']['error'] === UPLOAD_ERR_OK) {
             $ext = pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION);
-            $ext = pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION);
-            $filename = 'partner_' . time() . '_' . rand(100, 999) . '.' . $ext;
+            $filename = 'partner_' . time() . '_' . rand(100, 999) . '.' . strtolower($ext);
             $uploadDir = dirname($_SERVER['SCRIPT_FILENAME']) . '/assets/images/partners/';
             if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
             
@@ -51,6 +52,54 @@ class LandingPartnerController extends BaseController
             $_SESSION['success'] = "Mitra/Klien berhasil ditambahkan.";
         } else {
             $_SESSION['error'] = "Gagal menambahkan Mitra/Klien.";
+        }
+        
+        Response::redirect('/settings/partners');
+    }
+
+    public function update(Request $request, $id)
+    {
+        if (($_SESSION['role_id'] ?? 0) != 1) {
+            Response::redirect('/dashboard');
+            return;
+        }
+
+        $model = new LandingPartner();
+        $partner = $model->find($id);
+
+        if (!$partner) {
+            $_SESSION['error'] = "Mitra/Klien tidak ditemukan.";
+            Response::redirect('/settings/partners');
+            return;
+        }
+
+        $data = [
+            'name' => $request->get('name'),
+            'display_type' => $request->get('display_type') ?? 'logo',
+            'description' => $request->get('description') ?? ''
+        ];
+
+        if (isset($_FILES['logo']) && $_FILES['logo']['error'] === UPLOAD_ERR_OK) {
+            $ext = pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION);
+            $filename = 'partner_' . time() . '_' . rand(100, 999) . '.' . strtolower($ext);
+            $uploadDir = dirname($_SERVER['SCRIPT_FILENAME']) . '/assets/images/partners/';
+            if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+            
+            if (move_uploaded_file($_FILES['logo']['tmp_name'], $uploadDir . $filename)) {
+                $data['logo_path'] = '/assets/images/partners/' . $filename;
+
+                // Delete old logo
+                $oldLogoPath = dirname($_SERVER['SCRIPT_FILENAME']) . $partner['logo_path'];
+                if (!empty($partner['logo_path']) && file_exists($oldLogoPath)) {
+                    @unlink($oldLogoPath);
+                }
+            }
+        }
+
+        if ($model->update($id, $data)) {
+            $_SESSION['success'] = "Mitra/Klien berhasil diperbarui.";
+        } else {
+            $_SESSION['error'] = "Gagal memperbarui Mitra/Klien.";
         }
         
         Response::redirect('/settings/partners');
@@ -69,7 +118,7 @@ class LandingPartnerController extends BaseController
         if ($partner) {
             $logoPath = dirname($_SERVER['SCRIPT_FILENAME']) . $partner['logo_path'];
             if (!empty($partner['logo_path']) && file_exists($logoPath)) {
-                unlink($logoPath);
+                @unlink($logoPath);
             }
             $model->delete($id);
             $_SESSION['success'] = "Mitra/Klien berhasil dihapus.";
