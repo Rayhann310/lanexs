@@ -9,7 +9,7 @@ ob_start();
 ?>
 
     <!-- Hero Section -->
-    <section id="beranda" class="relative pt-32 pb-24 lg:pt-48 lg:pb-32 overflow-hidden border-b border-slate-200 dark:border-slate-800 transition-colors flex items-center justify-center min-h-[90vh]">
+    <section id="beranda" class="relative pt-24 pb-20 lg:pt-48 lg:pb-32 overflow-hidden border-b border-slate-200 dark:border-slate-800 transition-colors flex items-center justify-center min-h-[85vh] lg:min-h-[90vh]">
         
         <!-- Hero Background Slider -->
         <div class="absolute inset-0 z-0">
@@ -28,7 +28,7 @@ ob_start();
             <div class="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent dark:from-slate-900 dark:via-slate-900/40 z-10 transition-colors"></div>
         </div>
 
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 text-center mt-10">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 text-center mt-2 lg:mt-10">
             
             <div data-aos="zoom-in" data-aos-duration="1000">
                 
