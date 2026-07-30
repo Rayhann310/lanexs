@@ -39,7 +39,14 @@
                     required>
             </div>
 
-            <?php if (!in_array($page['slug'], ['visi-misi', 'struktur-organisasi', 'kontak-kami', 'experience', 'layanan-tracking', 'layanan-pengiriman', 'layanan-pengemasan'])): ?>
+            <?php
+            $specialSlugs = [
+                'visi-misi', 'struktur-organisasi', 'kontak-kami', 'experience',
+                'layanan-tracking', 'layanan-pengiriman', 'layanan-pengemasan', 'sejarah-perusahaan',
+            ];
+            ?>
+
+            <?php if (!in_array($page['slug'], $specialSlugs)): ?>
             <div class="p-6">
                 <label class="block text-sm font-semibold text-slate-700 mb-3">Konten Halaman</label>
                 <!-- Quill Editor Toolbar -->
@@ -109,6 +116,7 @@
                         </div>
                     </div>
                 </div>
+
             <?php elseif ($page['slug'] === 'sejarah-perusahaan'): ?>
                 <?php
                 $settingModel = new \App\Models\Setting();
@@ -131,7 +139,7 @@
                     <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
                         <i class="bi bi-sliders mr-2 text-primary"></i> Pengaturan Khusus (Sejarah Perusahaan)
                     </h3>
-                    
+
                     <h4 class="font-semibold text-slate-700 mb-3 border-b pb-2">Gambar Background</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div>
@@ -180,7 +188,7 @@
                                 <div class="md:col-span-10">
                                     <label class="block text-xs font-medium text-slate-500 mb-1">Judul Momen</label>
                                     <input type="text" name="sejarah_m1_title" value="<?= htmlspecialchars($m1_title) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm mb-2">
-                                    
+
                                     <label class="block text-xs font-medium text-slate-500 mb-1">Deskripsi Momen</label>
                                     <textarea name="sejarah_m1_desc" rows="2" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm"><?= htmlspecialchars($m1_desc) ?></textarea>
                                 </div>
@@ -196,7 +204,7 @@
                                 <div class="md:col-span-10">
                                     <label class="block text-xs font-medium text-slate-500 mb-1">Judul Momen</label>
                                     <input type="text" name="sejarah_m2_title" value="<?= htmlspecialchars($m2_title) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm mb-2">
-                                    
+
                                     <label class="block text-xs font-medium text-slate-500 mb-1">Deskripsi Momen</label>
                                     <textarea name="sejarah_m2_desc" rows="2" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm"><?= htmlspecialchars($m2_desc) ?></textarea>
                                 </div>
@@ -212,7 +220,7 @@
                                 <div class="md:col-span-10">
                                     <label class="block text-xs font-medium text-slate-500 mb-1">Judul Momen</label>
                                     <input type="text" name="sejarah_m3_title" value="<?= htmlspecialchars($m3_title) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm mb-2">
-                                    
+
                                     <label class="block text-xs font-medium text-slate-500 mb-1">Deskripsi Momen</label>
                                     <textarea name="sejarah_m3_desc" rows="2" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm"><?= htmlspecialchars($m3_desc) ?></textarea>
                                 </div>
@@ -220,11 +228,12 @@
                         </div>
                     </div>
                 </div>
+
             <?php elseif ($page['slug'] === 'visi-misi'): ?>
                 <?php
                 $settingModel = new \App\Models\Setting();
                 $hero_bg = $settingModel->get('page_visi_misi_img', 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop');
-                
+
                 // Fallback text if null
                 $def_visi = 'Menjadi mitra ekspedisi andalan masyarakat Indonesia dengan menghadirkan layanan logistik yang andal, inovatif, dan berdaya saing tinggi.';
                 $def_m1 = 'Mendukung pemerataan ekonomi nasional melalui jangkauan yang luas;';
@@ -242,7 +251,7 @@
                     <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
                         <i class="bi bi-sliders mr-2 text-primary"></i> Pengaturan Khusus (Visi & Misi)
                     </h3>
-                    
+
                     <h4 class="font-semibold text-slate-700 mb-3 border-b pb-2">Gambar Background Header</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div>
@@ -279,6 +288,7 @@
                         </div>
                     </div>
                 </div>
+
             <?php elseif ($page['slug'] === 'struktur-organisasi'): ?>
                 <?php
                 $settingModel = new \App\Models\Setting();
@@ -290,7 +300,7 @@
                     <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
                         <i class="bi bi-diagram-3 mr-2 text-primary"></i> Pengaturan Struktur Organisasi
                     </h3>
-                    
+
                     <div class="grid grid-cols-1 gap-6 mb-8">
                         <div>
                             <label class="block text-sm font-medium text-slate-600 mb-2">Gambar Background Header</label>
@@ -311,7 +321,7 @@
                                 <option value="model_3" <?= $org_chart_style === 'model_3' ? 'selected' : '' ?>>Model 3 (Minimalist Minimal)</option>
                             </select>
                         </div>
-                        
+
                         <div class="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-slate-200">
                             <!-- Node Editor List -->
                             <div class="p-4 lg:col-span-1 bg-slate-50/30 max-h-[500px] overflow-y-auto">
@@ -332,11 +342,11 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <input type="hidden" name="org_chart_data" id="orgChartData" value="<?= htmlspecialchars($org_chart_data) ?>">
                 </div>
-                
-                <?php 
+
+                <?php
                     $org_team_data = $settingModel->get('org_team_data', '[]');
                     $org_team_arr = json_decode($org_team_data, true) ?: [];
                     foreach ($org_team_arr as &$m) {
@@ -349,314 +359,309 @@
                     <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
                         <i class="bi bi-people mr-2 text-primary"></i> Pengaturan Anggota Tim (Our Team)
                     </h3>
-                    
+
                     <div class="border border-slate-200 bg-white rounded-xl overflow-hidden shadow-sm">
                         <div class="p-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
                             <h4 class="font-bold text-slate-700">Daftar Anggota</h4>
                             <button type="button" id="btnAddTeam" class="px-3 py-1.5 bg-primary text-white text-xs font-semibold rounded-lg hover:bg-primaryHover transition-colors"><i class="bi bi-person-plus"></i> Tambah Anggota</button>
                         </div>
-                        
+
                         <div class="p-6">
                             <div id="teamList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 <!-- Team members injected via JS -->
                             </div>
                         </div>
                     </div>
-                    
+
                     <input type="hidden" name="org_team_data" id="orgTeamData" value="<?= htmlspecialchars($org_team_data) ?>">
                 </div>
 
-<style>
-/* CSS Tree Logic for Preview */
-.org-tree * { margin: 0; padding: 0; box-sizing: border-box; }
-.org-tree { display: flex; justify-content: center; width: max-content; margin: 0 auto; padding: 20px;}
-.org-tree ul { padding-top: 20px; position: relative; transition: all 0.5s; display: flex; justify-content: center; }
-.org-tree li { float: left; text-align: center; list-style-type: none; position: relative; padding: 20px 5px 0 5px; transition: all 0.5s; }
-.org-tree li::before, .org-tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid #94a3b8; width: 50%; height: 20px; }
-.org-tree li::after { right: auto; left: 50%; border-left: 2px solid #94a3b8; }
-.org-tree li:only-child::after, .org-tree li:only-child::before { display: none; }
-.org-tree li:only-child { padding-top: 0; }
-.org-tree li:first-child::before, .org-tree li:last-child::after { border: 0 none; }
-.org-tree li:last-child::before { border-right: 2px solid #94a3b8; border-radius: 0 5px 0 0; }
-.org-tree li:first-child::after { border-radius: 5px 0 0 0; }
-.org-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #94a3b8; width: 0; height: 20px; }
-.org-tree .node-card { display: inline-block; padding: 16px 28px; text-decoration: none; transition: all 0.3s; min-width: 180px; }
-.org-tree .node-title { font-size: 0.95rem; font-weight: 600; display: block; opacity: 0.95; letter-spacing: 0.02em;}
+                <style>
+                /* CSS Tree Logic for Preview */
+                .org-tree * { margin: 0; padding: 0; box-sizing: border-box; }
+                .org-tree { display: flex; justify-content: center; width: max-content; margin: 0 auto; padding: 20px;}
+                .org-tree ul { padding-top: 20px; position: relative; transition: all 0.5s; display: flex; justify-content: center; }
+                .org-tree li { float: left; text-align: center; list-style-type: none; position: relative; padding: 20px 5px 0 5px; transition: all 0.5s; }
+                .org-tree li::before, .org-tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid #94a3b8; width: 50%; height: 20px; }
+                .org-tree li::after { right: auto; left: 50%; border-left: 2px solid #94a3b8; }
+                .org-tree li:only-child::after, .org-tree li:only-child::before { display: none; }
+                .org-tree li:only-child { padding-top: 0; }
+                .org-tree li:first-child::before, .org-tree li:last-child::after { border: 0 none; }
+                .org-tree li:last-child::before { border-right: 2px solid #94a3b8; border-radius: 0 5px 0 0; }
+                .org-tree li:first-child::after { border-radius: 5px 0 0 0; }
+                .org-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #94a3b8; width: 0; height: 20px; }
+                .org-tree .node-card { display: inline-block; padding: 16px 28px; text-decoration: none; transition: all 0.3s; min-width: 180px; }
+                .org-tree .node-title { font-size: 0.95rem; font-weight: 600; display: block; opacity: 0.95; letter-spacing: 0.02em;}
 
-/* Styles */
-/* Model 1: Corporate Blue */
-.org-tree.model_1 .node-card { background: #0f172a; color: #fff; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); border: 2px solid #1e293b; }
-.org-tree.model_1 .node-title { color: #f8fafc; }
-/* Model 2: Modern Card */
-.org-tree.model_2 .node-card { background: #fff; color: #334155; border-radius: 12px; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); border: 1px solid #e2e8f0; border-top: 4px solid #3b82f6; }
-.org-tree.model_2 .node-title { color: #475569; font-weight: 700;}
-/* Model 3: Minimalist */
-.org-tree.model_3 .node-card { background: transparent; color: #334155; border: 2px solid #94a3b8; border-radius: 0; }
-.org-tree.model_3 .node-title { color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;}
+                /* Styles */
+                /* Model 1: Corporate Blue */
+                .org-tree.model_1 .node-card { background: #0f172a; color: #fff; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); border: 2px solid #1e293b; }
+                .org-tree.model_1 .node-title { color: #f8fafc; }
+                /* Model 2: Modern Card */
+                .org-tree.model_2 .node-card { background: #fff; color: #334155; border-radius: 12px; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); border: 1px solid #e2e8f0; border-top: 4px solid #3b82f6; }
+                .org-tree.model_2 .node-title { color: #475569; font-weight: 700;}
+                /* Model 3: Minimalist */
+                .org-tree.model_3 .node-card { background: transparent; color: #334155; border: 2px solid #94a3b8; border-radius: 0; }
+                .org-tree.model_3 .node-title { color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;}
 
-/* Responsive Mobile Tree (Vertical) applied to ALL screens to prevent horizontal scroll */
-.org-tree { width: 100%; justify-content: flex-start; padding: 10px; overflow: hidden; }
-.org-tree ul { display: block; padding-top: 0; }
-.org-tree ul ul { margin-left: 20px; padding-left: 0; margin-top: 15px; }
-.org-tree li { float: none; text-align: left; padding: 15px 0 0 24px; position: relative; }
+                /* Responsive Mobile Tree (Vertical) applied to ALL screens to prevent horizontal scroll */
+                .org-tree { width: 100%; justify-content: flex-start; padding: 10px; overflow: hidden; }
+                .org-tree ul { display: block; padding-top: 0; }
+                .org-tree ul ul { margin-left: 20px; padding-left: 0; margin-top: 15px; }
+                .org-tree li { float: none; text-align: left; padding: 15px 0 0 24px; position: relative; }
 
-/* Hide all desktop horizontal lines */
-.org-tree li::before, .org-tree li::after, .org-tree ul ul::before { display: none !important; border: none !important; }
+                /* Hide all desktop horizontal lines */
+                .org-tree li::before, .org-tree li::after, .org-tree ul ul::before { display: none !important; border: none !important; }
 
-/* Draw L-shape connectors for children */
-.org-tree ul ul > li::before {
-    content: ''; position: absolute; top: -15px; left: 0;
-    width: 24px; height: 50px;
-    border-left: 2px solid #94a3b8 !important;
-    border-bottom: 2px solid #94a3b8 !important;
-    display: block !important;
-    border-radius: 0 0 0 8px;
-}
-
-/* Vertical continuation line for siblings */
-.org-tree ul ul > li::after {
-    content: ''; position: absolute; top: 35px; left: 0;
-    bottom: -15px;
-    border-left: 2px solid #94a3b8 !important;
-    display: block !important;
-}
-/* Hide downward line for the last child */
-.org-tree ul ul > li:last-child::after { display: none !important; }
-
-.org-tree .node-card { width: 100%; max-width: 320px; min-width: 0; display: block; padding: 14px 20px; font-size: 1rem; }
-
-/* Remove padding for root element so it's flush left */
-.org-tree > ul > li { padding-left: 0; }
-</style>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const rawData = document.getElementById('orgChartData').value;
-    let nodes = [];
-    try { nodes = JSON.parse(rawData); } catch(e) { nodes = []; }
-    if(!Array.isArray(nodes) || nodes.length === 0) {
-        nodes = [{id: 1, name: "Nama", title: "Jabatan", parent_id: null}];
-    }
-
-    const nodeListEl = document.getElementById('nodeList');
-    const previewEl = document.getElementById('orgChartPreview');
-    const dataInput = document.getElementById('orgChartData');
-    const styleSelect = document.getElementById('orgChartStyle');
-
-    function renderNodeList() {
-        nodeListEl.innerHTML = '';
-        nodes.forEach(node => {
-            const div = document.createElement('div');
-            div.className = 'bg-white p-3 border border-slate-200 rounded-lg shadow-sm text-sm relative group';
-            
-            // Delete button (prevent deleting the root node if it's the only one)
-            let deleteBtn = '';
-            if(nodes.length > 1) {
-                deleteBtn = `<button type="button" class="absolute top-2 right-2 text-red-400 hover:text-red-600 hidden group-hover:block" onclick="deleteNode(${node.id})"><i class="bi bi-trash"></i></button>`;
-            }
-
-            // Options for parent
-            let parentOpts = `<option value="">-- Tidak ada (Root) --</option>`;
-            nodes.forEach(n => {
-                if(n.id !== node.id) {
-                    parentOpts += `<option value="${n.id}" ${node.parent_id == n.id ? 'selected' : ''}>${n.name} (${n.title})</option>`;
+                /* Draw L-shape connectors for children */
+                .org-tree ul ul > li::before {
+                    content: ''; position: absolute; top: -15px; left: 0;
+                    width: 24px; height: 50px;
+                    border-left: 2px solid #94a3b8 !important;
+                    border-bottom: 2px solid #94a3b8 !important;
+                    display: block !important;
+                    border-radius: 0 0 0 8px;
                 }
-            });
 
-            div.innerHTML = `
-                ${deleteBtn}
-                <div class="mb-2">
-                    <label class="block text-xs text-slate-500 mb-1">Jabatan</label>
-                    <input type="text" class="w-full border-b border-slate-300 outline-none px-1 py-0.5 focus:border-primary" value="${node.title}" onchange="updateNode(${node.id}, 'title', this.value)">
-                </div>
-                <div>
-                    <label class="block text-xs text-slate-500 mb-1">Atasan</label>
-                    <select class="w-full border-b border-slate-300 outline-none px-1 py-0.5 focus:border-primary" onchange="updateNode(${node.id}, 'parent_id', this.value)">
-                        ${parentOpts}
-                    </select>
-                </div>
-            `;
-            nodeListEl.appendChild(div);
-        });
-    }
+                /* Vertical continuation line for siblings */
+                .org-tree ul ul > li::after {
+                    content: ''; position: absolute; top: 35px; left: 0;
+                    bottom: -15px;
+                    border-left: 2px solid #94a3b8 !important;
+                    display: block !important;
+                }
+                /* Hide downward line for the last child */
+                .org-tree ul ul > li:last-child::after { display: none !important; }
 
-    window.updateNode = function(id, field, value) {
-        const node = nodes.find(n => n.id == id);
-        if(node) {
-            node[field] = field === 'parent_id' ? (value ? parseInt(value) : null) : value;
-            saveAndRender();
-        }
-    };
+                .org-tree .node-card { width: 100%; max-width: 320px; min-width: 0; display: block; padding: 14px 20px; font-size: 1rem; }
 
-    window.deleteNode = function(id) {
-        if(confirm('Hapus posisi ini? Posisi di bawahnya (jika ada) akan kehilangan atasan.')) {
-            nodes = nodes.filter(n => n.id != id);
-            // Reset parent_id for orphaned children
-            nodes.forEach(n => { if(n.parent_id == id) n.parent_id = null; });
-            saveAndRender();
-        }
-    };
+                /* Remove padding for root element so it's flush left */
+                .org-tree > ul > li { padding-left: 0; }
+                </style>
 
-    document.getElementById('btnAddNode').addEventListener('click', () => {
-        const newId = nodes.length > 0 ? Math.max(...nodes.map(n => n.id)) + 1 : 1;
-        // Default parent to the first node
-        const defaultParent = nodes.length > 0 ? nodes[0].id : null;
-        nodes.push({id: newId, title: "Jabatan Baru", parent_id: defaultParent});
-        saveAndRender();
-    });
-
-    styleSelect.addEventListener('change', () => {
-        saveAndRender();
-    });
-
-    function buildTreeHTML(parentId) {
-        const children = nodes.filter(n => n.parent_id == parentId);
-        if(children.length === 0) return '';
-        let html = '<ul>';
-        children.forEach(child => {
-            html += `<li>
-                <div class="node-card">
-                    <span class="node-title">${child.title}</span>
-                </div>
-                ${buildTreeHTML(child.id)}
-            </li>`;
-        });
-        html += '</ul>';
-        return html;
-    }
-
-    function saveAndRender() {
-        dataInput.value = JSON.stringify(nodes);
-        
-        // Find roots (nodes with no valid parent)
-        const roots = nodes.filter(n => !n.parent_id || !nodes.find(p => p.id == n.parent_id));
-        
-        let previewHTML = '';
-        if(roots.length > 0) {
-            previewHTML = '<ul>';
-            roots.forEach(root => {
-                previewHTML += `<li>
-                    <div class="node-card">
-                        <span class="node-title">${root.title}</span>
-                    </div>
-                    ${buildTreeHTML(root.id)}
-                </li>`;
-            });
-            previewHTML += '</ul>';
-        } else {
-            previewHTML = '<div class="text-slate-400 mt-10">Tidak ada data.</div>';
-        }
-
-        previewEl.innerHTML = previewHTML;
-        previewEl.className = 'org-tree w-full ' + styleSelect.value;
-        
-        // Only re-render node list to update parent dropdowns if needed, but it causes input blur.
-        // For simplicity, we re-render everything when a node is added/deleted or parent changed.
-        // We handle input changes via onchange which fires on blur.
-        renderNodeList();
-    }
-
-    // Initial render
-    saveAndRender();
-
-    // ==========================================
-    // TEAM BUILDER LOGIC
-    // ==========================================
-    const rawTeamData = document.getElementById('orgTeamData').value;
-    let team = [];
-    try { team = JSON.parse(rawTeamData); } catch(e) { team = []; }
-
-    const teamListEl = document.getElementById('teamList');
-    const teamDataInput = document.getElementById('orgTeamData');
-
-    function renderTeamList() {
-        teamListEl.innerHTML = '';
-        if(team.length === 0) {
-            teamListEl.innerHTML = '<div class="col-span-full text-center py-8 text-slate-400">Belum ada anggota tim. Klik Tambah Anggota.</div>';
-        }
-        team.forEach(member => {
-            const div = document.createElement('div');
-            div.className = 'bg-slate-50 p-4 border border-slate-200 rounded-xl relative group';
-            
-            div.innerHTML = `
-                <button type="button" class="absolute -top-2 -right-2 bg-red-100 text-red-500 hover:bg-red-500 hover:text-white rounded-full w-8 h-8 flex items-center justify-center shadow-sm transition-colors" onclick="deleteTeam(${member.id})"><i class="bi bi-x-lg text-sm"></i></button>
-                
-                <div class="mb-3 text-center">
-                    <label class="block text-xs font-medium text-slate-500 mb-2">Foto Profil</label>
-                    ${member.photo
-                        ? '<img src="' + member.photo + '" class="w-20 h-28 object-cover object-top rounded-xl mx-auto mb-2 border-2 border-primary/30 shadow-sm">'
-                        : '<div class="w-20 h-28 bg-slate-200 rounded-xl mx-auto mb-2 flex items-center justify-center text-slate-400"><i class="bi bi-person text-3xl"></i></div>'
+                <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const rawData = document.getElementById('orgChartData').value;
+                    let nodes = [];
+                    try { nodes = JSON.parse(rawData); } catch(e) { nodes = []; }
+                    if(!Array.isArray(nodes) || nodes.length === 0) {
+                        nodes = [{id: 1, name: "Nama", title: "Jabatan", parent_id: null}];
                     }
-                    <input type="file" name="org_team_photo_${member.id}" accept="image/*" class="w-full text-xs text-slate-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-slate-200 hover:file:bg-slate-300 transition-colors">
-                    <p class="text-[10px] text-slate-400 mt-1">${member.photo ? 'Upload baru untuk mengganti foto.' : 'Belum ada foto. Silakan upload.'}</p>
-                </div>
-                
-                <div class="mb-3">
-                    <label class="block text-xs font-medium text-slate-500 mb-1">Nama Lengkap</label>
-                    <input type="text" class="w-full border border-slate-300 rounded px-2 py-1.5 text-sm focus:border-primary outline-none" value="${member.name}" onchange="updateTeam(${member.id}, 'name', this.value)" placeholder="Misal: Budi Santoso">
-                </div>
-                
-                <div>
-                    <label class="block text-xs font-medium text-slate-500 mb-1">Jabatan</label>
-                    <input type="text" class="w-full border border-slate-300 rounded px-2 py-1.5 text-sm focus:border-primary outline-none" value="${member.title}" onchange="updateTeam(${member.id}, 'title', this.value)" placeholder="Misal: Manager Operasional">
-                </div>
-            `;
-            teamListEl.appendChild(div);
-        });
-    }
 
-    window.updateTeam = function(id, field, value) {
-        const member = team.find(m => m.id == id);
-        if(member) {
-            member[field] = value;
-            teamDataInput.value = JSON.stringify(team);
-        }
-    };
+                    const nodeListEl = document.getElementById('nodeList');
+                    const previewEl = document.getElementById('orgChartPreview');
+                    const dataInput = document.getElementById('orgChartData');
+                    const styleSelect = document.getElementById('orgChartStyle');
 
-    window.deleteTeam = function(id) {
-        if(confirm('Hapus anggota tim ini?')) {
-            team = team.filter(m => m.id != id);
-            teamDataInput.value = JSON.stringify(team);
-            renderTeamList();
-        }
-    };
+                    function renderNodeList() {
+                        nodeListEl.innerHTML = '';
+                        nodes.forEach(node => {
+                            const div = document.createElement('div');
+                            div.className = 'bg-white p-3 border border-slate-200 rounded-lg shadow-sm text-sm relative group';
 
-    document.getElementById('btnAddTeam').addEventListener('click', () => {
-        const newId = team.length > 0 ? Math.max(...team.map(m => m.id)) + 1 : 1;
-        team.push({id: newId, name: "", title: ""});
-        teamDataInput.value = JSON.stringify(team);
-        renderTeamList();
-    });
+                            // Delete button (prevent deleting the root node if it's the only one)
+                            let deleteBtn = '';
+                            if(nodes.length > 1) {
+                                deleteBtn = `<button type="button" class="absolute top-2 right-2 text-red-400 hover:text-red-600 hidden group-hover:block" onclick="deleteNode(${node.id})"><i class="bi bi-trash"></i></button>`;
+                            }
 
-    // Initial render team
-    renderTeamList();
-});
-</script>
-            <?php elseif (in_array($page['slug'], ['layanan-pengiriman', 'layanan-pengemasan', 'layanan-tracking', 'experience', 'kontak-kami'])): ?>
+                            // Options for parent
+                            let parentOpts = `<option value="">-- Tidak ada (Root) --</option>`;
+                            nodes.forEach(n => {
+                                if(n.id !== node.id) {
+                                    parentOpts += `<option value="${n.id}" ${node.parent_id == n.id ? 'selected' : ''}>${n.name} (${n.title})</option>`;
+                                }
+                            });
+
+                            div.innerHTML = `
+                                ${deleteBtn}
+                                <div class="mb-2">
+                                    <label class="block text-xs text-slate-500 mb-1">Jabatan</label>
+                                    <input type="text" class="w-full border-b border-slate-300 outline-none px-1 py-0.5 focus:border-primary" value="${node.title}" onchange="updateNode(${node.id}, 'title', this.value)">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-500 mb-1">Atasan</label>
+                                    <select class="w-full border-b border-slate-300 outline-none px-1 py-0.5 focus:border-primary" onchange="updateNode(${node.id}, 'parent_id', this.value)">
+                                        ${parentOpts}
+                                    </select>
+                                </div>
+                            `;
+                            nodeListEl.appendChild(div);
+                        });
+                    }
+
+                    window.updateNode = function(id, field, value) {
+                        const node = nodes.find(n => n.id == id);
+                        if(node) {
+                            node[field] = field === 'parent_id' ? (value ? parseInt(value) : null) : value;
+                            saveAndRender();
+                        }
+                    };
+
+                    window.deleteNode = function(id) {
+                        if(confirm('Hapus posisi ini? Posisi di bawahnya (jika ada) akan kehilangan atasan.')) {
+                            nodes = nodes.filter(n => n.id != id);
+                            // Reset parent_id for orphaned children
+                            nodes.forEach(n => { if(n.parent_id == id) n.parent_id = null; });
+                            saveAndRender();
+                        }
+                    };
+
+                    document.getElementById('btnAddNode').addEventListener('click', () => {
+                        const newId = nodes.length > 0 ? Math.max(...nodes.map(n => n.id)) + 1 : 1;
+                        // Default parent to the first node
+                        const defaultParent = nodes.length > 0 ? nodes[0].id : null;
+                        nodes.push({id: newId, title: "Jabatan Baru", parent_id: defaultParent});
+                        saveAndRender();
+                    });
+
+                    styleSelect.addEventListener('change', () => {
+                        saveAndRender();
+                    });
+
+                    function buildTreeHTML(parentId) {
+                        const children = nodes.filter(n => n.parent_id == parentId);
+                        if(children.length === 0) return '';
+                        let html = '<ul>';
+                        children.forEach(child => {
+                            html += `<li>
+                                <div class="node-card">
+                                    <span class="node-title">${child.title}</span>
+                                </div>
+                                ${buildTreeHTML(child.id)}
+                            </li>`;
+                        });
+                        html += '</ul>';
+                        return html;
+                    }
+
+                    function saveAndRender() {
+                        dataInput.value = JSON.stringify(nodes);
+
+                        // Find roots (nodes with no valid parent)
+                        const roots = nodes.filter(n => !n.parent_id || !nodes.find(p => p.id == n.parent_id));
+
+                        let previewHTML = '';
+                        if(roots.length > 0) {
+                            previewHTML = '<ul>';
+                            roots.forEach(root => {
+                                previewHTML += `<li>
+                                    <div class="node-card">
+                                        <span class="node-title">${root.title}</span>
+                                    </div>
+                                    ${buildTreeHTML(root.id)}
+                                </li>`;
+                            });
+                            previewHTML += '</ul>';
+                        } else {
+                            previewHTML = '<div class="text-slate-400 mt-10">Tidak ada data.</div>';
+                        }
+
+                        previewEl.innerHTML = previewHTML;
+                        previewEl.className = 'org-tree w-full ' + styleSelect.value;
+
+                        // Only re-render node list to update parent dropdowns if needed, but it causes input blur.
+                        // For simplicity, we re-render everything when a node is added/deleted or parent changed.
+                        // We handle input changes via onchange which fires on blur.
+                        renderNodeList();
+                    }
+
+                    // Initial render
+                    saveAndRender();
+
+                    // ==========================================
+                    // TEAM BUILDER LOGIC
+                    // ==========================================
+                    const rawTeamData = document.getElementById('orgTeamData').value;
+                    let team = [];
+                    try { team = JSON.parse(rawTeamData); } catch(e) { team = []; }
+
+                    const teamListEl = document.getElementById('teamList');
+                    const teamDataInput = document.getElementById('orgTeamData');
+
+                    function renderTeamList() {
+                        teamListEl.innerHTML = '';
+                        if(team.length === 0) {
+                            teamListEl.innerHTML = '<div class="col-span-full text-center py-8 text-slate-400">Belum ada anggota tim. Klik Tambah Anggota.</div>';
+                        }
+                        team.forEach(member => {
+                            const div = document.createElement('div');
+                            div.className = 'bg-slate-50 p-4 border border-slate-200 rounded-xl relative group';
+
+                            div.innerHTML = `
+                                <button type="button" class="absolute -top-2 -right-2 bg-red-100 text-red-500 hover:bg-red-500 hover:text-white rounded-full w-8 h-8 flex items-center justify-center shadow-sm transition-colors" onclick="deleteTeam(${member.id})"><i class="bi bi-x-lg text-sm"></i></button>
+
+                                <div class="mb-3 text-center">
+                                    <label class="block text-xs font-medium text-slate-500 mb-2">Foto Profil</label>
+                                    ${member.photo
+                                        ? '<img src="' + member.photo + '" class="w-20 h-28 object-cover object-top rounded-xl mx-auto mb-2 border-2 border-primary/30 shadow-sm">'
+                                        : '<div class="w-20 h-28 bg-slate-200 rounded-xl mx-auto mb-2 flex items-center justify-center text-slate-400"><i class="bi bi-person text-3xl"></i></div>'
+                                    }
+                                    <input type="file" name="org_team_photo_${member.id}" accept="image/*" class="w-full text-xs text-slate-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-slate-200 hover:file:bg-slate-300 transition-colors">
+                                    <p class="text-[10px] text-slate-400 mt-1">${member.photo ? 'Upload baru untuk mengganti foto.' : 'Belum ada foto. Silakan upload.'}</p>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">Nama Lengkap</label>
+                                    <input type="text" class="w-full border border-slate-300 rounded px-2 py-1.5 text-sm focus:border-primary outline-none" value="${member.name}" onchange="updateTeam(${member.id}, 'name', this.value)" placeholder="Misal: Budi Santoso">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">Jabatan</label>
+                                    <input type="text" class="w-full border border-slate-300 rounded px-2 py-1.5 text-sm focus:border-primary outline-none" value="${member.title}" onchange="updateTeam(${member.id}, 'title', this.value)" placeholder="Misal: Manager Operasional">
+                                </div>
+                            `;
+                            teamListEl.appendChild(div);
+                        });
+                    }
+
+                    window.updateTeam = function(id, field, value) {
+                        const member = team.find(m => m.id == id);
+                        if(member) {
+                            member[field] = value;
+                            teamDataInput.value = JSON.stringify(team);
+                        }
+                    };
+
+                    window.deleteTeam = function(id) {
+                        if(confirm('Hapus anggota tim ini?')) {
+                            team = team.filter(m => m.id != id);
+                            teamDataInput.value = JSON.stringify(team);
+                            renderTeamList();
+                        }
+                    };
+
+                    document.getElementById('btnAddTeam').addEventListener('click', () => {
+                        const newId = team.length > 0 ? Math.max(...team.map(m => m.id)) + 1 : 1;
+                        team.push({id: newId, name: "", title: ""});
+                        teamDataInput.value = JSON.stringify(team);
+                        renderTeamList();
+                    });
+
+                    // Initial render team
+                    renderTeamList();
+                });
+                </script>
+
+            <?php elseif (in_array($page['slug'], ['layanan-pengiriman', 'layanan-pengemasan'])): ?>
                 <?php
                 $settingModel = new \App\Models\Setting();
                 $prefix = 'page_' . str_replace('-', '_', $page['slug']);
-                
-                $defaultImg = 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070&auto=format&fit=crop';
-                $defaultSubtitle = 'Layanan Kami';
-                $defaultTitle = 'Kualitas Terbaik';
-                
-                if ($page['slug'] == 'layanan-pengiriman') { $defaultImg = 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070&auto=format&fit=crop'; $defaultSubtitle = 'Jangkauan seluruh nusantara'; $defaultTitle = 'Cepat & Aman'; }
-                if ($page['slug'] == 'layanan-pengemasan') { $defaultImg = 'https://images.unsplash.com/photo-1577705998148-6da4f3963bc8?q=80&w=2070&auto=format&fit=crop'; $defaultSubtitle = 'Perlindungan maksimal'; $defaultTitle = 'Kemasan Kuat'; }
-                if ($page['slug'] == 'layanan-tracking') { $defaultImg = 'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1470&auto=format&fit=crop'; $defaultSubtitle = 'Informasi 24/7'; $defaultTitle = 'Pantau Real-time'; }
-                if ($page['slug'] == 'experience') { $defaultImg = 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070&auto=format&fit=crop'; $defaultSubtitle = 'Portofolio kami'; $defaultTitle = 'Pengalaman Teruji'; }
-                if ($page['slug'] == 'visi-misi') { $defaultImg = 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop'; }
-                if ($page['slug'] == 'struktur-organisasi') { $defaultImg = 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop'; }
-                
+
+                if ($page['slug'] === 'layanan-pengiriman') {
+                    $defaultImg = 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070&auto=format&fit=crop';
+                    $defaultSubtitle = 'Jangkauan seluruh nusantara';
+                    $defaultTitle = 'Cepat & Aman';
+                } else {
+                    $defaultImg = 'https://images.unsplash.com/photo-1577705998148-6da4f3963bc8?q=80&w=2070&auto=format&fit=crop';
+                    $defaultSubtitle = 'Perlindungan maksimal';
+                    $defaultTitle = 'Kemasan Kuat';
+                }
+
                 $img = $settingModel->get($prefix . '_img', $defaultImg);
                 $subtitle = $settingModel->get($prefix . '_subtitle', $defaultSubtitle);
                 $title = $settingModel->get($prefix . '_title', $defaultTitle);
-                
-                $isHeroOnly = in_array($page['slug'], ['visi-misi', 'struktur-organisasi']);
-                $isRichLayanan = in_array($page['slug'], ['layanan-pengiriman', 'layanan-pengemasan']);
                 ?>
-
-                <?php if ($isRichLayanan): ?>
                 <!-- ===== RICH EDITOR FOR LAYANAN PENGIRIMAN & PENGEMASAN ===== -->
                 <div class="p-6 border-t border-slate-100 bg-slate-50/50 space-y-8">
                     <h3 class="text-lg font-bold text-slate-800 mb-2 flex items-center">
@@ -739,12 +744,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
 
-                <?php elseif ($page['slug'] === 'layanan-tracking'): ?>
+            <?php elseif ($page['slug'] === 'layanan-tracking'): ?>
+                <?php
+                $settingModel = new \App\Models\Setting();
+                $prefix = 'page_layanan_tracking';
+                $defaultImg = 'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1470&auto=format&fit=crop';
+                $defaultSubtitle = 'Informasi 24/7';
+                $defaultTitle = 'Pantau Real-time';
+
+                $img = $settingModel->get($prefix . '_img', $defaultImg);
+                $subtitle = $settingModel->get($prefix . '_subtitle', $defaultSubtitle);
+                $title = $settingModel->get($prefix . '_title', $defaultTitle);
+                ?>
                 <div class="p-6 border-t border-slate-100 bg-slate-50/50 space-y-6">
                     <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
                         <i class="bi bi-geo-alt-fill mr-2 text-teal-600"></i> Pengaturan Halaman Tracking
                     </h3>
-                    
+
                     <!-- Hero Section -->
                     <div>
                         <h4 class="font-bold text-slate-700 mb-4 flex items-center gap-2"><i class="bi bi-image text-teal-600"></i> Bagian Header (Hero)</h4>
@@ -857,23 +873,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
 
-                </div>
+            <?php elseif ($page['slug'] === 'experience'): ?>
+                <?php
+                $settingModel = new \App\Models\Setting();
+                $prefix = 'page_experience';
 
-                <?php elseif ($page['slug'] === 'experience'): ?>
-                <?php 
-                    $exp_gallery_data = $settingModel->get('exp_gallery_data', '[]');
-                    $exp_gallery_arr = json_decode($exp_gallery_data, true) ?: [];
-                    foreach ($exp_gallery_arr as &$g) {
-                        $g['photo'] = $settingModel->get('exp_img_' . $g['id'], '');
-                    }
-                    unset($g);
-                    $exp_gallery_data = json_encode($exp_gallery_arr);
+                $exp_gallery_data = $settingModel->get('exp_gallery_data', '[]');
+                $exp_gallery_arr = json_decode($exp_gallery_data, true) ?: [];
+                foreach ($exp_gallery_arr as &$g) {
+                    $g['photo'] = $settingModel->get('exp_img_' . $g['id'], '');
+                }
+                unset($g);
+                $exp_gallery_data = json_encode($exp_gallery_arr);
                 ?>
                 <div class="p-6 border-t border-slate-100 bg-slate-50/50 space-y-6">
                     <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
                         <i class="bi bi-images mr-2 text-indigo-600"></i> Pengaturan Halaman Experience (Galeri)
                     </h3>
-                    
+
                     <div>
                         <h4 class="font-bold text-slate-700 mb-4 flex items-center gap-2"><i class="bi bi-card-heading text-indigo-600"></i> Header Experience</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white rounded-xl p-4 border border-slate-200">
@@ -896,7 +913,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             </button>
                         </div>
                         <input type="hidden" name="exp_gallery_data" id="expGalleryData" value="<?= htmlspecialchars($exp_gallery_data) ?>">
-                        
+
                         <div id="galleryContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                             <!-- Container JS -->
                         </div>
@@ -966,54 +983,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 </script>
 
-                <?php elseif ($page['slug'] === 'kontak-kami'): ?>
+            <?php else: ?>
                 <?php
-                    // $prefix is already set to 'page_kontak_kami' by str_replace above
+                $settingModel = new \App\Models\Setting();
+                $prefix = 'page_' . str_replace('-', '_', $page['slug']);
+                $img = $settingModel->get($prefix . '_img', '');
+                $subtitle = $settingModel->get($prefix . '_subtitle', '');
+                $title = $settingModel->get($prefix . '_title', '');
                 ?>
-                <div class="p-6 border-t border-slate-100 bg-slate-50/50 space-y-6">
-                    <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
-                        <i class="bi bi-envelope-paper mr-2 text-rose-600"></i> Pengaturan Halaman Kontak
-                    </h3>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white rounded-xl p-4 border border-slate-200">
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-slate-600 mb-1">Tagline Hero</label>
-                            <input type="text" name="<?= $prefix ?>_tagline" value="<?= htmlspecialchars($settingModel->get($prefix . '_tagline', 'Siap Melayani Anda 24/7')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-rose-600 text-sm">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-600 mb-1">Email Layanan</label>
-                            <input type="email" name="<?= $prefix ?>_email" value="<?= htmlspecialchars($settingModel->get($prefix . '_email', 'cs@lanexgroup.com')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-rose-600 text-sm">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-600 mb-1">Telepon (Call Center)</label>
-                            <input type="text" name="<?= $prefix ?>_phone" value="<?= htmlspecialchars($settingModel->get($prefix . '_phone', '1500-569')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-rose-600 text-sm">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-slate-600 mb-1">Nomor WhatsApp (Contoh: 6281234567890)</label>
-                            <input type="text" name="<?= $prefix ?>_wa" value="<?= htmlspecialchars($settingModel->get($prefix . '_wa', '6281234567890')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-rose-600 text-sm">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-slate-600 mb-1">Alamat Kantor Pusat</label>
-                            <textarea name="<?= $prefix ?>_address" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-rose-600 text-sm" rows="3"><?= htmlspecialchars($settingModel->get($prefix . '_address', 'Gedung LANEXS Center, Jl. Jend. Sudirman Kav 21, Jakarta Pusat, 10220')) ?></textarea>
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-slate-600 mb-1">Google Maps Embed URL (Gunakan link src dari iframe)</label>
-                            <input type="text" name="<?= $prefix ?>_map" value="<?= htmlspecialchars($settingModel->get($prefix . '_map', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126914.86989441113!2d106.74108821948523!3d-6.251458931102941!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3e945e34b9d%3A0x5371bf0fdad786a2!2sJakarta!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-rose-600 text-sm">
-                            <p class="text-xs text-slate-400 mt-1">Hanya masukkan URL src dari iframe google maps (dimulai dengan https://www.google.com/maps/embed...).</p>
-                        </div>
-                    </div>
-                </div>
-
-                <?php else: ?>
                 <div class="p-6 border-t border-slate-100 bg-slate-50/50">
                     <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
                         <i class="bi bi-image mr-2 text-primary"></i> Pengaturan Grafis Halaman
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                         <div>
-                            <label class="block text-sm font-medium text-slate-600 mb-1">
-                                <?= $isHeroOnly ? 'Gambar Background Header (Upload)' : 'Gambar Layout Samping (Upload)' ?>
-                            </label>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Gambar Layout Samping (Upload)</label>
                             <?php if ($img): ?>
                                 <img src="<?= htmlspecialchars($img) ?>" class="h-24 w-full object-cover rounded-lg mb-2 shadow-sm border border-slate-200">
                             <?php endif; ?>
@@ -1021,7 +1005,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             <p class="text-xs text-slate-400 mt-1">Biarkan kosong jika tidak ingin mengubah foto.</p>
                         </div>
                     </div>
-                    <?php if (!$isHeroOnly): ?>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-medium text-slate-600 mb-1">Judul Gambar</label>
@@ -1032,10 +1015,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <input type="text" name="<?= $prefix ?>_subtitle" value="<?= htmlspecialchars($subtitle) ?>" class="w-full px-4 py-2 border border-slate-200 rounded-lg outline-none focus:border-primary">
                         </div>
                     </div>
-                    <?php endif; ?>
                 </div>
-                <?php endif; ?>
-
             <?php endif; ?>
 
             <div class="px-6 pb-6 pt-4 flex items-center space-x-4 border-t border-slate-100">
