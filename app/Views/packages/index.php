@@ -1275,7 +1275,7 @@
         });
 
         // Child row logic
-        $('#packagesTable tbody').on('click', 'td:first-child', function () {
+        $('#packagesTable tbody').on('click', 'td:nth-child(2)', function () {
             var tr = $(this).closest('tr');
             var row = $('#packagesTable').DataTable().row(tr);
             var icon = $(this).find('.toggle-icon');
