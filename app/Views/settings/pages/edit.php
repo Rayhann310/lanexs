@@ -39,6 +39,7 @@
                     required>
             </div>
 
+            <?php if ($page['slug'] !== 'visi-misi'): ?>
             <div class="p-6">
                 <label class="block text-sm font-semibold text-slate-700 mb-3">Konten Halaman</label>
                 <!-- Quill Editor Toolbar -->
@@ -67,8 +68,12 @@
                 <!-- Quill Editor Body -->
                 <div id="quill-editor" class="border border-t-0 border-slate-200 rounded-b-xl min-h-[420px] text-base text-slate-700 bg-white"><?= $page['content'] ?></div>
                 <!-- Hidden input for form submission -->
-                <input type="hidden" name="content" id="quill-content">
+                <input type="hidden" name="content" id="quill-content" value="<?= htmlspecialchars($page['content']) ?>">
             </div>
+            <?php else: ?>
+                <!-- Preserve existing content so it doesn't get wiped -->
+                <input type="hidden" name="content" id="quill-content" value="<?= htmlspecialchars($page['content']) ?>">
+            <?php endif; ?>
 
             <?php if ($page['slug'] === 'sejarah-perusahaan'): ?>
                 <?php
@@ -181,7 +186,66 @@
                         </div>
                     </div>
                 </div>
-            <?php elseif (in_array($page['slug'], ['layanan-pengiriman', 'layanan-pengemasan', 'layanan-tracking', 'experience', 'visi-misi', 'struktur-organisasi'])): ?>
+            <?php elseif ($page['slug'] === 'visi-misi'): ?>
+                <?php
+                $settingModel = new \App\Models\Setting();
+                $hero_bg = $settingModel->get('page_visi_misi_img', 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop');
+                
+                // Fallback text if null
+                $def_visi = 'Menjadi mitra ekspedisi andalan masyarakat Indonesia dengan menghadirkan layanan logistik yang andal, inovatif, dan berdaya saing tinggi.';
+                $def_m1 = 'Mendukung pemerataan ekonomi nasional melalui jangkauan yang luas;';
+                $def_m2 = 'Menjaga hubungan baik, profesional dan responsif dengan pelanggan;';
+                $def_m3 = 'Mengembangkan teknologi modern untuk mempermudah pelacakan dan pengelolaan pengiriman barang;';
+                $def_m4 = 'Memberikan pelayanan pengiriman yang cepat, aman, dan terpercaya ke seluruh penjuru Nusantara;';
+
+                $visi_text = $settingModel->get('vm_visi', $def_visi);
+                $m1 = $settingModel->get('vm_m1', $def_m1);
+                $m2 = $settingModel->get('vm_m2', $def_m2);
+                $m3 = $settingModel->get('vm_m3', $def_m3);
+                $m4 = $settingModel->get('vm_m4', $def_m4);
+                ?>
+                <div class="p-6 border-t border-slate-100 bg-slate-50/50">
+                    <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
+                        <i class="bi bi-sliders mr-2 text-primary"></i> Pengaturan Khusus (Visi & Misi)
+                    </h3>
+                    
+                    <h4 class="font-semibold text-slate-700 mb-3 border-b pb-2">Gambar Background Header</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <?php if ($hero_bg): ?>
+                                <img src="<?= htmlspecialchars($hero_bg) ?>" class="h-24 w-full object-cover rounded-lg mb-2 shadow-sm border border-slate-200">
+                            <?php endif; ?>
+                            <input type="file" name="page_visi_misi_img" accept="image/*" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20">
+                            <p class="text-xs text-slate-400 mt-1">Kosongkan jika tidak ingin mengubah gambar saat ini.</p>
+                        </div>
+                    </div>
+
+                    <h4 class="font-semibold text-slate-700 mb-3 border-b pb-2">Teks Visi Utama</h4>
+                    <div class="mb-8">
+                        <textarea name="vm_visi" rows="3" class="w-full px-4 py-3 border border-slate-200 rounded-xl outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-slate-700"><?= htmlspecialchars($visi_text) ?></textarea>
+                    </div>
+
+                    <h4 class="font-semibold text-slate-700 mb-3 border-b pb-2">Poin-poin Misi</h4>
+                    <div class="space-y-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Misi 1</label>
+                            <input type="text" name="vm_m1" value="<?= htmlspecialchars($m1) ?>" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg outline-none focus:border-primary text-slate-700">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Misi 2</label>
+                            <input type="text" name="vm_m2" value="<?= htmlspecialchars($m2) ?>" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg outline-none focus:border-primary text-slate-700">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Misi 3</label>
+                            <input type="text" name="vm_m3" value="<?= htmlspecialchars($m3) ?>" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg outline-none focus:border-primary text-slate-700">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Misi 4</label>
+                            <input type="text" name="vm_m4" value="<?= htmlspecialchars($m4) ?>" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg outline-none focus:border-primary text-slate-700">
+                        </div>
+                    </div>
+                </div>
+            <?php elseif (in_array($page['slug'], ['layanan-pengiriman', 'layanan-pengemasan', 'layanan-tracking', 'experience', 'struktur-organisasi'])): ?>
                 <?php
                 $settingModel = new \App\Models\Setting();
                 $prefix = 'page_' . str_replace('-', '_', $page['slug']);

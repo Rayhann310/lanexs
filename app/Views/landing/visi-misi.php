@@ -6,6 +6,19 @@ $meta = ['icon' => 'bi-eye', 'label' => 'Profil Perusahaan', 'color' => 'from-pu
 $settingModel = new \App\Models\Setting();
 $hero_bg = $settingModel->get('page_visi_misi_img', 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop');
 
+// Load structured Visi Misi fields
+$def_visi = 'Menjadi mitra ekspedisi andalan masyarakat Indonesia dengan menghadirkan layanan logistik yang andal, inovatif, dan berdaya saing tinggi.';
+$def_m1 = 'Mendukung pemerataan ekonomi nasional melalui jangkauan yang luas;';
+$def_m2 = 'Menjaga hubungan baik, profesional dan responsif dengan pelanggan;';
+$def_m3 = 'Mengembangkan teknologi modern untuk mempermudah pelacakan dan pengelolaan pengiriman barang;';
+$def_m4 = 'Memberikan pelayanan pengiriman yang cepat, aman, dan terpercaya ke seluruh penjuru Nusantara;';
+
+$visi_text = $settingModel->get('vm_visi', $def_visi);
+$m1 = $settingModel->get('vm_m1', $def_m1);
+$m2 = $settingModel->get('vm_m2', $def_m2);
+$m3 = $settingModel->get('vm_m3', $def_m3);
+$m4 = $settingModel->get('vm_m4', $def_m4);
+
 ob_start();
 ?>
 <style>
@@ -196,14 +209,16 @@ ob_start();
                 <div class="absolute -bottom-32 -left-32 w-64 h-64 bg-secondary/20 rounded-full blur-3xl pointer-events-none group-hover:scale-150 transition-transform duration-700 delay-100"></div>
                 
                 <div class="prose-content dark:text-slate-300 relative z-10">
-                    <?php if (!empty($page['content'])): ?>
-                        <?= $page['content'] ?>
-                    <?php else: ?>
-                        <div class="text-center py-12 text-slate-400 dark:text-slate-500 border border-dashed border-slate-300 dark:border-slate-600 rounded-2xl">
-                            <i class="bi bi-file-earmark-plus text-5xl mb-4 block"></i>
-                            <p class="font-medium">Konten halaman ini belum diisi.</p>
-                        </div>
-                    <?php endif; ?>
+                    <h2>Visi</h2>
+                    <p><?= nl2br(htmlspecialchars($visi_text)) ?></p>
+                    
+                    <h2>Misi</h2>
+                    <ul>
+                        <?php if(!empty($m1)): ?><li><?= htmlspecialchars($m1) ?></li><?php endif; ?>
+                        <?php if(!empty($m2)): ?><li><?= htmlspecialchars($m2) ?></li><?php endif; ?>
+                        <?php if(!empty($m3)): ?><li><?= htmlspecialchars($m3) ?></li><?php endif; ?>
+                        <?php if(!empty($m4)): ?><li><?= htmlspecialchars($m4) ?></li><?php endif; ?>
+                    </ul>
                 </div>
             </div>
 
