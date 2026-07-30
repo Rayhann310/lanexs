@@ -1,6 +1,6 @@
 <?php
 $settingModel = new \App\Models\Setting();
-$prefix = 'kontak_kami';
+$prefix = 'page_kontak_kami';
 
 $tagline = $settingModel->get($prefix . '_tagline', 'Siap Melayani Anda 24/7');
 $email = $settingModel->get($prefix . '_email', 'cs@lanexgroup.com');

@@ -598,7 +598,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTeamList();
 });
 </script>
-            <?php elseif (in_array($page['slug'], ['layanan-pengiriman', 'layanan-pengemasan'])): ?>
+            <?php elseif (in_array($page['slug'], ['layanan-pengiriman', 'layanan-pengemasan', 'layanan-tracking', 'experience', 'kontak-kami'])): ?>
                 <?php
                 $settingModel = new \App\Models\Setting();
                 $prefix = 'page_' . str_replace('-', '_', $page['slug']);
@@ -933,9 +933,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 </script>
 
                 <?php elseif ($page['slug'] === 'kontak-kami'): ?>
-                <?php 
-                    $settingModel = new \App\Models\Setting();
-                    $prefix = 'kontak_kami';
+                <?php
+                    // $prefix is already set to 'page_kontak_kami' by str_replace above
                 ?>
                 <div class="p-6 border-t border-slate-100 bg-slate-50/50 space-y-6">
                     <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
