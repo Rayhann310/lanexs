@@ -9,23 +9,23 @@ ob_start();
 ?>
 
     <!-- Hero Section -->
-    <section id="beranda" class="relative pt-32 pb-16 lg:pt-40 lg:pb-20 overflow-hidden border-b border-slate-200 dark:border-slate-800 transition-colors flex items-center justify-center min-h-[60vh] lg:min-h-[70vh] max-h-[800px]">
+    <section id="beranda" class="relative pt-32 pb-16 lg:pt-40 lg:pb-20 overflow-hidden border-b border-slate-200 dark:border-slate-800 transition-colors flex items-center justify-center min-h-[70vh] lg:min-h-[80vh] max-h-[900px]">
         
         <!-- Hero Background Slider -->
-        <div class="absolute inset-0 z-0">
-            <div class="swiper heroSwiper w-full h-full">
-                <div class="swiper-wrapper">
+        <div class="absolute inset-0 z-0" style="height:100%;">
+            <div class="swiper heroSwiper" style="width:100%;height:100%;position:absolute;top:0;left:0;">
+                <div class="swiper-wrapper" style="height:100%;">
                     <?php foreach($heroImages as $img): ?>
-                    <div class="swiper-slide w-full h-full">
-                        <img src="<?= htmlspecialchars($img) ?>" class="w-full h-full object-cover">
+                    <div class="swiper-slide" style="width:100%;height:100%;">
+                        <img src="<?= htmlspecialchars($img) ?>" style="width:100%;height:100%;object-fit:cover;display:block;">
                     </div>
                     <?php endforeach; ?>
                 </div>
             </div>
-            <!-- Overlay to ensure text readability but keep the banner visible -->
-            <div class="absolute inset-0 bg-white/40 dark:bg-slate-900/60 z-10 transition-colors"></div>
-            <!-- Additional gradient overlay to make text pop -->
-            <div class="absolute inset-0 bg-gradient-to-t from-white via-white/60 to-transparent dark:from-slate-900 dark:via-slate-900/80 z-10 transition-colors"></div>
+            <!-- Light overlay so text is readable -->
+            <div class="absolute inset-0 bg-white/30 dark:bg-slate-900/50 z-10 transition-colors"></div>
+            <!-- Bottom gradient to blend into page -->
+            <div class="absolute inset-0 bg-gradient-to-t from-white/80 via-white/20 to-transparent dark:from-slate-900/80 dark:via-slate-900/30 z-10 transition-colors"></div>
         </div>
 
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 text-center mt-2 lg:mt-10">
@@ -558,7 +558,18 @@ $extraScripts = '
         effect: "fade",
         autoplay: { delay: 3500, disableOnInteraction: false },
         loop: heroSlideCount > 1,
-        allowTouchMove: false
+        allowTouchMove: false,
+        autoHeight: false,
+        on: {
+            init: function() {
+                this.el.style.height = '100%';
+                this.wrapperEl.style.height = '100%';
+            }
+        }
+    });
+    // Ensure swiper fills its container on all breakpoints
+    document.querySelectorAll('.heroSwiper, .heroSwiper .swiper-wrapper, .heroSwiper .swiper-slide').forEach(function(el){
+        el.style.height = '100%';
     });
     var servicesSwiper = new Swiper(".servicesSwiper", {
         slidesPerView: 1.15,
