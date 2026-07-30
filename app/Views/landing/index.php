@@ -506,7 +506,7 @@ $extraScripts = '
         }
     });
     // Typewriter Effect
-    const words = ["Pergudangan", "Kargo Udara", "Distribusi Darat", "Perusahaan B2B", "E-Commerce"];
+    const words = ["Pergudangan", "Kargo Udara", "Kargo Darat", "Perusahaan", "E-Commerce"];
     let i = 0;
     let timer;
 
