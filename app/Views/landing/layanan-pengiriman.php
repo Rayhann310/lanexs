@@ -3,7 +3,14 @@
 $navbarWhite = true;
 $meta = ['icon' => 'bi-truck', 'label' => 'Layanan', 'color' => 'from-amber-500 to-orange-700'];
 
+
+$settingModel = new \App\Models\Setting();
+$page_layanan_pengiriman_img = $settingModel->get('page_layanan_pengiriman_img', 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070&auto=format&fit=crop');
+$page_layanan_pengiriman_title = $settingModel->get('page_layanan_pengiriman_title', 'Cepat & Aman');
+$page_layanan_pengiriman_subtitle = $settingModel->get('page_layanan_pengiriman_subtitle', 'Jangkauan seluruh nusantara');
+
 ob_start();
+
 ?>
 <style>
 .prose-content h1, .prose-content h2, .prose-content h3 {
@@ -63,11 +70,11 @@ ob_start();
             <!-- Graphic Side -->
             <div class="lg:col-span-5 order-2 lg:order-2" data-aos="fade-in">
                 <div class="relative rounded-3xl overflow-hidden shadow-2xl group">
-                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070&auto=format&fit=crop" alt="LANEXS" class="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105">
+                    <img src="<?= htmlspecialchars($page_layanan_pengiriman_img) ?>"  alt="LANEXS" class="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105">
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent"></div>
                     <div class="absolute bottom-0 left-0 p-8">
-                        <div class="bg-primary text-white text-xs font-bold uppercase tracking-wider py-1.5 px-3 rounded-full inline-block mb-3">Jangkauan seluruh nusantara</div>
-                        <h3 class="text-white font-heading font-bold text-2xl">Cepat & Aman</h3>
+                        <div class="bg-primary text-white text-xs font-bold uppercase tracking-wider py-1.5 px-3 rounded-full inline-block mb-3"><?= htmlspecialchars($page_layanan_pengiriman_subtitle) ?></div>
+                        <h3 class="text-white font-heading font-bold text-2xl"><?= htmlspecialchars($page_layanan_pengiriman_title) ?></h3>
                     </div>
                 </div>
             </div>
