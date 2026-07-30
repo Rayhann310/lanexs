@@ -59,26 +59,26 @@ ob_start();
 </style>
 
 <!-- ============================================
-     PREMIUM HERO SECTION (Dark & Modern)
+     PREMIUM HERO SECTION (Adaptive Light/Dark)
      ============================================ -->
-<div class="relative pt-32 pb-24 lg:pt-48 lg:pb-32 bg-[#0a0f1c] overflow-hidden">
+<div class="relative pt-32 pb-24 lg:pt-48 lg:pb-32 bg-white dark:bg-[#0a0f1c] overflow-hidden transition-colors duration-500">
     <!-- Futuristic Grid Background -->
-    <div class="absolute inset-0 pointer-events-none opacity-20" 
+    <div class="absolute inset-0 pointer-events-none opacity-5 dark:opacity-20" 
          style="background-image: 
-            linear-gradient(to right, #334155 1px, transparent 1px),
-            linear-gradient(to bottom, #334155 1px, transparent 1px);
+            linear-gradient(to right, currentColor 1px, transparent 1px),
+            linear-gradient(to bottom, currentColor 1px, transparent 1px);
             background-size: 4rem 4rem;
             mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
             -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);">
     </div>
     
     <!-- Floating Glowing Orbs -->
-    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-500/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none mix-blend-screen"></div>
-    <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px] translate-y-1/3 -translate-x-1/3 pointer-events-none mix-blend-screen"></div>
+    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-500/10 dark:bg-cyan-500/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 pointer-events-none mix-blend-multiply dark:mix-blend-screen"></div>
+    <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/10 dark:bg-blue-600/20 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/3 pointer-events-none mix-blend-multiply dark:mix-blend-screen"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center justify-center min-h-[30vh]">
         <div data-aos="fade-down" data-aos-duration="1000">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-cyan-400 text-xs font-bold tracking-[0.2em] uppercase mb-8 shadow-2xl">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 backdrop-blur-md text-cyan-600 dark:text-cyan-400 text-xs font-bold tracking-[0.2em] uppercase mb-8 shadow-sm dark:shadow-2xl transition-colors">
                 <span class="relative flex h-2 w-2">
                   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
                   <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
@@ -87,19 +87,19 @@ ob_start();
             </div>
         </div>
         
-        <h1 class="text-5xl md:text-7xl lg:text-8xl font-heading font-black text-white tracking-tight mb-8 leading-[1.1]" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-heading font-black text-slate-900 dark:text-white tracking-tight mb-8 leading-[1.1] transition-colors" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
             Jejak <br class="hidden md:block" />
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500">
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 dark:from-cyan-400 dark:via-blue-500 dark:to-indigo-500">
                 Langkah Kami
             </span>
         </h1>
         
-        <p class="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto font-light leading-relaxed mb-12" data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">
+        <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-light leading-relaxed mb-12 transition-colors" data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">
             <?= htmlspecialchars($desc) ?>
         </p>
 
         <!-- Scroll Indicator -->
-        <div class="animate-bounce inline-flex justify-center items-center w-12 h-12 rounded-full bg-white/5 border border-white/10 text-white/50 backdrop-blur-sm" data-aos="fade-up" data-aos-delay="600">
+        <div class="animate-bounce inline-flex justify-center items-center w-12 h-12 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-400 dark:text-white/50 backdrop-blur-sm transition-colors" data-aos="fade-up" data-aos-delay="600">
             <i class="bi bi-arrow-down text-xl"></i>
         </div>
     </div>
@@ -126,28 +126,37 @@ ob_start();
             <div class="masonry-grid">
                 <?php foreach ($galleries as $index => $item): ?>
                     <?php if ($item['photo']): ?>
-                        <div class="masonry-item glow-card group rounded-2xl md:rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-700 bg-white dark:bg-slate-800 border border-slate-200/50 dark:border-slate-700/50" data-aos="fade-up" data-aos-delay="<?= ($index % 4) * 100 ?>">
+                        <!-- On mobile, card shows image and text below. On desktop, text is overlay -->
+                        <div class="masonry-item glow-card group rounded-2xl md:rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-700 bg-white dark:bg-slate-800 border border-slate-200/50 dark:border-slate-700/50 flex flex-col" data-aos="fade-up" data-aos-delay="<?= ($index % 4) * 100 ?>">
                             
-                            <!-- Image Container with Cinematic Zoom Effect -->
-                            <div class="relative overflow-hidden aspect-auto bg-slate-100 dark:bg-slate-800">
+                            <!-- Image Container -->
+                            <div class="relative overflow-hidden aspect-auto bg-slate-100 dark:bg-slate-800 shrink-0">
                                 <img src="<?= htmlspecialchars($item['photo']) ?>" alt="<?= htmlspecialchars($item['caption']) ?>" loading="lazy" class="w-full h-auto object-cover transform transition-transform duration-1000 ease-out group-hover:scale-[1.05] will-change-transform">
                                 
-                                <!-- Sleek Gradient Overlay -->
-                                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-900/30 to-transparent opacity-60 md:opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                <!-- Desktop-only: Sleek Gradient Overlay & Caption -->
+                                <div class="hidden md:block absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-900/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                                 
-                                <!-- Content / Caption -->
-                                <div class="absolute bottom-0 left-0 right-0 p-4 md:p-8 translate-y-2 md:translate-y-8 opacity-100 md:opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out">
-                                    <div class="hidden md:flex items-center gap-3 mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100">
+                                <div class="hidden md:block absolute bottom-0 left-0 right-0 p-8 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out">
+                                    <div class="flex items-center gap-3 mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100">
                                         <span class="w-8 h-[2px] bg-cyan-400"></span>
                                         <span class="text-xs font-bold text-cyan-400 uppercase tracking-widest">Dokumentasi</span>
                                     </div>
                                     <?php if (!empty($item['caption'])): ?>
-                                        <p class="text-white font-bold text-sm md:text-xl lg:text-2xl leading-snug drop-shadow-lg md:drop-shadow-none">
+                                        <p class="text-white font-bold text-xl lg:text-2xl leading-snug">
                                             <?= htmlspecialchars($item['caption']) ?>
                                         </p>
                                     <?php endif; ?>
                                 </div>
                             </div>
+                            
+                            <!-- Mobile-only: Caption below image so it never blocks the photo -->
+                            <?php if (!empty($item['caption'])): ?>
+                            <div class="block md:hidden p-3 bg-white dark:bg-slate-800 text-center transition-colors">
+                                <p class="text-slate-800 dark:text-white font-bold text-xs leading-snug">
+                                    <?= htmlspecialchars($item['caption']) ?>
+                                </p>
+                            </div>
+                            <?php endif; ?>
 
                         </div>
                     <?php endif; ?>
@@ -169,6 +178,6 @@ ob_start();
 
 <?php
 $slot = ob_get_clean();
-$navbarWhite = true; // Make navbar transparent with white text initially since hero is dark
+$navbarWhite = false; // Back to standard adaptive navbar
 require __DIR__ . '/layout.php';
 ?>
