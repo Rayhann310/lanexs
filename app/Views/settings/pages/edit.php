@@ -181,7 +181,7 @@
                         </div>
                     </div>
                 </div>
-            <?php elseif (in_array($page['slug'], ['layanan-pengiriman', 'layanan-pengemasan', 'layanan-tracking', 'experience'])): ?>
+            <?php elseif (in_array($page['slug'], ['layanan-pengiriman', 'layanan-pengemasan', 'layanan-tracking', 'experience', 'visi-misi', 'struktur-organisasi'])): ?>
                 <?php
                 $settingModel = new \App\Models\Setting();
                 $prefix = 'page_' . str_replace('-', '_', $page['slug']);
@@ -194,10 +194,14 @@
                 if ($page['slug'] == 'layanan-pengemasan') { $defaultImg = 'https://images.unsplash.com/photo-1577705998148-6da4f3963bc8?q=80&w=2070&auto=format&fit=crop'; $defaultSubtitle = 'Perlindungan maksimal'; $defaultTitle = 'Kemasan Kuat'; }
                 if ($page['slug'] == 'layanan-tracking') { $defaultImg = 'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1470&auto=format&fit=crop'; $defaultSubtitle = 'Informasi 24/7'; $defaultTitle = 'Pantau Real-time'; }
                 if ($page['slug'] == 'experience') { $defaultImg = 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070&auto=format&fit=crop'; $defaultSubtitle = 'Portofolio kami'; $defaultTitle = 'Pengalaman Teruji'; }
+                if ($page['slug'] == 'visi-misi') { $defaultImg = 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop'; }
+                if ($page['slug'] == 'struktur-organisasi') { $defaultImg = 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop'; }
                 
                 $img = $settingModel->get($prefix . '_img', $defaultImg);
                 $subtitle = $settingModel->get($prefix . '_subtitle', $defaultSubtitle);
                 $title = $settingModel->get($prefix . '_title', $defaultTitle);
+                
+                $isHeroOnly = in_array($page['slug'], ['visi-misi', 'struktur-organisasi']);
                 ?>
                 <div class="p-6 border-t border-slate-100 bg-slate-50/50">
                     <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
@@ -205,7 +209,9 @@
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                         <div>
-                            <label class="block text-sm font-medium text-slate-600 mb-1">Gambar Layout Samping (Upload)</label>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">
+                                <?= $isHeroOnly ? 'Gambar Background Header (Upload)' : 'Gambar Layout Samping (Upload)' ?>
+                            </label>
                             <?php if ($img): ?>
                                 <img src="<?= htmlspecialchars($img) ?>" class="h-24 w-full object-cover rounded-lg mb-2 shadow-sm border border-slate-200">
                             <?php endif; ?>
@@ -213,6 +219,7 @@
                             <p class="text-xs text-slate-400 mt-1">Biarkan kosong jika tidak ingin mengubah foto.</p>
                         </div>
                     </div>
+                    <?php if (!$isHeroOnly): ?>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-medium text-slate-600 mb-1">Judul Gambar</label>
@@ -223,6 +230,7 @@
                             <input type="text" name="<?= $prefix ?>_subtitle" value="<?= htmlspecialchars($subtitle) ?>" class="w-full px-4 py-2 border border-slate-200 rounded-lg outline-none focus:border-primary">
                         </div>
                     </div>
+                    <?php endif; ?>
                 </div>
             <?php endif; ?>
 
