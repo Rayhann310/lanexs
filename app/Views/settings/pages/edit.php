@@ -932,6 +932,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 </script>
 
+                <?php elseif ($page['slug'] === 'kontak'): ?>
+                <div class="p-6 border-t border-slate-100 bg-slate-50/50 space-y-6">
+                    <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
+                        <i class="bi bi-envelope-paper mr-2 text-rose-600"></i> Pengaturan Halaman Kontak
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white rounded-xl p-4 border border-slate-200">
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Tagline Hero</label>
+                            <input type="text" name="<?= $prefix ?>_tagline" value="<?= htmlspecialchars($settingModel->get($prefix . '_tagline', 'Siap Melayani Anda 24/7')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-rose-600 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Email Layanan</label>
+                            <input type="email" name="<?= $prefix ?>_email" value="<?= htmlspecialchars($settingModel->get($prefix . '_email', 'cs@lanexgroup.com')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-rose-600 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Telepon (Call Center)</label>
+                            <input type="text" name="<?= $prefix ?>_phone" value="<?= htmlspecialchars($settingModel->get($prefix . '_phone', '1500-569')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-rose-600 text-sm">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Nomor WhatsApp (Contoh: 6281234567890)</label>
+                            <input type="text" name="<?= $prefix ?>_wa" value="<?= htmlspecialchars($settingModel->get($prefix . '_wa', '6281234567890')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-rose-600 text-sm">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Alamat Kantor Pusat</label>
+                            <textarea name="<?= $prefix ?>_address" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-rose-600 text-sm" rows="3"><?= htmlspecialchars($settingModel->get($prefix . '_address', 'Gedung LANEXS Center, Jl. Jend. Sudirman Kav 21, Jakarta Pusat, 10220')) ?></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Google Maps Embed URL (Gunakan link src dari iframe)</label>
+                            <input type="text" name="<?= $prefix ?>_map" value="<?= htmlspecialchars($settingModel->get($prefix . '_map', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126914.86989441113!2d106.74108821948523!3d-6.251458931102941!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3e945e34b9d%3A0x5371bf0fdad786a2!2sJakarta!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-rose-600 text-sm">
+                            <p class="text-xs text-slate-400 mt-1">Hanya masukkan URL src dari iframe google maps (dimulai dengan https://www.google.com/maps/embed...).</p>
+                        </div>
+                    </div>
+                </div>
+
                 <?php else: ?>
                 <div class="p-6 border-t border-slate-100 bg-slate-50/50">
                     <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
