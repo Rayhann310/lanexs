@@ -45,38 +45,41 @@ ob_start();
 .so-hero {
     position: relative;
     padding: 7rem 0 5rem;
-    background: linear-gradient(135deg, #0a0f1e 0%, #0f172a 50%, #0d1f3c 100%);
+    background: #ffffff;
     overflow: hidden;
 }
+.dark .so-hero { background: #0f172a; }
 .so-hero::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-image: radial-gradient(rgba(0,0,0,0.06) 1px, transparent 1px);
     background-size: 32px 32px;
 }
+.dark .so-hero::before { background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px); }
 .so-hero-glow {
     position: absolute;
     border-radius: 9999px;
     filter: blur(80px);
-    opacity: 0.2;
+    opacity: 0.12;
     pointer-events: none;
 }
 
 /* --- CHART SECTION --- */
 .so-chart-section {
-    background: linear-gradient(160deg, #0d1b2a 0%, #112240 60%, #0a192f 100%);
+    background: #f8fafc;
     padding: 5rem 0 6rem;
     position: relative;
     overflow: hidden;
 }
+.dark .so-chart-section { background: #0f172a; }
 .so-chart-section::before {
     content: '';
     position: absolute;
     inset: 0;
     background-image:
-        linear-gradient(rgba(56, 189, 248, 0.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(56, 189, 248, 0.07) 1px, transparent 1px);
+        linear-gradient(rgba(59,130,246,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59,130,246,0.06) 1px, transparent 1px);
     background-size: 48px 48px;
 }
 .so-chart-section::after {
@@ -84,7 +87,7 @@ ob_start();
     position: absolute;
     bottom: 0;
     left: 0; right: 0;
-    height: 6px;
+    height: 4px;
     background: linear-gradient(90deg, #3b82f6, #06b6d4, #8b5cf6, #3b82f6);
     background-size: 200% auto;
     animation: gradientShift 4s linear infinite;
@@ -101,13 +104,12 @@ ob_start();
     padding: 2rem 1rem 3rem;
     cursor: grab;
     -webkit-overflow-scrolling: touch;
-    /* Custom scrollbar */
     scrollbar-width: thin;
     scrollbar-color: rgba(56,189,248,0.4) rgba(255,255,255,0.05);
 }
 .chart-scroll-wrapper::-webkit-scrollbar { height: 6px; }
 .chart-scroll-wrapper::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 99px; }
-.chart-scroll-wrapper::-webkit-scrollbar-thumb { background: rgba(56,189,248,0.4); border-radius: 99px; }
+.chart-scroll-wrapper::-webkit-scrollbar-thumb { background: rgba(59,130,246,0.4); border-radius: 99px; }
 .chart-scroll-wrapper:active { cursor: grabbing; }
 
 /* --- ORG TREE CSS (Horizontal, True Tree) --- */
@@ -137,27 +139,30 @@ ob_start();
     content: ''; 
     position: absolute; 
     top: 0; right: 50%; 
-    border-top: 2px solid rgba(56,189,248,0.4); 
+    border-top: 2px solid #cbd5e1; 
     width: 50%; 
     height: 28px; 
 }
 .org-tree li::after { 
     right: auto; left: 50%; 
-    border-left: 2px solid rgba(56,189,248,0.4); 
+    border-left: 2px solid #cbd5e1; 
 }
 .org-tree li:only-child::after, .org-tree li:only-child::before { display: none; }
 .org-tree li:only-child { padding-top: 0; }
 .org-tree li:first-child::before, .org-tree li:last-child::after { border: 0 none; }
-.org-tree li:last-child::before { border-right: 2px solid rgba(56,189,248,0.4); border-radius: 0 6px 0 0; }
+.org-tree li:last-child::before { border-right: 2px solid #cbd5e1; border-radius: 0 6px 0 0; }
 .org-tree li:first-child::after { border-radius: 6px 0 0 0; }
 .org-tree ul ul::before { 
     content: ''; 
     position: absolute; 
     top: 0; left: 50%; 
-    border-left: 2px solid rgba(56,189,248,0.4); 
+    border-left: 2px solid #cbd5e1; 
     width: 0; 
     height: 28px; 
 }
+.dark .org-tree li::before,.dark .org-tree li::after { border-color: rgba(56,189,248,0.3); }
+.dark .org-tree li:last-child::before { border-color: rgba(56,189,248,0.3); }
+.dark .org-tree ul ul::before { border-color: rgba(56,189,248,0.3); }
 
 /* Node Card Base */
 .org-tree .node-card { 
@@ -176,50 +181,55 @@ ob_start();
     line-height: 1.4;
 }
 
-/* --- STYLE THEMES --- */
-/* Model 1: Corporate Blueprint */
+/* Model 1: Corporate Navy */
 .org-tree.model_1 .node-card { 
-    background: rgba(15,23,42,0.8); 
-    color: #f0f9ff; 
+    background: #f8fafc; 
+    color: #0f172a; 
     border-radius: 10px; 
-    box-shadow: 0 0 0 1px rgba(56,189,248,0.3), 0 8px 24px rgba(0,0,0,0.4);
-    border: 1px solid rgba(56,189,248,0.3);
-    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 0 0 1px #e2e8f0;
+    border: 1px solid #e2e8f0;
 }
 .org-tree.model_1 .node-card:hover { 
-    border-color: rgba(56,189,248,0.8); 
-    box-shadow: 0 0 20px rgba(56,189,248,0.3), 0 8px 24px rgba(0,0,0,0.5);
+    border-color: #3b82f6;
+    box-shadow: 0 4px 20px rgba(59,130,246,0.15);
     transform: translateY(-3px);
 }
-.org-tree.model_1 .node-title { color: #e0f2fe; }
+.org-tree.model_1 .node-title { color: #1e293b; }
+.dark .org-tree.model_1 .node-card { background: rgba(15,23,42,0.8); border-color: rgba(56,189,248,0.3); box-shadow: 0 0 0 1px rgba(56,189,248,0.3), 0 8px 24px rgba(0,0,0,0.4); }
+.dark .org-tree.model_1 .node-title { color: #e0f2fe; }
 
-/* Model 2: Glow Cards */
+/* Model 2: Blue Accent */
 .org-tree.model_2 .node-card { 
-    background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(6,182,212,0.1)); 
-    color: #e2e8f0; 
+    background: #ffffff; 
+    color: #1e293b; 
     border-radius: 14px; 
-    box-shadow: 0 0 0 1px rgba(99,179,237,0.3), 0 8px 32px rgba(0,0,0,0.4);
-    border: 1px solid rgba(99,179,237,0.2);
-    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    border: 1px solid #e2e8f0;
+    border-top: 4px solid #3b82f6;
 }
 .org-tree.model_2 .node-card:hover { 
-    background: linear-gradient(135deg, rgba(59,130,246,0.3), rgba(6,182,212,0.2));
     transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(59,130,246,0.15);
 }
-.org-tree.model_2 .node-title { color: #bfdbfe; }
+.org-tree.model_2 .node-title { color: #334155; font-weight: 700;}
+.dark .org-tree.model_2 .node-card { background: rgba(15,23,42,0.8); border-top-color: #3b82f6; border-color: rgba(99,179,237,0.2); }
+.dark .org-tree.model_2 .node-title { color: #bfdbfe; }
 
-/* Model 3: Minimal Gold */
+/* Model 3: Minimal Line */
 .org-tree.model_3 .node-card { 
     background: transparent; 
-    color: #fef3c7; 
-    border: 1px solid rgba(251,191,36,0.5); 
+    color: #334155; 
+    border: 2px solid #cbd5e1;
     border-radius: 6px;
 }
 .org-tree.model_3 .node-card:hover { 
-    border-color: #fbbf24; 
-    background: rgba(251,191,36,0.1);
+    border-color: #3b82f6;
+    background: #eff6ff;
 }
-.org-tree.model_3 .node-title { color: #fde68a; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem; }
+.org-tree.model_3 .node-title { color: #1e293b; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem; }
+.dark .org-tree.model_3 .node-card { border-color: rgba(251,191,36,0.5); }
+.dark .org-tree.model_3 .node-card:hover { background: rgba(251,191,36,0.1); border-color: #fbbf24; }
+.dark .org-tree.model_3 .node-title { color: #fde68a; }
 
 /* Hint text animation */
 .swipe-hint { animation: bounce-x 2s ease-in-out infinite; display: inline-flex; align-items: center; gap: 8px; }
@@ -227,59 +237,59 @@ ob_start();
 </style>
 
 <!-- ================================================
-     HERO SECTION (Dark Immersive)
+     HERO SECTION (Light Immersive)
      ================================================ -->
 <section class="so-hero">
-    <!-- Glow orbs -->
+    <!-- Glow orbs (visible on both light and dark) -->
     <div class="so-hero-glow" style="width:500px;height:500px;background:#3b82f6;top:-200px;right:-100px;"></div>
     <div class="so-hero-glow" style="width:400px;height:400px;background:#8b5cf6;bottom:-150px;left:-100px;"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         <!-- Breadcrumb -->
-        <nav class="flex items-center justify-center space-x-2 text-white/40 text-sm mb-8 font-medium" aria-label="Breadcrumb">
-            <a href="<?= BASE_URL ?>/" class="hover:text-white/80 transition-colors">Beranda</a>
+        <nav class="flex items-center justify-center space-x-2 text-slate-400 dark:text-white/40 text-sm mb-8 font-medium" aria-label="Breadcrumb">
+            <a href="<?= BASE_URL ?>/" class="hover:text-primary dark:hover:text-white/80 transition-colors">Beranda</a>
             <i class="bi bi-chevron-right text-xs"></i>
-            <span class="text-white/80 font-bold"><?= htmlspecialchars($page['title']) ?></span>
+            <span class="text-slate-700 dark:text-white/80 font-bold"><?= htmlspecialchars($page['title']) ?></span>
         </nav>
 
         <div data-aos="fade-up" class="max-w-3xl mx-auto">
-            <div class="inline-flex items-center justify-center space-x-2 bg-sky-500/10 border border-sky-500/30 rounded-full px-4 py-1.5 mb-6">
-                <i class="bi bi-diagram-3 text-sky-400"></i>
-                <span class="text-sky-400 font-semibold text-sm tracking-widest uppercase"><?= htmlspecialchars($meta['label']) ?></span>
+            <div class="inline-flex items-center justify-center space-x-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-6">
+                <i class="bi bi-diagram-3 text-primary"></i>
+                <span class="text-primary font-semibold text-sm tracking-widest uppercase"><?= htmlspecialchars($meta['label']) ?></span>
             </div>
-            <h1 class="text-4xl md:text-6xl font-heading font-black text-white leading-tight mb-4">
+            <h1 class="text-4xl md:text-6xl font-heading font-black text-slate-900 dark:text-white leading-tight mb-4 transition-colors">
                 <?= htmlspecialchars($page['title']) ?>
             </h1>
-            <p class="text-lg text-white/50 font-light">Garis komando & tanggung jawab dalam ekosistem logistik kami.</p>
+            <p class="text-lg text-slate-500 dark:text-white/50 font-light">Garis komando &amp; tanggung jawab dalam ekosistem logistik kami.</p>
         </div>
     </div>
 </section>
 
 <!-- ================================================
-     ORG CHART SECTION (Dark Blueprint)
+     ORG CHART SECTION (Light Blueprint)
      ================================================ -->
 <section class="so-chart-section">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         <!-- Section Label -->
         <div class="flex items-center gap-4 mb-8" data-aos="fade-right">
-            <div class="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center flex-shrink-0">
-                <i class="bi bi-diagram-3 text-sky-400"></i>
+            <div class="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+                <i class="bi bi-diagram-3 text-primary"></i>
             </div>
             <div>
-                <h2 class="text-xl font-bold text-white">Bagan Hierarki</h2>
-                <p class="text-sm text-white/40">Geser kiri/kanan untuk melihat seluruh struktur</p>
+                <h2 class="text-xl font-bold text-slate-800 dark:text-white">Bagan Hierarki</h2>
+                <p class="text-sm text-slate-500 dark:text-white/40">Geser kiri/kanan untuk melihat seluruh struktur</p>
             </div>
             <div class="ml-auto">
-                <span class="swipe-hint text-white/30 text-sm">
-                    <i class="bi bi-arrow-left-right text-sky-500/60"></i>
+                <span class="swipe-hint text-slate-400 dark:text-white/30 text-sm">
+                    <i class="bi bi-arrow-left-right text-primary/60"></i>
                     <span>Scroll</span>
                 </span>
             </div>
         </div>
 
         <!-- Chart Container -->
-        <div class="rounded-2xl overflow-hidden border border-white/10 shadow-2xl" data-aos="fade-up">
+        <div class="rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-sm dark:shadow-2xl bg-white dark:bg-transparent" data-aos="fade-up">
             <div class="chart-scroll-wrapper" id="chartWrapper">
                 <?php if (!empty($org_nodes)): ?>
                     <div class="org-tree <?= htmlspecialchars($org_chart_style) ?>">
@@ -317,7 +327,7 @@ ob_start();
         <!-- Admin Quick Edit -->
         <?php if(isset($_SESSION['role_id']) && $_SESSION['role_id'] == 1): ?>
         <div class="mt-8 flex justify-center">
-            <a href="<?= BASE_URL ?>/settings/pages/edit/<?= $page['id'] ?>" class="flex items-center px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-sm font-bold rounded-xl transition-all hover:scale-105">
+            <a href="<?= BASE_URL ?>/settings/pages/edit/<?= $page['id'] ?>" class="flex items-center px-6 py-3 bg-slate-800 dark:bg-white/10 hover:bg-slate-900 dark:hover:bg-white/20 border border-transparent dark:border-white/20 text-white text-sm font-bold rounded-xl transition-all hover:scale-105">
                 <i class="bi bi-pencil-fill mr-2"></i> Pengaturan Struktur
             </a>
         </div>
