@@ -9,76 +9,63 @@ ob_start();
 ?>
 
     <!-- Hero Section -->
-    <section id="beranda" class="relative pt-24 pb-16 lg:pt-40 lg:pb-28 hero-bg overflow-hidden border-b border-slate-200 dark:border-slate-800 transition-colors">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                
-                <!-- Hero Text -->
-                <div data-aos="fade-right" data-aos-duration="1000">
-                    <div class="inline-flex items-center px-3 py-1.5 rounded-full bg-slate-200/80 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 font-semibold text-xs tracking-wide uppercase mb-6 shadow-sm transition-colors">
-                        <span class="w-2 h-2 rounded-full bg-secondary mr-2"></span> Logistic • Cargo • Courier
+    <section id="beranda" class="relative pt-32 pb-24 lg:pt-48 lg:pb-32 overflow-hidden border-b border-slate-200 dark:border-slate-800 transition-colors flex items-center justify-center min-h-[90vh]">
+        
+        <!-- Hero Background Slider -->
+        <div class="absolute inset-0 z-0">
+            <div class="swiper heroSwiper w-full h-full">
+                <div class="swiper-wrapper">
+                    <?php foreach($heroImages as $img): ?>
+                    <div class="swiper-slide w-full h-full">
+                        <img src="<?= htmlspecialchars($img) ?>" class="w-full h-full object-cover">
                     </div>
-                    
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-heading font-black text-slate-900 dark:text-white tracking-tight mb-6 leading-tight transition-colors">
-                        Solusi Logistik Terbaik Untuk <br>
-                        <span class="text-primary relative inline-block">
-                            <span id="typewriter-text">Perusahaan</span><span class="animate-pulse border-r-4 border-primary ml-1 absolute h-[80%] top-[10%]"></span>
-                        </span>
-                    </h1>
-                    
-                    <p class="text-lg text-slate-600 dark:text-slate-400 mb-10 leading-relaxed font-light max-w-lg transition-colors">
-                        <?= htmlspecialchars($heroSubtitle) ?>
-                    </p>
-                    
-                    <!-- Tracking Form -->
-                    <div class="bg-white dark:bg-slate-800/90 backdrop-blur-md p-2 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-700 max-w-md transition-all duration-300 hover:-translate-y-1 relative z-20 hover:shadow-2xl hover:shadow-slate-200/60">
-                        <form action="<?= BASE_URL ?>/tracking" method="GET" class="flex items-center">
-                            <div class="pl-4 text-primary">
-                                <i class="bi bi-box-seam text-lg"></i>
-                            </div>
-                            <input type="text" name="resi" class="w-full pl-3 pr-4 py-3 bg-transparent border-none focus:ring-0 outline-none text-slate-800 dark:text-white placeholder-slate-400 font-medium transition-colors" placeholder="Masukkan Nomor Resi..." required>
-                            <button type="submit" class="bg-primary hover:bg-primaryHover text-white px-6 py-3 rounded-2xl font-bold transition-all duration-300 whitespace-nowrap shadow-md hover:shadow-lg">
-                                Lacak
-                            </button>
-                        </form>
-                    </div>
-                    
-                    <div class="mt-8 flex items-center gap-6 text-sm font-medium text-slate-500 dark:text-slate-400 transition-colors">
-                        <div class="flex items-center" data-aos="fade-up" data-aos-delay="200"><i class="bi bi-shield-check text-secondary mr-2 text-lg"></i> Aman & Terlindungi</div>
-                        <div class="flex items-center" data-aos="fade-up" data-aos-delay="300"><i class="bi bi-clock-history text-secondary mr-2 text-lg"></i> SLA Presisi</div>
-                        <div class="flex items-center" data-aos="fade-up" data-aos-delay="400"><i class="bi bi-globe text-secondary mr-2 text-lg"></i> Jangkauan Luas</div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
-
-                <!-- Hero Image Slider (Self-Healing logic provides default image if empty) -->
-                <div class="hidden lg:block relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl" data-aos="fade-left" data-aos-duration="1200">
-                    
-                    <div class="swiper heroSwiper w-full h-full">
-                        <div class="swiper-wrapper">
-                            <?php foreach($heroImages as $img): ?>
-                            <div class="swiper-slide w-full h-full">
-                                <img src="<?= htmlspecialchars($img) ?>" class="w-full h-full object-cover">
-                            </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-
-                    <!-- Overlay -->
-                    <div class="absolute inset-0 bg-primary/20 mix-blend-multiply z-10 pointer-events-none"></div>
-                    
-                    <!-- Floating badge -->
-                    <div class="absolute bottom-6 left-6 bg-white dark:bg-slate-800/90 backdrop-blur-md px-6 py-4 rounded-2xl shadow-xl shadow-black/5 dark:shadow-none border border-slate-100 dark:border-slate-700 flex items-center gap-4 z-20 transition-all hover:-translate-y-1 duration-300 cursor-default">
-                        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-secondary text-2xl">
-                            <i class="bi bi-award-fill"></i>
-                        </div>
-                        <div>
-                            <p class="text-xs text-primary font-bold uppercase tracking-wider">Profesional</p>
-                            <p class="text-slate-900 dark:text-white font-bold text-lg transition-colors">Layanan B2B</p>
-                        </div>
-                    </div>
-                </div>
-
             </div>
+            <!-- Overlay to ensure text readability -->
+            <div class="absolute inset-0 bg-white/80 dark:bg-slate-900/85 backdrop-blur-[2px] z-10 transition-colors"></div>
+            <!-- Additional gradient overlay for smooth transition to next section -->
+            <div class="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent dark:from-slate-900 dark:via-slate-900/40 z-10 transition-colors"></div>
+        </div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 text-center">
+            
+            <div data-aos="fade-up" data-aos-duration="1000">
+                <div class="inline-flex items-center px-4 py-2 rounded-full bg-white/90 dark:bg-slate-800/90 text-slate-700 dark:text-slate-300 font-semibold text-xs tracking-wide uppercase mb-8 shadow-md border border-slate-200/50 dark:border-slate-700/50 transition-colors mx-auto">
+                    <span class="w-2 h-2 rounded-full bg-secondary mr-2"></span> Logistic • Cargo • Courier
+                </div>
+                
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-heading font-black text-slate-900 dark:text-white tracking-tight mb-6 leading-tight transition-colors">
+                    Solusi Logistik Terbaik Untuk <br class="hidden sm:block">
+                    <span class="text-primary relative inline-block mt-2">
+                        <span id="typewriter-text">Perusahaan</span><span class="animate-pulse border-r-4 border-primary ml-1 absolute h-[80%] top-[10%]"></span>
+                    </span>
+                </h1>
+                
+                <p class="text-lg text-slate-700 dark:text-slate-400 mb-10 leading-relaxed font-light max-w-2xl mx-auto transition-colors">
+                    <?= htmlspecialchars($heroSubtitle) ?>
+                </p>
+                
+                <!-- Tracking Form -->
+                <div class="bg-white dark:bg-slate-800/90 backdrop-blur-md p-2.5 rounded-[2rem] shadow-2xl shadow-primary/10 dark:shadow-none border border-slate-100 dark:border-slate-700 max-w-xl mx-auto transition-all duration-300 hover:-translate-y-1 relative z-20 hover:shadow-primary/20">
+                    <form action="<?= BASE_URL ?>/tracking" method="GET" class="flex items-center">
+                        <div class="pl-5 text-primary">
+                            <i class="bi bi-box-seam text-xl"></i>
+                        </div>
+                        <input type="text" name="resi" class="w-full pl-4 pr-4 py-3 bg-transparent border-none focus:ring-0 outline-none text-slate-800 dark:text-white placeholder-slate-400 font-medium transition-colors text-lg" placeholder="Masukkan Nomor Resi..." required>
+                        <button type="submit" class="bg-primary hover:bg-primaryHover text-white px-8 py-3.5 rounded-3xl font-bold transition-all duration-300 whitespace-nowrap shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 text-lg">
+                            Lacak
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="mt-12 flex flex-wrap justify-center items-center gap-4 md:gap-8 text-sm font-medium text-slate-700 dark:text-slate-300 transition-colors">
+                    <div class="flex items-center bg-white/70 dark:bg-slate-800/70 backdrop-blur-md px-5 py-2.5 rounded-full border border-slate-200/50 dark:border-slate-700/50 shadow-sm" data-aos="fade-up" data-aos-delay="200"><i class="bi bi-shield-check text-secondary mr-2 text-lg"></i> Aman & Terlindungi</div>
+                    <div class="flex items-center bg-white/70 dark:bg-slate-800/70 backdrop-blur-md px-5 py-2.5 rounded-full border border-slate-200/50 dark:border-slate-700/50 shadow-sm" data-aos="fade-up" data-aos-delay="300"><i class="bi bi-clock-history text-secondary mr-2 text-lg"></i> SLA Presisi</div>
+                    <div class="flex items-center bg-white/70 dark:bg-slate-800/70 backdrop-blur-md px-5 py-2.5 rounded-full border border-slate-200/50 dark:border-slate-700/50 shadow-sm" data-aos="fade-up" data-aos-delay="400"><i class="bi bi-globe text-secondary mr-2 text-lg"></i> Jangkauan Luas</div>
+                </div>
+            </div>
+
         </div>
     </section>
 
