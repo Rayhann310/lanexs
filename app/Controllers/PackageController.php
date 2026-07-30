@@ -526,7 +526,9 @@ class PackageController extends BaseController
         $totalFiltered = $stmtTotal->fetchColumn();
 
         // Fetch data
-        $sql = "SELECT p.*, bo.name as origin_branch_name, bd.name as dest_branch_name 
+        $sql = "SELECT p.*, bo.name as origin_branch_name, bd.name as dest_branch_name,
+                       (SELECT proof_image FROM tracking_histories th WHERE th.package_id = p.id ORDER BY th.created_at DESC, th.id DESC LIMIT 1) as last_proof_image,
+                       (SELECT description FROM tracking_histories th WHERE th.package_id = p.id ORDER BY th.created_at DESC, th.id DESC LIMIT 1) as last_description
                 FROM packages p
                 LEFT JOIN branches bo ON p.origin_branch_id = bo.id
                 LEFT JOIN branches bd ON p.destination_branch_id = bd.id

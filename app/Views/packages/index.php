@@ -329,7 +329,29 @@
                 </button>
             </div>
 
-            <form :action="statusFormAction" method="POST" enctype="multipart/form-data" class="p-6 space-y-4" id="statusUpdateForm">
+            <!-- Last Update Info -->
+            <div class="px-6 pt-4 pb-2" x-show="lastStatusData.status !== ''">
+                <div class="bg-indigo-50 rounded-xl p-4 border border-indigo-100 flex gap-4">
+                    <!-- Image -->
+                    <div x-show="lastStatusData.image" class="w-16 h-16 shrink-0 rounded-lg overflow-hidden border border-indigo-200 bg-white">
+                        <img :src="'<?= BASE_URL ?>/uploads/tracking/' + lastStatusData.image" class="w-full h-full object-cover" alt="Bukti">
+                    </div>
+                    <div x-show="!lastStatusData.image" class="w-16 h-16 shrink-0 rounded-lg border border-indigo-200 bg-indigo-100/50 flex items-center justify-center text-indigo-300">
+                        <i class="bi bi-image text-2xl"></i>
+                    </div>
+                    
+                    <!-- Content -->
+                    <div class="flex-1">
+                        <p class="text-[10px] font-bold text-indigo-400 uppercase tracking-wide mb-1">Status Saat Ini</p>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="px-2 py-0.5 text-xs font-bold rounded bg-indigo-100 text-indigo-700 border border-indigo-200" x-text="lastStatusData.status"></span>
+                        </div>
+                        <p class="text-sm text-slate-600" x-text="lastStatusData.description ? lastStatusData.description : 'Tidak ada deskripsi pada update terakhir.'"></p>
+                    </div>
+                </div>
+            </div>
+
+            <form :action="statusFormAction" method="POST" enctype="multipart/form-data" class="px-6 pb-6 space-y-4" id="statusUpdateForm">
                 <!-- Status Select -->
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-1">Status Baru</label>
@@ -902,6 +924,11 @@
             statusFormAction: '',
             currentResi: '',
             tariffInfo: '',
+            lastStatusData: {
+                status: '',
+                description: '',
+                image: ''
+            },
             
             // Default form state
             defaultFormData: {
@@ -1150,6 +1177,11 @@
                     branch_id: ''
                 };
                 this.currentResi = data.resi;
+                this.lastStatusData = {
+                    status: data.status,
+                    description: data.last_description || '',
+                    image: data.last_proof_image || ''
+                };
                 this.statusData.status = data.status;
                 this.statusModal = true;
             },
