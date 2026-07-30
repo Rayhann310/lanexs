@@ -1,6 +1,6 @@
 <?php
 // sejarah-perusahaan.php — Specific view for Sejarah Perusahaan
-$navbarWhite = true;
+$navbarWhite = false;
 $meta = ['icon' => 'bi-clock-history', 'label' => 'Profil Perusahaan', 'color' => 'from-blue-600 to-blue-800'];
 
 // Component Texts (Editable via Settings if needed)
@@ -63,29 +63,29 @@ ob_start();
 </style>
 
 <!-- Page Hero Banner -->
-<section class="pt-32 pb-24 bg-slate-900 relative overflow-hidden">
+<section class="pt-32 pb-24 bg-white dark:bg-slate-900 relative overflow-hidden transition-colors border-b border-slate-200 dark:border-slate-800">
     <!-- Logistics Background Graphic -->
-    <img src="<?= htmlspecialchars($hero_bg) ?>" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay">
-    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent"></div>
-    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(white 1px, transparent 1px); background-size: 28px 28px;"></div>
+    <img src="<?= htmlspecialchars($hero_bg) ?>" class="absolute inset-0 w-full h-full object-cover opacity-10 dark:opacity-20 mix-blend-overlay">
+    <div class="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent dark:from-slate-900 dark:via-slate-900/80 transition-colors"></div>
+    <div class="absolute inset-0 opacity-[0.03] dark:opacity-10" style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 28px 28px;"></div>
     
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         <!-- Breadcrumb -->
-        <nav class="flex items-center justify-center space-x-2 text-white/60 text-sm mb-8" aria-label="Breadcrumb">
-            <a href="<?= BASE_URL ?>/" class="hover:text-white transition-colors">Beranda</a>
+        <nav class="flex items-center justify-center space-x-2 text-slate-500 dark:text-white/60 text-sm mb-8 font-medium" aria-label="Breadcrumb">
+            <a href="<?= BASE_URL ?>/" class="hover:text-primary dark:hover:text-white transition-colors">Beranda</a>
             <i class="bi bi-chevron-right text-xs"></i>
-            <span class="text-white font-medium"><?= htmlspecialchars($page['title']) ?></span>
+            <span class="text-slate-800 dark:text-white font-bold"><?= htmlspecialchars($page['title']) ?></span>
         </nav>
 
         <div data-aos="fade-up" class="max-w-3xl mx-auto">
-            <div class="inline-flex items-center justify-center space-x-2 bg-primary/20 border border-primary/30 rounded-full px-4 py-1.5 mb-6">
+            <div class="inline-flex items-center justify-center space-x-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-6">
                 <i class="bi <?= $meta['icon'] ?> text-primary"></i>
                 <span class="text-primary font-semibold text-sm tracking-widest uppercase">Perjalanan Kami</span>
             </div>
-            <h1 class="text-3xl md:text-5xl font-heading font-black text-white leading-tight mb-4">
-                Menghubungkan <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">Nusantara</span> Tanpa Batas
+            <h1 class="text-3xl md:text-5xl font-heading font-black text-slate-900 dark:text-white leading-tight mb-4 transition-colors">
+                Menghubungkan <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-500 dark:from-blue-400 dark:to-emerald-400">Nusantara</span> Tanpa Batas
             </h1>
-            <p class="text-base md:text-lg text-slate-300 font-light">Sejarah panjang dedikasi kami dalam membangun tulang punggung logistik Indonesia.</p>
+            <p class="text-base md:text-lg text-slate-600 dark:text-slate-300 font-light transition-colors">Sejarah panjang dedikasi kami dalam membangun tulang punggung logistik Indonesia.</p>
         </div>
     </div>
 </section>
