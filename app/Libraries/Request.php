@@ -44,6 +44,9 @@ class Request
             }
         }
         
+        // Normalize multiple slashes to single slash
+        $uri = preg_replace('#/+#', '/', $uri);
+        
         return rtrim($uri, '/') ?: '/';
     }
 

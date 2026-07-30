@@ -1143,7 +1143,12 @@
             },
             
             openStatusModal(data) {
-                this.statusFormAction = '<?= BASE_URL ?>/packages/update-status/' + data.id;
+                this.statusFormAction = '<?= rtrim(BASE_URL, '/') ?>/packages/update-status/' + data.id;
+                this.statusData = {
+                    status: data.status,
+                    description: '',
+                    branch_id: ''
+                };
                 this.currentResi = data.resi;
                 this.statusData.status = data.status;
                 this.statusModal = true;
@@ -1281,7 +1286,10 @@
         });
 
         // Child row logic
-        $('#packagesTable tbody').on('click', 'td:nth-child(2)', function () {
+        $('#packagesTable tbody').on('click', '.toggle-icon-container', function (e) {
+            // Prevent if they somehow clicked a checkbox or a button inside this container
+            if ($(e.target).closest('input, button, a').length > 0) return;
+
             var tr = $(this).closest('tr');
             var row = $('#packagesTable').DataTable().row(tr);
             var icon = $(this).find('.toggle-icon');
