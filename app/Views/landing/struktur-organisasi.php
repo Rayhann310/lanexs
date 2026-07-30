@@ -65,41 +65,39 @@ ob_start();
 .org-tree.model_3 .node-title { color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;}
 .dark .org-tree.model_3 .node-title { color: #f8fafc; }
 
-/* Responsive Mobile Tree (Vertical) */
-@media (max-width: 768px) {
-    .org-tree { width: 100%; justify-content: flex-start; padding: 10px; overflow: hidden; }
-    .org-tree ul { display: block; padding-top: 0; }
-    .org-tree ul ul { margin-left: 20px; padding-left: 0; margin-top: 15px; }
-    .org-tree li { float: none; text-align: left; padding: 15px 0 0 24px; position: relative; }
-    
-    /* Hide all desktop horizontal lines */
-    .org-tree li::before, .org-tree li::after, .org-tree ul ul::before { display: none !important; border: none !important; }
-    
-    /* Draw L-shape connectors for children */
-    .org-tree ul ul > li::before {
-        content: ''; position: absolute; top: -15px; left: 0;
-        width: 24px; height: 50px;
-        border-left: 2px solid #94a3b8 !important;
-        border-bottom: 2px solid #94a3b8 !important;
-        display: block !important;
-        border-radius: 0 0 0 8px;
-    }
-    
-    /* Vertical continuation line for siblings */
-    .org-tree ul ul > li::after {
-        content: ''; position: absolute; top: 35px; left: 0;
-        bottom: -15px;
-        border-left: 2px solid #94a3b8 !important;
-        display: block !important;
-    }
-    /* Hide downward line for the last child */
-    .org-tree ul ul > li:last-child::after { display: none !important; }
-    
-    .org-tree .node-card { width: 100%; max-width: 280px; min-width: 0; display: block; padding: 14px 20px; font-size: 1rem; }
-    
-    /* Remove padding for root element so it's flush left */
-    .org-tree > ul > li { padding-left: 0; }
+/* Responsive Mobile Tree (Vertical) applied to ALL screens to prevent horizontal scroll */
+.org-tree { width: 100%; justify-content: flex-start; padding: 10px; overflow: hidden; }
+.org-tree ul { display: block; padding-top: 0; }
+.org-tree ul ul { margin-left: 20px; padding-left: 0; margin-top: 15px; }
+.org-tree li { float: none; text-align: left; padding: 15px 0 0 24px; position: relative; }
+
+/* Hide all desktop horizontal lines */
+.org-tree li::before, .org-tree li::after, .org-tree ul ul::before { display: none !important; border: none !important; }
+
+/* Draw L-shape connectors for children */
+.org-tree ul ul > li::before {
+    content: ''; position: absolute; top: -15px; left: 0;
+    width: 24px; height: 50px;
+    border-left: 2px solid #94a3b8 !important;
+    border-bottom: 2px solid #94a3b8 !important;
+    display: block !important;
+    border-radius: 0 0 0 8px;
 }
+
+/* Vertical continuation line for siblings */
+.org-tree ul ul > li::after {
+    content: ''; position: absolute; top: 35px; left: 0;
+    bottom: -15px;
+    border-left: 2px solid #94a3b8 !important;
+    display: block !important;
+}
+/* Hide downward line for the last child */
+.org-tree ul ul > li:last-child::after { display: none !important; }
+
+.org-tree .node-card { width: 100%; max-width: 320px; min-width: 0; display: block; padding: 14px 20px; font-size: 1rem; }
+
+/* Remove padding for root element so it's flush left */
+.org-tree > ul > li { padding-left: 0; }
 </style>
 
 <!-- Page Hero Banner -->
@@ -140,9 +138,9 @@ ob_start();
                 <div class="absolute -top-32 -right-32 w-64 h-64 bg-primary/20 rounded-full blur-3xl pointer-events-none group-hover:scale-150 transition-transform duration-700"></div>
                 <div class="absolute -bottom-32 -left-32 w-64 h-64 bg-secondary/20 rounded-full blur-3xl pointer-events-none group-hover:scale-150 transition-transform duration-700 delay-100"></div>
                 
-                <div class="relative z-10 text-center overflow-x-auto pb-8">
+                <div class="relative z-10 text-left pb-8">
                     <?php if (!empty($org_nodes)): ?>
-                        <div class="org-tree <?= htmlspecialchars($org_chart_style) ?> w-full">
+                        <div class="org-tree <?= htmlspecialchars($org_chart_style) ?> w-full md:w-2/3 mx-auto">
                             <ul>
                                 <?php 
                                 // Find roots
