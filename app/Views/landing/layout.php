@@ -133,8 +133,8 @@
     </style>
     <!-- Prevent FOUC -->
     <script>
-        // Set Light Mode as default
-        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        // Force Light Mode as default regardless of system preference
+        if (localStorage.getItem('color-theme') === 'dark') {
             document.documentElement.classList.add('dark');
         } else {
             document.documentElement.classList.remove('dark');

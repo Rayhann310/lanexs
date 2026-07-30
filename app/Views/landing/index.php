@@ -37,10 +37,10 @@ ob_start();
                     Premium B2B Logistics
                 </div>
                 
-                <h1 class="text-5xl sm:text-6xl lg:text-[5rem] font-heading font-black text-slate-900 dark:text-white tracking-tighter mb-6 leading-[1.1] transition-colors drop-shadow-sm">
-                    Solusi Logistik Terbaik <br class="hidden sm:block">
-                    <span class="text-primary relative inline-block mt-2">
-                        <span id="typewriter-text">Perusahaan</span><span class="animate-pulse border-r-[5px] border-primary ml-2 absolute h-[75%] top-[15%]"></span>
+                <h1 class="text-5xl sm:text-6xl lg:text-[5rem] font-heading font-black text-slate-900 dark:text-white tracking-tighter mb-6 leading-[1.2] transition-colors drop-shadow-sm flex flex-col items-center justify-center min-h-[120px] sm:min-h-[160px] lg:min-h-[180px]">
+                    <span>Solusi Logistik Terbaik Untuk</span>
+                    <span class="text-primary relative inline-block mt-2 h-[60px] sm:h-[80px] lg:h-[100px] flex items-center justify-center">
+                        <span id="typewriter-text">Perusahaan</span><span class="animate-pulse border-r-[5px] border-primary ml-2 h-[70%]"></span>
                     </span>
                 </h1>
                 
