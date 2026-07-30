@@ -15,11 +15,11 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#107c8c',
-                        primaryHover: '#0d6573',
-                        secondary: '#f3aa00',
-                        secondaryHover: '#d99700',
-                        darkBg: '#0f172a'
+                        primary: '#3b82f6',
+                        primaryHover: '#2563eb',
+                        secondary: '#f59e0b',
+                        secondaryHover: '#d97706',
+                        darkBg: '#020617'
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -40,28 +40,41 @@
 
     <style>
         .nav-scrolled {
-            background-color: rgba(255, 255, 255, 0.97);
-            backdrop-filter: blur(12px);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            background-color: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
         }
         .dark .nav-scrolled {
-            background-color: rgba(15, 23, 42, 0.97); /* slate-900 */
+            background-color: rgba(2, 6, 23, 0.75); /* slate-950 */
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
         }
         .hero-bg {
             background-color: #f8fafc;
-            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
-            background-size: 32px 32px;
+            background-image: 
+                radial-gradient(at 10% 20%, rgba(59, 130, 246, 0.12) 0px, transparent 50%),
+                radial-gradient(at 90% 80%, rgba(245, 158, 11, 0.08) 0px, transparent 50%),
+                radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
+            background-size: 100% 100%, 100% 100%, 32px 32px;
         }
         .dark .hero-bg {
-            background-color: #0f172a;
-            background-image: radial-gradient(#1e293b 1px, transparent 1px);
+            background-color: #020617;
+            background-image: 
+                radial-gradient(at 10% 20%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 90% 80%, rgba(245, 158, 11, 0.1) 0px, transparent 50%),
+                radial-gradient(#1e293b 1.5px, transparent 1.5px);
+            background-size: 100% 100%, 100% 100%, 32px 32px;
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .accent-border-hover:hover {
-            border-bottom: 4px solid #f3aa00;
-            transform: translateY(-4px);
+            border-color: #3b82f6;
+            box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.15), 0 8px 10px -6px rgba(59, 130, 246, 0.1);
+            transform: translateY(-6px);
         }
         /* Dropdown menu */
         .nav-dropdown { display: none; }
@@ -101,14 +114,26 @@
         
         /* Dark Mode overrides for navbar elements */
         .dark .nav-logo { filter: brightness(0) invert(1); }
-        .dark .nav-link, .dark .nav-btn, .dark .mobile-accordion-btn { color: #cbd5e1; }
-        .dark .nav-link:hover, .dark .nav-btn:hover, .dark .mobile-accordion-btn:hover { color: #f8fafc; background-color: #1e293b; }
-        .dark .nav-dropdown > div { background-color: #1e293b; border-color: #334155; }
-        .dark .nav-dropdown a { color: #cbd5e1; }
-        .dark .nav-dropdown a:hover { background-color: #334155; color: #f8fafc; }
+        .dark .nav-link, .dark .nav-btn, .dark .mobile-accordion-btn { color: #e2e8f0; }
+        .dark .nav-link:hover, .dark .nav-btn:hover, .dark .mobile-accordion-btn:hover { color: #f8fafc; background-color: rgba(255,255,255,0.05); }
+        .dark .nav-dropdown > div { background-color: rgba(15,23,42,0.95); backdrop-filter: blur(16px); border-color: rgba(255,255,255,0.1); }
+        .dark .nav-dropdown a { color: #e2e8f0; }
+        .dark .nav-dropdown a:hover { background-color: rgba(255,255,255,0.05); color: #3b82f6; }
         
         /* Smooth transition for all nav elements */
-        #navbar, #navbar * { transition: color 0.25s, background-color 0.25s, filter 0.25s, border-color 0.25s, box-shadow 0.25s; }
+        #navbar, #navbar * { transition: color 0.3s, background-color 0.3s, filter 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.3s; }
+        
+        /* Navbar sliding underline */
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute; width: 0; height: 2px;
+            bottom: 4px; left: 50%; transform: translateX(-50%);
+            background-color: #3b82f6; transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+        .nav-link:hover::after { width: 60%; }
+        
+        .glow-shadow-primary { box-shadow: 0 0 25px rgba(59,130,246,0.4); }
     </style>
     <!-- Prevent FOUC -->
     <script>
@@ -190,12 +215,13 @@
                     </button>
                     
                     <?php if(isset($_SESSION['user_id'])): ?>
-                        <a href="<?= BASE_URL ?>/dashboard" class="nav-cta-filled px-5 py-2.5 bg-primary text-white font-semibold rounded-lg hover:bg-primaryHover shadow-sm flex items-center text-sm">
+                        <a href="<?= BASE_URL ?>/dashboard" class="relative group px-6 py-2.5 bg-primary text-white font-bold rounded-xl shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:shadow-[0_0_25px_rgba(59,130,246,0.5)] transition-all duration-300 flex items-center text-sm hover:-translate-y-0.5">
                             <i class="bi bi-grid-fill mr-2"></i> Dashboard
                         </a>
                     <?php else: ?>
-                        <a href="<?= BASE_URL ?>/login" class="nav-cta-outline px-5 py-2.5 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-white flex items-center text-sm">
-                            <i class="bi bi-box-arrow-in-right mr-2"></i> Login ERP
+                        <a href="<?= BASE_URL ?>/login" class="nav-cta-outline relative overflow-hidden group px-6 py-2.5 border-2 border-primary text-primary font-bold rounded-xl hover:text-white flex items-center text-sm transition-all duration-300">
+                            <span class="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform translate-x-[-100%] bg-primary group-hover:translate-x-0"></span>
+                            <span class="relative flex items-center"><i class="bi bi-box-arrow-in-right mr-2 text-lg"></i> Login ERP</span>
                         </a>
                     <?php endif; ?>
                 </div>
@@ -214,7 +240,7 @@
         </div>
 
         <!-- Mobile Menu Panel -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 absolute w-full shadow-xl left-0 top-full max-h-[80vh] overflow-y-auto transition-colors">
+        <div id="mobile-menu" class="hidden lg:hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-t border-slate-200/50 dark:border-slate-800/50 absolute w-full shadow-2xl left-0 top-full max-h-[80vh] overflow-y-auto transition-all duration-300">
             <div class="flex flex-col px-5 pt-3 pb-6 space-y-1">
                 <a href="<?= BASE_URL ?>/" class="text-slate-700 dark:text-slate-200 font-medium py-2.5 px-3 border-b border-slate-50 dark:border-slate-800 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800">Beranda</a>
 
@@ -257,13 +283,13 @@
                 <a href="<?= BASE_URL ?>/page/experience" class="text-slate-700 dark:text-slate-200 font-medium py-2.5 px-3 border-b border-slate-50 dark:border-slate-800 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800">Experience</a>
                 <a href="<?= BASE_URL ?>/page/kontak-kami" class="text-slate-700 dark:text-slate-200 font-medium py-2.5 px-3 border-b border-slate-50 dark:border-slate-800 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800">Kontak Kami</a>
 
-                <div class="pt-3">
+                <div class="pt-4 pb-2">
                     <?php if(isset($_SESSION['user_id'])): ?>
-                        <a href="<?= BASE_URL ?>/dashboard" class="w-full flex justify-center items-center bg-primary text-white px-4 py-3 rounded-lg font-semibold">
+                        <a href="<?= BASE_URL ?>/dashboard" class="w-full flex justify-center items-center bg-primary text-white px-4 py-3.5 rounded-xl font-bold shadow-lg shadow-primary/30 transition-transform active:scale-95">
                             <i class="bi bi-grid-fill mr-2"></i> Dashboard
                         </a>
                     <?php else: ?>
-                        <a href="<?= BASE_URL ?>/login" class="w-full flex justify-center items-center bg-primary text-white px-4 py-3 rounded-lg font-semibold">
+                        <a href="<?= BASE_URL ?>/login" class="w-full flex justify-center items-center bg-primary text-white px-4 py-3.5 rounded-xl font-bold shadow-lg shadow-primary/30 transition-transform active:scale-95">
                             <i class="bi bi-box-arrow-in-right mr-2"></i> Login ERP
                         </a>
                     <?php endif; ?>

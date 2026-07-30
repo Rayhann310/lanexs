@@ -28,13 +28,13 @@ ob_start();
                     </p>
                     
                     <!-- Tracking Form -->
-                    <div class="bg-white dark:bg-slate-800/80 dark:backdrop-blur-sm p-2 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-200 dark:border-slate-700 max-w-md transition-colors hover:shadow-lg">
+                    <div class="bg-white/90 dark:bg-slate-800/80 backdrop-blur-md p-2 rounded-2xl shadow-[0_10px_40px_rgba(59,130,246,0.15)] border border-slate-200/50 dark:border-slate-700 max-w-md transition-all duration-300 hover:shadow-[0_15px_50px_rgba(59,130,246,0.25)] hover:-translate-y-1 relative z-20">
                         <form action="<?= BASE_URL ?>/tracking" method="GET" class="flex items-center">
                             <div class="pl-4 text-slate-400 dark:text-slate-500">
                                 <i class="bi bi-box-seam text-lg"></i>
                             </div>
                             <input type="text" name="resi" class="w-full pl-3 pr-4 py-3 bg-transparent border-none focus:ring-0 outline-none text-slate-700 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 font-medium transition-colors" placeholder="Masukkan Nomor Resi..." required>
-                            <button type="submit" class="bg-primary hover:bg-primaryHover text-white px-6 py-3 rounded-lg font-semibold transition-colors whitespace-nowrap shadow-md">
+                            <button type="submit" class="bg-primary hover:bg-primaryHover text-white px-6 py-3 rounded-xl font-bold transition-all duration-300 whitespace-nowrap shadow-lg shadow-primary/30 hover:shadow-primary/50">
                                 Lacak
                             </button>
                         </form>
@@ -168,10 +168,11 @@ ob_start();
             </div>
             
             <div class="swiper servicesSwiper !overflow-visible md:!overflow-hidden">
-                <div class="swiper-wrapper md:grid md:grid-cols-3 md:gap-8">
+                <div class="swiper-wrapper md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6 lg:gap-8">
                     <!-- Card 1 -->
-                    <div class="swiper-slide md:!w-auto md:!mr-0 bg-white dark:bg-slate-800 p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 transition-all duration-300 accent-border-hover dark:hover:border-b-secondary hover:shadow-xl hover:-translate-y-2 group" data-aos="fade-up" data-aos-delay="100">
-                        <div class="w-14 h-14 bg-slate-100 dark:bg-slate-700 rounded-xl flex items-center justify-center text-2xl text-primary mb-6 transition-colors group-hover:scale-110 duration-300">
+                    <div class="swiper-slide md:!w-auto md:!mr-0 bg-white dark:bg-slate-800 p-6 md:p-8 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 transition-all duration-300 accent-border-hover hover:shadow-2xl hover:-translate-y-2 group relative overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-bl-full -mr-8 -mt-8 transition-transform duration-500 group-hover:scale-110"></div>
+                        <div class="w-14 h-14 bg-primary/10 dark:bg-primary/20 rounded-2xl flex items-center justify-center text-2xl text-primary mb-6 transition-all group-hover:scale-110 group-hover:rotate-3 duration-300 relative z-10">
                             <i class="bi bi-truck"></i>
                         </div>
                         <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 transition-colors">Cargo Darat & Laut</h3>
@@ -181,8 +182,9 @@ ob_start();
                     </div>
                     
                     <!-- Card 2 -->
-                    <div class="swiper-slide md:!w-auto md:!mr-0 bg-white dark:bg-slate-800 p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 transition-all duration-300 accent-border-hover dark:hover:border-b-secondary hover:shadow-xl hover:-translate-y-2 group" data-aos="fade-up" data-aos-delay="200">
-                        <div class="w-14 h-14 bg-slate-100 dark:bg-slate-700 rounded-xl flex items-center justify-center text-2xl text-primary mb-6 transition-colors group-hover:scale-110 duration-300">
+                    <div class="swiper-slide md:!w-auto md:!mr-0 bg-white dark:bg-slate-800 p-6 md:p-8 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 transition-all duration-300 accent-border-hover hover:shadow-2xl hover:-translate-y-2 group relative overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-bl-full -mr-8 -mt-8 transition-transform duration-500 group-hover:scale-110"></div>
+                        <div class="w-14 h-14 bg-primary/10 dark:bg-primary/20 rounded-2xl flex items-center justify-center text-2xl text-primary mb-6 transition-all group-hover:scale-110 group-hover:rotate-3 duration-300 relative z-10">
                             <i class="bi bi-airplane-engines"></i>
                         </div>
                         <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 transition-colors">Top Urgent Service (Udara)</h3>
@@ -192,8 +194,9 @@ ob_start();
                     </div>
 
                     <!-- Card 3 -->
-                    <div class="swiper-slide md:!w-auto md:!mr-0 bg-white dark:bg-slate-800 p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 transition-all duration-300 accent-border-hover dark:hover:border-b-secondary hover:shadow-xl hover:-translate-y-2 group" data-aos="fade-up" data-aos-delay="300">
-                        <div class="w-14 h-14 bg-slate-100 dark:bg-slate-700 rounded-xl flex items-center justify-center text-2xl text-primary mb-6 transition-colors group-hover:scale-110 duration-300">
+                    <div class="swiper-slide md:!w-auto md:!mr-0 bg-white dark:bg-slate-800 p-6 md:p-8 rounded-3xl shadow-sm border border-slate-200 dark:border-slate-700 transition-all duration-300 accent-border-hover hover:shadow-2xl hover:-translate-y-2 group relative overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-bl-full -mr-8 -mt-8 transition-transform duration-500 group-hover:scale-110"></div>
+                        <div class="w-14 h-14 bg-primary/10 dark:bg-primary/20 rounded-2xl flex items-center justify-center text-2xl text-primary mb-6 transition-all group-hover:scale-110 group-hover:rotate-3 duration-300 relative z-10">
                             <i class="bi bi-box-seam"></i>
                         </div>
                         <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 transition-colors">Pergudangan & Packing</h3>
@@ -221,24 +224,32 @@ ob_start();
                 </div>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6" data-aos="fade-left">
-                    <div class="bg-slate-50 dark:bg-slate-800 p-5 md:p-6 rounded-2xl border border-slate-100 dark:border-slate-700 transition-all hover:bg-slate-100 dark:hover:bg-slate-700 hover:shadow-lg duration-300 group">
-                        <i class="bi bi-shield-check text-secondary text-2xl md:text-3xl mb-3 md:mb-4 block group-hover:scale-110 transition-transform origin-left"></i>
-                        <h4 class="font-bold text-slate-900 dark:text-white mb-1 md:mb-2 transition-colors">Keamanan Ekstra</h4>
+                    <div class="bg-slate-50 dark:bg-slate-800 p-5 md:p-6 rounded-3xl border border-slate-100 dark:border-slate-700 transition-all hover:bg-white dark:hover:bg-slate-750 hover:shadow-xl hover:-translate-y-1 duration-300 group">
+                        <div class="w-12 h-12 bg-white dark:bg-slate-700 rounded-2xl flex items-center justify-center shadow-sm mb-4 group-hover:shadow-md transition-all group-hover:scale-110 origin-left">
+                            <i class="bi bi-shield-check text-secondary text-2xl md:text-3xl"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 dark:text-white mb-1 md:mb-2 transition-colors group-hover:text-primary">Keamanan Ekstra</h4>
                         <p class="text-sm text-slate-600 dark:text-slate-400 font-light transition-colors">Asuransi komprehensif dan standar *handling* barang yang ketat.</p>
                     </div>
-                    <div class="bg-slate-50 dark:bg-slate-800 p-5 md:p-6 rounded-2xl border border-slate-100 dark:border-slate-700 transition-all hover:bg-slate-100 dark:hover:bg-slate-700 hover:shadow-lg duration-300 group">
-                        <i class="bi bi-lightning-charge-fill text-secondary text-2xl md:text-3xl mb-3 md:mb-4 block group-hover:scale-110 transition-transform origin-left"></i>
-                        <h4 class="font-bold text-slate-900 dark:text-white mb-1 md:mb-2 transition-colors">Tepat Waktu</h4>
+                    <div class="bg-slate-50 dark:bg-slate-800 p-5 md:p-6 rounded-3xl border border-slate-100 dark:border-slate-700 transition-all hover:bg-white dark:hover:bg-slate-750 hover:shadow-xl hover:-translate-y-1 duration-300 group">
+                        <div class="w-12 h-12 bg-white dark:bg-slate-700 rounded-2xl flex items-center justify-center shadow-sm mb-4 group-hover:shadow-md transition-all group-hover:scale-110 origin-left">
+                            <i class="bi bi-lightning-charge-fill text-secondary text-2xl md:text-3xl"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 dark:text-white mb-1 md:mb-2 transition-colors group-hover:text-primary">Tepat Waktu</h4>
                         <p class="text-sm text-slate-600 dark:text-slate-400 font-light transition-colors">Komitmen kuat pada SLA dengan tingkat keberhasilan tinggi.</p>
                     </div>
-                    <div class="bg-slate-50 dark:bg-slate-800 p-5 md:p-6 rounded-2xl border border-slate-100 dark:border-slate-700 transition-all hover:bg-slate-100 dark:hover:bg-slate-700 hover:shadow-lg duration-300 group">
-                        <i class="bi bi-phone-vibrate text-secondary text-2xl md:text-3xl mb-3 md:mb-4 block group-hover:scale-110 transition-transform origin-left"></i>
-                        <h4 class="font-bold text-slate-900 dark:text-white mb-1 md:mb-2 transition-colors">Real-time Tracking</h4>
+                    <div class="bg-slate-50 dark:bg-slate-800 p-5 md:p-6 rounded-3xl border border-slate-100 dark:border-slate-700 transition-all hover:bg-white dark:hover:bg-slate-750 hover:shadow-xl hover:-translate-y-1 duration-300 group">
+                        <div class="w-12 h-12 bg-white dark:bg-slate-700 rounded-2xl flex items-center justify-center shadow-sm mb-4 group-hover:shadow-md transition-all group-hover:scale-110 origin-left">
+                            <i class="bi bi-phone-vibrate text-secondary text-2xl md:text-3xl"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 dark:text-white mb-1 md:mb-2 transition-colors group-hover:text-primary">Real-time Tracking</h4>
                         <p class="text-sm text-slate-600 dark:text-slate-400 font-light transition-colors">Pantau status dan lokasi barang secara presisi melalui sistem kami.</p>
                     </div>
-                    <div class="bg-slate-50 dark:bg-slate-800 p-5 md:p-6 rounded-2xl border border-slate-100 dark:border-slate-700 transition-all hover:bg-slate-100 dark:hover:bg-slate-700 hover:shadow-lg duration-300 group">
-                        <i class="bi bi-headset text-secondary text-2xl md:text-3xl mb-3 md:mb-4 block group-hover:scale-110 transition-transform origin-left"></i>
-                        <h4 class="font-bold text-slate-900 dark:text-white mb-1 md:mb-2 transition-colors">Support Prioritas</h4>
+                    <div class="bg-slate-50 dark:bg-slate-800 p-5 md:p-6 rounded-3xl border border-slate-100 dark:border-slate-700 transition-all hover:bg-white dark:hover:bg-slate-750 hover:shadow-xl hover:-translate-y-1 duration-300 group">
+                        <div class="w-12 h-12 bg-white dark:bg-slate-700 rounded-2xl flex items-center justify-center shadow-sm mb-4 group-hover:shadow-md transition-all group-hover:scale-110 origin-left">
+                            <i class="bi bi-headset text-secondary text-2xl md:text-3xl"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-900 dark:text-white mb-1 md:mb-2 transition-colors group-hover:text-primary">Support Prioritas</h4>
                         <p class="text-sm text-slate-600 dark:text-slate-400 font-light transition-colors">Akun manajer khusus untuk menangani kebutuhan perusahaan Anda.</p>
                     </div>
                 </div>
