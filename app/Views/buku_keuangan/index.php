@@ -49,8 +49,26 @@
     </div>
     <?php endif; ?>
 
-    <!-- Table Card -->
+    <!-- Search & Table Card -->
     <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+        <!-- Toolbar -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 px-4 py-3 border-b border-slate-100">
+            <div class="relative w-full sm:w-72">
+                <i class="bi bi-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                <input type="text" id="bkSearch" placeholder="Cari invoice, customer, tujuan..." 
+                       class="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
+            </div>
+            <div class="flex items-center gap-2 text-sm text-slate-500">
+                <span>Tampilkan</span>
+                <select id="bkPerPage" class="border border-slate-200 rounded-lg px-2 py-1.5 text-sm outline-none">
+                    <option value="10">10</option>
+                    <option value="25" selected>25</option>
+                    <option value="50">50</option>
+                    <option value="-1">Semua</option>
+                </select>
+                <span>entri</span>
+            </div>
+        </div>
         <div class="overflow-x-auto">
             <table id="bukuKeuanganTable" class="w-full whitespace-nowrap text-xs">
                 <thead>
@@ -216,6 +234,11 @@
                 <?php endif; ?>
             </table>
         </div>
+        <!-- Pagination bar -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 px-4 py-3 border-t border-slate-100 text-sm text-slate-500">
+            <span id="bkInfo"></span>
+            <div id="bkPagination" class="flex items-center gap-1"></div>
+        </div>
     </div>
 </div>
 
@@ -364,14 +387,85 @@ function openEdit(row) {
     document.getElementById('modalEdit').classList.remove('hidden');
 }
 
-$(document).ready(function() {
-    $('#bukuKeuanganTable').DataTable({
-        "scrollX": true,
-        "pageLength": 25,
-        "order": [[1, "desc"]],
-        "language": { "search": "", "searchPlaceholder": "Cari data..." },
-        "dom": '<"flex justify-between items-center py-3 px-4 border-b"<"flex items-center"l><"flex items-center"f>>rt<"flex justify-between items-center p-4"ip>',
-    });
-});
+// ── Lightweight search + pagination (works with multi-row thead) ──
+(function() {
+    const table    = document.getElementById('bukuKeuanganTable');
+    const tbody    = table ? table.querySelector('tbody') : null;
+    const tfoot    = table ? table.querySelector('tfoot') : null;
+    if (!tbody) return;
+
+    const allRows  = Array.from(tbody.querySelectorAll('tr'));
+    let filtered   = [...allRows];
+    let perPage    = 25;
+    let currentPage = 1;
+
+    function render() {
+        allRows.forEach(r => r.style.display = 'none');
+        const total = filtered.length;
+        const start = perPage === -1 ? 0 : (currentPage - 1) * perPage;
+        const end   = perPage === -1 ? total : Math.min(start + perPage, total);
+        filtered.slice(start, end).forEach(r => r.style.display = '');
+
+        // Info
+        const infoEl = document.getElementById('bkInfo');
+        if (infoEl) {
+            infoEl.textContent = total === 0 
+                ? 'Tidak ada data ditemukan'
+                : `Menampilkan ${start + 1}–${end} dari ${total} entri`;
+        }
+
+        // Pagination
+        const pgEl = document.getElementById('bkPagination');
+        if (!pgEl) return;
+        pgEl.innerHTML = '';
+        if (perPage === -1 || total <= perPage) return;
+        const totalPages = Math.ceil(total / perPage);
+
+        function btn(label, page, disabled, active) {
+            const b = document.createElement('button');
+            b.textContent = label;
+            b.className = [
+                'px-3 py-1.5 rounded-lg text-xs font-medium transition',
+                active  ? 'bg-primary text-white shadow' : 'border border-slate-200 hover:bg-slate-50',
+                disabled ? 'opacity-40 cursor-not-allowed' : ''
+            ].join(' ');
+            if (!disabled && !active) b.onclick = () => { currentPage = page; render(); };
+            return b;
+        }
+
+        pgEl.appendChild(btn('‹', currentPage - 1, currentPage === 1, false));
+        for (let p = 1; p <= totalPages; p++) {
+            if (totalPages > 7 && p !== 1 && p !== totalPages && Math.abs(p - currentPage) > 2) {
+                if (p === 2 || p === totalPages - 1) { const d = document.createElement('span'); d.textContent = '…'; d.className = 'px-2'; pgEl.appendChild(d); }
+                continue;
+            }
+            pgEl.appendChild(btn(p, p, false, p === currentPage));
+        }
+        pgEl.appendChild(btn('›', currentPage + 1, currentPage === totalPages, false));
+    }
+
+    // Search
+    const searchEl = document.getElementById('bkSearch');
+    if (searchEl) {
+        searchEl.addEventListener('input', function() {
+            const q = this.value.toLowerCase().trim();
+            filtered = allRows.filter(r => !q || r.textContent.toLowerCase().includes(q));
+            currentPage = 1;
+            render();
+        });
+    }
+
+    // Per page
+    const ppEl = document.getElementById('bkPerPage');
+    if (ppEl) {
+        ppEl.addEventListener('change', function() {
+            perPage = parseInt(this.value);
+            currentPage = 1;
+            render();
+        });
+    }
+
+    render();
+})();
 </script>
 <?php App\Helpers\View::endSection(); ?>
