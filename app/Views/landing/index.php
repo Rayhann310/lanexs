@@ -133,13 +133,10 @@ ob_start();
             $itemsHtml = ob_get_clean();
             ?>
 
-            <!-- Marquee track — items duplicated for seamless infinite loop -->
-            <div class="partners-marquee flex items-center w-full">
-                <div class="partners-track flex items-center">
+            <!-- Marquee: single animated wrapper that contains both copies -->
+            <div class="overflow-hidden w-full">
+                <div class="partners-track inline-flex items-center">
                     <?= $itemsHtml ?>
-                </div>
-                <!-- Duplicate for seamless loop -->
-                <div class="partners-track flex items-center" aria-hidden="true">
                     <?= $itemsHtml ?>
                 </div>
             </div>
@@ -147,41 +144,24 @@ ob_start();
     </section>
 
     <style>
-    .partners-marquee {
-        overflow: hidden;
-    }
     .partners-track {
         animation: partnersScroll 30s linear infinite;
         will-change: transform;
     }
-    .partners-marquee:hover .partners-track {
+    .partners-track:hover {
         animation-play-state: paused;
     }
     @keyframes partnersScroll {
         0%   { transform: translateX(0); }
         100% { transform: translateX(-50%); }
     }
-    /* Dark mode fade edges */
-    .dark .partners-fade-left  { background: linear-gradient(to right, rgb(15 23 42), transparent); }
-    .dark .partners-fade-right { background: linear-gradient(to left,  rgb(15 23 42), transparent); }
+    /* Fade edges — light mode */
+    .partners-fade-left  { background: linear-gradient(to right, #ffffff, transparent); }
+    .partners-fade-right { background: linear-gradient(to left,  #ffffff, transparent); }
+    /* Fade edges — dark mode */
+    .dark .partners-fade-left  { background: linear-gradient(to right, #0f172a, transparent) !important; }
+    .dark .partners-fade-right { background: linear-gradient(to left,  #0f172a, transparent) !important; }
     </style>
-
-    <script>
-    // Adjust dark mode fade edge colours dynamically
-    (function() {
-        function setFades() {
-            const isDark = document.documentElement.classList.contains('dark');
-            const colour = isDark ? 'rgb(15,23,42)' : 'white';
-            document.querySelectorAll('.partners-fade-left, .partners-fade-right').forEach(el => {
-                const dir = el.classList.contains('partners-fade-left') ? 'to right' : 'to left';
-                el.style.background = `linear-gradient(${dir}, ${colour}, transparent)`;
-            });
-        }
-        setFades();
-        const obs = new MutationObserver(setFades);
-        obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-    })();
-    </script>
 
     <!-- Statistik Pencapaian (Counter) -->
     <!-- Statistik Pencapaian (Counter) -->
