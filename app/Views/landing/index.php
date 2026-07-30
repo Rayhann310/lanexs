@@ -39,7 +39,7 @@ ob_start();
                 
                 <h1 class="text-5xl sm:text-6xl lg:text-[5rem] font-heading font-black text-slate-900 dark:text-white tracking-tighter mb-6 leading-[1.1] transition-colors drop-shadow-sm">
                     Solusi Logistik Terbaik <br class="hidden sm:block">
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary relative inline-block mt-2">
+                    <span class="text-primary relative inline-block mt-2">
                         <span id="typewriter-text">Perusahaan</span><span class="animate-pulse border-r-[5px] border-primary ml-2 absolute h-[75%] top-[15%]"></span>
                     </span>
                 </h1>
