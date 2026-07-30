@@ -5,17 +5,19 @@
 /storage/uploads/*
 !/storage/uploads/.gitkeep
 
-# User-uploaded files — NEVER delete these on git pull/reset
-/public/assets/uploads/*
-!/public/assets/uploads/.gitkeep
-/public/assets/images/partners/*
-!/public/assets/images/partners/.gitkeep
-/public/assets/images/testimonials/*
-!/public/assets/images/testimonials/.gitkeep
-/public/assets/images/hero/*
-!/public/assets/images/hero/.gitkeep
+# CMS Images - Tracked in Git so they sync across environments
+!/public/assets/images/partners/
+!/public/assets/images/partners/*
+!/public/assets/images/testimonials/
+!/public/assets/images/testimonials/*
+!/public/assets/images/hero/
+!/public/assets/images/hero/*
+
+# Operational Uploads - Ignored in Git
 /public/uploads/*
 !/public/uploads/.gitkeep
 !/public/uploads/pages/
 !/public/uploads/pages/*
+!/public/uploads/testimonials/
+!/public/uploads/testimonials/*
 .DS_Store
