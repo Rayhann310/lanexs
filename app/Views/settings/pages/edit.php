@@ -647,6 +647,10 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <label class="block text-sm font-medium text-slate-600 mb-1">Sub-judul Gambar (Badge)</label>
                                 <input type="text" name="<?= $prefix ?>_subtitle" value="<?= htmlspecialchars($subtitle) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-primary text-sm">
                             </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-600 mb-1">Nomor WhatsApp (Untuk Tombol CTA)</label>
+                                <input type="text" name="<?= $prefix ?>_wa" value="<?= htmlspecialchars($settingModel->get($prefix . '_wa', '6281234567890')) ?>" placeholder="Misal: 6281234567890" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-primary text-sm">
+                            </div>
                         </div>
                     </div>
                     <div>

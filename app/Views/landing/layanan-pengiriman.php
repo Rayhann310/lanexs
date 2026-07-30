@@ -33,6 +33,8 @@ $stat4_num   = $settingModel->get($prefix . '_stat4_num', '24/7');
 $stat4_label = $settingModel->get($prefix . '_stat4_label', 'Layanan Aktif');
 $cta_title   = $settingModel->get($prefix . '_cta_title', 'Siap Mengirim Sekarang?');
 $cta_desc    = $settingModel->get($prefix . '_cta_desc', 'Hubungi kami dan dapatkan estimasi biaya pengiriman gratis.');
+$wa_number   = $settingModel->get($prefix . '_wa', '6281234567890');
+$wa_link     = "https://wa.me/" . preg_replace('/[^0-9]/', '', $wa_number);
 
 ob_start();
 ?>
@@ -122,10 +124,10 @@ ob_start();
                 </h1>
                 <p class="text-xl text-slate-500 dark:text-slate-400 font-light leading-relaxed mb-8"><?= htmlspecialchars($desc) ?></p>
                 <div class="flex flex-wrap gap-3">
-                    <a href="<?= BASE_URL ?>/tracking" class="px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all hover:scale-105 shadow-lg flex items-center gap-2">
-                        <i class="bi bi-search"></i> Lacak Paket
+                    <a href="<?= $wa_link ?>?text=Halo%20LANEXS,%20saya%20ingin%20konsultasi%20layanan%20pengiriman" target="_blank" class="px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all hover:scale-105 shadow-lg flex items-center gap-2">
+                        <i class="bi bi-whatsapp"></i> Konsultasi Sekarang
                     </a>
-                    <a href="<?= BASE_URL ?>/contact" class="px-6 py-3 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-white font-bold rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all flex items-center gap-2">
+                    <a href="<?= $wa_link ?>?text=Halo%20LANEXS,%20saya%20ingin%20bertanya%20mengenai%20layanan" target="_blank" class="px-6 py-3 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-white font-bold rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all flex items-center gap-2">
                         <i class="bi bi-telephone"></i> Hubungi Kami
                     </a>
                 </div>
@@ -207,8 +209,8 @@ ob_start();
                 <div class="prose-content mb-6"><?= $page['content'] ?></div>
                 <?php endif; ?>
 
-                <a href="<?= BASE_URL ?>/contact" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all hover:scale-105 shadow-lg gap-2">
-                    <i class="bi bi-send-fill"></i> Mulai Pengiriman
+                <a href="<?= $wa_link ?>?text=Halo%20LANEXS,%20saya%20ingin%20konsultasi%20layanan%20pengiriman" target="_blank" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all hover:scale-105 shadow-lg gap-2">
+                    <i class="bi bi-whatsapp"></i> Konsultasi Sekarang
                 </a>
             </div>
         </div>
@@ -257,10 +259,10 @@ ob_start();
                 <h2 class="text-3xl md:text-4xl font-heading font-black text-white mb-3"><?= htmlspecialchars($cta_title) ?></h2>
                 <p class="text-white/80 text-lg mb-8 max-w-xl mx-auto"><?= htmlspecialchars($cta_desc) ?></p>
                 <div class="flex flex-wrap justify-center gap-4">
-                    <a href="<?= BASE_URL ?>/contact" class="px-8 py-3.5 bg-white text-amber-600 font-black rounded-xl hover:bg-amber-50 transition-all hover:scale-105 shadow-lg">
-                        Mulai Sekarang
+                    <a href="<?= $wa_link ?>?text=Halo%20LANEXS,%20saya%20ingin%20konsultasi%20layanan%20pengiriman" target="_blank" class="px-8 py-3.5 bg-white text-amber-600 font-black rounded-xl hover:bg-amber-50 transition-all hover:scale-105 shadow-lg flex items-center gap-2">
+                        <i class="bi bi-whatsapp"></i> Konsultasi Gratis
                     </a>
-                    <a href="tel:+62" class="px-8 py-3.5 bg-white/15 backdrop-blur-sm text-white font-bold rounded-xl border border-white/30 hover:bg-white/25 transition-all">
+                    <a href="<?= $wa_link ?>?text=Halo%20LANEXS,%20saya%20ingin%20bertanya%20mengenai%20layanan" target="_blank" class="px-8 py-3.5 bg-white/15 backdrop-blur-sm text-white font-bold rounded-xl border border-white/30 hover:bg-white/25 transition-all flex items-center gap-2">
                         <i class="bi bi-telephone-fill mr-2"></i> Hubungi Kami
                     </a>
                 </div>
