@@ -61,15 +61,22 @@ class LandingPageController extends BaseController
             mkdir($uploadDir, 0755, true);
         }
         foreach ($_FILES as $key => $file) {
-            if ($file['error'] === UPLOAD_ERR_OK && (strpos($key, 'sejarah_') === 0 || strpos($key, 'page_') === 0 || strpos($key, 'org_') === 0)) {
-                $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-                $allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'];
-                if (in_array($ext, $allowed)) {
-                    $filename = $key . '_' . time() . '.' . $ext;
-                    if (move_uploaded_file($file['tmp_name'], $uploadDir . $filename)) {
-                        $settingModel->set($key, BASE_URL . '/uploads/pages/' . $filename);
-                    }
-                }
+            // Allow: sejarah_, page_, org_ (includes org_chart_img, org_team_photo_*)
+            $allowedPrefixes = ['sejarah_', 'page_', 'org_'];
+            $isAllowed = false;
+            foreach ($allowedPrefixes as $prefix) {
+                if (strpos($key, $prefix) === 0) { $isAllowed = true; break; }
+            }
+            if (!$isAllowed) continue;
+            if ($file['error'] !== UPLOAD_ERR_OK) continue;
+            
+            $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+            $allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'];
+            if (!in_array($ext, $allowed)) continue;
+            
+            $filename = $key . '_' . time() . '.' . $ext;
+            if (move_uploaded_file($file['tmp_name'], $uploadDir . $filename)) {
+                $settingModel->set($key, BASE_URL . '/uploads/pages/' . $filename);
             }
         }
         if ($model->update($id, $data)) {

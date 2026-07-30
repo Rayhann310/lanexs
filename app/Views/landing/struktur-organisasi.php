@@ -360,11 +360,11 @@ ob_start();
             ?>
             <div class="group relative" data-aos="fade-up" data-aos-delay="<?= ($i % 4) * 100 ?>">
                 <div class="bg-slate-50 dark:bg-slate-900 rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-slate-100 dark:border-slate-800 hover:-translate-y-3">
-                    <!-- Photo -->
-                    <div class="relative overflow-hidden h-56">
+                    <!-- Photo 3:4 portrait ratio -->
+                    <div class="relative overflow-hidden" style="padding-bottom: 133.33%;">
                         <img src="<?= htmlspecialchars($photo) ?>" 
                              alt="<?= htmlspecialchars($member['name']) ?>" 
-                             class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700">
+                             class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700">
                         <!-- Gradient overlay on hover -->
                         <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-5">
                             <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
