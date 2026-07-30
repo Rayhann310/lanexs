@@ -619,7 +619,89 @@ document.addEventListener('DOMContentLoaded', () => {
                 $title = $settingModel->get($prefix . '_title', $defaultTitle);
                 
                 $isHeroOnly = in_array($page['slug'], ['visi-misi', 'struktur-organisasi']);
+                $isRichLayanan = in_array($page['slug'], ['layanan-pengiriman', 'layanan-pengemasan']);
                 ?>
+
+                <?php if ($isRichLayanan): ?>
+                <!-- ===== RICH EDITOR FOR LAYANAN PENGIRIMAN & PENGEMASAN ===== -->
+                <div class="p-6 border-t border-slate-100 bg-slate-50/50 space-y-8">
+                    <h3 class="text-lg font-bold text-slate-800 mb-2 flex items-center">
+                        <i class="bi bi-image mr-2 text-primary"></i> Gambar & Konten Utama
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-600 mb-1">Gambar Utama (Hero & Layout)</label>
+                            <?php if ($img): ?><img src="<?= htmlspecialchars($img) ?>" class="h-28 w-full object-cover rounded-lg mb-2 shadow-sm border border-slate-200"><?php endif; ?>
+                            <input type="file" name="<?= $prefix ?>_img" accept="image/*" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20">
+                        </div>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-600 mb-1">Tagline (Badge Hero)</label>
+                                <input type="text" name="<?= $prefix ?>_tagline" value="<?= htmlspecialchars($settingModel->get($prefix . '_tagline', '')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-primary text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-600 mb-1">Judul Gambar (Overlay)</label>
+                                <input type="text" name="<?= $prefix ?>_title" value="<?= htmlspecialchars($title) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-primary text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-600 mb-1">Sub-judul Gambar (Badge)</label>
+                                <input type="text" name="<?= $prefix ?>_subtitle" value="<?= htmlspecialchars($subtitle) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-primary text-sm">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1">Deskripsi Utama (Hero & Konten)</label>
+                        <textarea name="<?= $prefix ?>_desc" rows="3" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-primary text-sm resize-y"><?= htmlspecialchars($settingModel->get($prefix . '_desc', '')) ?></textarea>
+                    </div>
+
+                    <!-- STATISTICS -->
+                    <div>
+                        <h4 class="font-bold text-slate-700 mb-4 flex items-center gap-2"><i class="bi bi-bar-chart-fill text-primary"></i> Statistik (4 angka di bawah hero)</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <?php for ($i = 1; $i <= 4; $i++): ?>
+                            <div class="bg-white rounded-xl p-4 border border-slate-200">
+                                <label class="block text-xs font-medium text-slate-500 mb-1">Angka <?= $i ?></label>
+                                <input type="text" name="<?= $prefix ?>_stat<?= $i ?>_num" value="<?= htmlspecialchars($settingModel->get($prefix . '_stat' . $i . '_num', '')) ?>" placeholder="Mis: 5M+" class="w-full border-b border-slate-300 text-sm py-1 outline-none focus:border-primary mb-2">
+                                <label class="block text-xs font-medium text-slate-500 mb-1">Label <?= $i ?></label>
+                                <input type="text" name="<?= $prefix ?>_stat<?= $i ?>_label" value="<?= htmlspecialchars($settingModel->get($prefix . '_stat' . $i . '_label', '')) ?>" placeholder="Mis: Paket Dikirim" class="w-full border-b border-slate-300 text-sm py-1 outline-none focus:border-primary">
+                            </div>
+                            <?php endfor; ?>
+                        </div>
+                    </div>
+
+                    <!-- FEATURES -->
+                    <div>
+                        <h4 class="font-bold text-slate-700 mb-4 flex items-center gap-2"><i class="bi bi-grid-fill text-primary"></i> Kartu Fitur (6 Kartu Unggulan)</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <?php for ($i = 1; $i <= 6; $i++): ?>
+                            <div class="bg-white rounded-xl p-4 border border-slate-200">
+                                <p class="text-xs font-bold text-slate-500 uppercase tracking-wide mb-3">Fitur <?= $i ?></p>
+                                <label class="block text-xs font-medium text-slate-500 mb-1">Judul</label>
+                                <input type="text" name="<?= $prefix ?>_feat<?= $i ?>_title" value="<?= htmlspecialchars($settingModel->get($prefix . '_feat' . $i . '_title', '')) ?>" class="w-full border-b border-slate-300 text-sm py-1 outline-none focus:border-primary mb-3">
+                                <label class="block text-xs font-medium text-slate-500 mb-1">Deskripsi</label>
+                                <textarea name="<?= $prefix ?>_feat<?= $i ?>_desc" rows="2" class="w-full border border-slate-200 rounded px-2 py-1 text-sm outline-none focus:border-primary resize-none"><?= htmlspecialchars($settingModel->get($prefix . '_feat' . $i . '_desc', '')) ?></textarea>
+                            </div>
+                            <?php endfor; ?>
+                        </div>
+                    </div>
+
+                    <!-- CTA -->
+                    <div>
+                        <h4 class="font-bold text-slate-700 mb-4 flex items-center gap-2"><i class="bi bi-megaphone-fill text-primary"></i> Bagian Call-to-Action (CTA)</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white rounded-xl p-4 border border-slate-200">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-600 mb-1">Judul CTA</label>
+                                <input type="text" name="<?= $prefix ?>_cta_title" value="<?= htmlspecialchars($settingModel->get($prefix . '_cta_title', '')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-primary text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-600 mb-1">Deskripsi CTA</label>
+                                <input type="text" name="<?= $prefix ?>_cta_desc" value="<?= htmlspecialchars($settingModel->get($prefix . '_cta_desc', '')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-primary text-sm">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <?php else: ?>
                 <div class="p-6 border-t border-slate-100 bg-slate-50/50">
                     <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
                         <i class="bi bi-image mr-2 text-primary"></i> Pengaturan Grafis Halaman
@@ -649,7 +731,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <?php endif; ?>
                 </div>
-            <?php endif; ?>
+                <?php endif; ?>
 
             <div class="px-6 pb-6 pt-4 flex items-center space-x-4 border-t border-slate-100">
                 <button type="submit" id="save-btn" class="bg-primary hover:bg-blue-700 text-white font-bold py-2.5 px-8 rounded-xl shadow-md transition-all active:scale-95 flex items-center">
