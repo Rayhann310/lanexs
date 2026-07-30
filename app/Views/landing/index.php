@@ -44,20 +44,20 @@ ob_start();
                     </span>
                 </h1>
                 
-                <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-12 leading-relaxed font-light max-w-2xl mx-auto transition-colors">
+                <p class="text-base md:text-xl text-slate-600 dark:text-slate-400 mb-8 md:mb-12 leading-relaxed font-light max-w-2xl mx-auto px-4 transition-colors">
                     <?= htmlspecialchars($heroSubtitle) ?>
                 </p>
                 
                 <!-- Tracking Form: Ultra Modern -->
-                <div class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl p-2 md:p-3 rounded-full shadow-[0_20px_50px_rgb(18,123,142,0.15)] dark:shadow-[0_20px_50px_rgb(0,0,0,0.5)] border border-white/50 dark:border-slate-700/50 max-w-2xl mx-auto transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_60px_rgb(18,123,142,0.2)] relative z-20 group">
+                <div class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl p-1.5 md:p-3 rounded-full shadow-[0_20px_50px_rgb(18,123,142,0.15)] dark:shadow-[0_20px_50px_rgb(0,0,0,0.5)] border border-white/50 dark:border-slate-700/50 max-w-2xl mx-auto transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_60px_rgb(18,123,142,0.2)] relative z-20 group w-[90vw] md:w-full">
                     <form action="<?= BASE_URL ?>/tracking" method="GET" class="flex items-center">
-                        <div class="pl-6 pr-2 text-primary group-hover:scale-110 transition-transform duration-300">
-                            <i class="bi bi-upc-scan text-2xl"></i>
+                        <div class="pl-4 md:pl-6 pr-1 md:pr-2 text-primary group-hover:scale-110 transition-transform duration-300">
+                            <i class="bi bi-upc-scan text-xl md:text-2xl"></i>
                         </div>
-                        <input type="text" name="resi" class="w-full px-4 py-4 bg-transparent border-none focus:ring-0 outline-none text-slate-800 dark:text-white placeholder-slate-400 font-medium transition-colors text-lg" placeholder="Ketik Nomor Resi Anda..." required autocomplete="off">
-                        <button type="submit" class="bg-primary hover:bg-primaryHover text-white px-8 md:px-10 py-4 rounded-full font-bold transition-all duration-300 whitespace-nowrap shadow-lg shadow-primary/40 hover:shadow-primary/60 text-lg flex items-center gap-2 group/btn">
+                        <input type="text" name="resi" class="w-full px-2 py-3 md:px-4 md:py-4 bg-transparent border-none focus:ring-0 outline-none text-slate-800 dark:text-white placeholder-slate-400 font-medium transition-colors text-base md:text-lg min-w-0" placeholder="Ketik Nomor Resi..." required autocomplete="off">
+                        <button type="submit" class="bg-primary hover:bg-primaryHover text-white px-5 md:px-10 py-3 md:py-4 rounded-full font-bold transition-all duration-300 whitespace-nowrap shadow-lg shadow-primary/40 hover:shadow-primary/60 text-sm md:text-lg flex items-center gap-1 md:gap-2 group/btn shrink-0">
                             <span>Lacak</span>
-                            <i class="bi bi-arrow-right-short text-2xl -mr-2 group-hover/btn:translate-x-1 transition-transform"></i>
+                            <i class="bi bi-arrow-right-short text-xl md:text-2xl -mr-1 md:-mr-2 group-hover/btn:translate-x-1 transition-transform"></i>
                         </button>
                     </form>
                 </div>
