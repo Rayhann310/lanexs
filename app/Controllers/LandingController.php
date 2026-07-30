@@ -76,8 +76,14 @@ class LandingController extends BaseController
             http_response_code(404);
             $page = ['id' => 0, 'slug' => $slug, 'title' => 'Halaman Tidak Ditemukan', 'content' => '<p>Halaman yang Anda cari tidak tersedia.</p>'];
         }
-        // Direct require — page.php uses ob_start/layout pattern
-        require BASE_PATH . '/app/Views/landing/page.php';
+        // Check if specific view file exists for this slug
+        $viewFile = BASE_PATH . '/app/Views/landing/' . $slug . '.php';
+        if (file_exists($viewFile)) {
+            require $viewFile;
+        } else {
+            // Fallback to generic page.php
+            require BASE_PATH . '/app/Views/landing/page.php';
+        }
     }
 
     public function docs(Request $request)
