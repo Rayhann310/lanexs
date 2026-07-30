@@ -550,7 +550,7 @@ ob_start();
 <?php
 $slot = ob_get_clean();
 
-$extraScripts = '
+$extraScripts = <<<SCRIPTS
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
     var heroSlideCount = document.querySelectorAll(".heroSwiper .swiper-slide").length;
@@ -635,6 +635,6 @@ $extraScripts = '
         typingEffect();
     }, 1000);
 </script>
-';
+SCRIPTS;
 
 require __DIR__ . '/layout.php';
