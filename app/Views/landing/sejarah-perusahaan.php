@@ -34,22 +34,16 @@ ob_start();
 }
 .dark .prose-content h1, .dark .prose-content h2, .dark .prose-content h3 { color: #f8fafc; }
 .prose-content p {
-    font-size: 1.1rem;
-    line-height: 1.8;
+    font-size: 0.95rem;
+    line-height: 1.7;
     color: #475569;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
 }
 .dark .prose-content p { color: #cbd5e1; }
-.prose-content p:first-of-type {
-    font-size: 1.25rem;
-    font-weight: 500;
-    color: #1e293b;
-}
-.dark .prose-content p:first-of-type { color: #f1f5f9; }
 .prose-content ul { list-style-type: none; padding-left: 0.5rem; margin-bottom: 1.5rem; }
-.prose-content ul li { position: relative; padding-left: 1.5rem; margin-bottom: 0.5rem; color: #475569; line-height: 1.7; font-size: 1.05rem;}
+.prose-content ul li { position: relative; padding-left: 1.25rem; margin-bottom: 0.5rem; color: #475569; line-height: 1.6; font-size: 0.95rem;}
 .dark .prose-content ul li { color: #cbd5e1; }
-.prose-content ul li::before { content: '•'; position: absolute; left: 0; color: #127B8E; font-weight: bold; font-size: 1.5rem; line-height: 1; top: 2px;}
+.prose-content ul li::before { content: '•'; position: absolute; left: 0; color: #127B8E; font-weight: bold; font-size: 1.2rem; line-height: 1; top: 1px;}
 
 /* Timeline CSS */
 .timeline-item::before {
@@ -85,10 +79,10 @@ ob_start();
                 <i class="bi <?= $meta['icon'] ?> text-primary"></i>
                 <span class="text-primary font-semibold text-sm tracking-widest uppercase">Perjalanan Kami</span>
             </div>
-            <h1 class="text-4xl md:text-6xl font-heading font-black text-white leading-tight mb-6">
+            <h1 class="text-3xl md:text-5xl font-heading font-black text-white leading-tight mb-4">
                 Menghubungkan <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">Nusantara</span> Tanpa Batas
             </h1>
-            <p class="text-lg text-slate-300 font-light">Sejarah panjang dedikasi kami dalam membangun tulang punggung logistik Indonesia.</p>
+            <p class="text-base md:text-lg text-slate-300 font-light">Sejarah panjang dedikasi kami dalam membangun tulang punggung logistik Indonesia.</p>
         </div>
     </div>
 </section>
@@ -153,32 +147,32 @@ ob_start();
                     
                     <div class="relative space-y-8">
                         <!-- Milestone 1 -->
-                        <div class="relative timeline-item flex gap-6">
-                            <div class="w-6 h-6 bg-primary rounded-full border-4 border-white dark:border-slate-800 flex-shrink-0 relative z-10 shadow-sm mt-1"></div>
+                        <div class="relative timeline-item flex gap-4 md:gap-6">
+                            <div class="w-5 h-5 md:w-6 md:h-6 bg-primary rounded-full border-4 border-white dark:border-slate-800 flex-shrink-0 relative z-10 shadow-sm mt-1"></div>
                             <div>
-                                <span class="text-primary font-bold text-lg"><?= htmlspecialchars($m1_year) ?></span>
-                                <h4 class="font-bold text-slate-800 dark:text-white text-xl mt-1"><?= htmlspecialchars($m1_title) ?></h4>
-                                <p class="text-slate-500 dark:text-slate-400 mt-2 line-height-relaxed"><?= htmlspecialchars($m1_desc) ?></p>
+                                <span class="text-primary font-bold text-base md:text-lg"><?= htmlspecialchars($m1_year) ?></span>
+                                <h4 class="font-bold text-slate-800 dark:text-white text-lg md:text-xl mt-1"><?= htmlspecialchars($m1_title) ?></h4>
+                                <p class="text-slate-500 dark:text-slate-400 mt-1 md:mt-2 text-sm md:text-base leading-relaxed"><?= htmlspecialchars($m1_desc) ?></p>
                             </div>
                         </div>
                         
                         <!-- Milestone 2 -->
-                        <div class="relative timeline-item flex gap-6">
-                            <div class="w-6 h-6 bg-blue-500 rounded-full border-4 border-white dark:border-slate-800 flex-shrink-0 relative z-10 shadow-sm mt-1"></div>
+                        <div class="relative timeline-item flex gap-4 md:gap-6">
+                            <div class="w-5 h-5 md:w-6 md:h-6 bg-blue-500 rounded-full border-4 border-white dark:border-slate-800 flex-shrink-0 relative z-10 shadow-sm mt-1"></div>
                             <div>
-                                <span class="text-blue-500 font-bold text-lg"><?= htmlspecialchars($m2_year) ?></span>
-                                <h4 class="font-bold text-slate-800 dark:text-white text-xl mt-1"><?= htmlspecialchars($m2_title) ?></h4>
-                                <p class="text-slate-500 dark:text-slate-400 mt-2 line-height-relaxed"><?= htmlspecialchars($m2_desc) ?></p>
+                                <span class="text-blue-500 font-bold text-base md:text-lg"><?= htmlspecialchars($m2_year) ?></span>
+                                <h4 class="font-bold text-slate-800 dark:text-white text-lg md:text-xl mt-1"><?= htmlspecialchars($m2_title) ?></h4>
+                                <p class="text-slate-500 dark:text-slate-400 mt-1 md:mt-2 text-sm md:text-base leading-relaxed"><?= htmlspecialchars($m2_desc) ?></p>
                             </div>
                         </div>
 
                         <!-- Milestone 3 -->
-                        <div class="relative timeline-item flex gap-6">
-                            <div class="w-6 h-6 bg-emerald-500 rounded-full border-4 border-white dark:border-slate-800 flex-shrink-0 relative z-10 shadow-sm mt-1"></div>
+                        <div class="relative timeline-item flex gap-4 md:gap-6">
+                            <div class="w-5 h-5 md:w-6 md:h-6 bg-emerald-500 rounded-full border-4 border-white dark:border-slate-800 flex-shrink-0 relative z-10 shadow-sm mt-1"></div>
                             <div>
-                                <span class="text-emerald-500 font-bold text-lg"><?= htmlspecialchars($m3_year) ?></span>
-                                <h4 class="font-bold text-slate-800 dark:text-white text-xl mt-1"><?= htmlspecialchars($m3_title) ?></h4>
-                                <p class="text-slate-500 dark:text-slate-400 mt-2 line-height-relaxed"><?= htmlspecialchars($m3_desc) ?></p>
+                                <span class="text-emerald-500 font-bold text-base md:text-lg"><?= htmlspecialchars($m3_year) ?></span>
+                                <h4 class="font-bold text-slate-800 dark:text-white text-lg md:text-xl mt-1"><?= htmlspecialchars($m3_title) ?></h4>
+                                <p class="text-slate-500 dark:text-slate-400 mt-1 md:mt-2 text-sm md:text-base leading-relaxed"><?= htmlspecialchars($m3_desc) ?></p>
                             </div>
                         </div>
                     </div>
