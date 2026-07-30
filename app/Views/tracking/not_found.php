@@ -1,28 +1,37 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resi Tidak Ditemukan - LANEXS</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: { extend: { colors: { primary: '#4e73df', secondary: '#224abe' }, fontFamily: { sans: ['Inter', 'sans-serif'] } } }
-        }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-</head>
-<body class="bg-gray-50 dark:bg-slate-900 font-sans antialiased text-gray-800 dark:text-gray-200 flex items-center justify-center min-h-screen transition-colors">
-    <div class="bg-white dark:bg-slate-800 p-10 rounded-3xl shadow-xl max-w-md w-full text-center border border-transparent dark:border-slate-700 transition-colors">
-        <div class="w-24 h-24 bg-red-50 dark:bg-red-900/30 text-red-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-6 transition-colors">
-            <i class="bi bi-x-circle-fill"></i>
+<?php
+$pageTitle = 'Resi Tidak Ditemukan - ' . APP_NAME;
+$pageDescription = 'Maaf, resi pengiriman tidak ditemukan di sistem ' . APP_NAME . '.';
+
+ob_start();
+?>
+
+<div class="pt-32 pb-24 bg-slate-50 dark:bg-slate-900 transition-colors min-h-[80vh] flex flex-col items-center justify-center">
+    <div class="bg-white dark:bg-slate-800 p-10 md:p-14 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-slate-900/50 border border-slate-100 dark:border-slate-700 max-w-lg w-full text-center transition-colors">
+        <div class="w-28 h-28 bg-red-50 dark:bg-red-900/30 text-red-500 rounded-full flex items-center justify-center text-5xl mx-auto mb-8 shadow-inner transition-colors">
+            <i class="bi bi-search"></i>
+            <i class="bi bi-x absolute text-white dark:text-red-200 text-3xl translate-x-3 translate-y-3 drop-shadow-md"></i>
         </div>
-        <h2 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white transition-colors">Resi Tidak Ditemukan</h2>
-        <p class="text-gray-500 dark:text-gray-400 mb-8 transition-colors">Maaf, paket dengan nomor resi <strong class="text-gray-800 dark:text-white transition-colors"><?= htmlspecialchars($resi) ?></strong> tidak dapat kami temukan di dalam sistem.</p>
-        <a href="<?= BASE_URL ?>/" class="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-xl font-bold transition flex items-center justify-center shadow-sm">
-            <i class="bi bi-arrow-left mr-2"></i> Kembali ke Beranda
-        </a>
+        
+        <h2 class="text-3xl font-extrabold mb-3 text-slate-900 dark:text-white transition-colors">Resi Tidak Ditemukan</h2>
+        
+        <p class="text-slate-500 dark:text-slate-400 mb-8 text-lg transition-colors">
+            Maaf, paket dengan nomor resi <br>
+            <strong class="text-slate-800 dark:text-white bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-lg border border-slate-200 dark:border-slate-600 inline-block mt-3 text-xl tracking-wider transition-colors"><?= htmlspecialchars($resi) ?></strong> <br>
+            tidak dapat kami temukan di dalam sistem.
+        </p>
+        
+        <div class="flex flex-col gap-3">
+            <a href="<?= BASE_URL ?>/tracking" class="bg-primary hover:bg-secondary text-white px-6 py-3.5 rounded-2xl font-bold transition-all shadow-lg shadow-primary/30 hover:shadow-xl hover:-translate-y-1 flex items-center justify-center">
+                <i class="bi bi-arrow-repeat mr-2"></i> Coba Resi Lain
+            </a>
+            <a href="<?= BASE_URL ?>/" class="bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 px-6 py-3.5 rounded-2xl font-bold transition-all flex items-center justify-center">
+                <i class="bi bi-house-door mr-2"></i> Kembali ke Beranda
+            </a>
+        </div>
     </div>
-</body>
-</html>
+</div>
+
+<?php
+$content = ob_get_clean();
+require __DIR__ . '/../landing/layout.php';
+?>
