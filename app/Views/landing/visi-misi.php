@@ -9,31 +9,153 @@ $hero_bg = $settingModel->get('page_visi_misi_img', 'https://images.unsplash.com
 ob_start();
 ?>
 <style>
+/* Reset and Base */
 .prose-content h1, .prose-content h2, .prose-content h3 {
     font-family: 'Outfit', sans-serif;
     color: #0f172a;
     font-weight: 800;
-    margin-top: 1.5rem;
-    margin-bottom: 1rem;
     line-height: 1.3;
 }
 .dark .prose-content h1, .dark .prose-content h2, .dark .prose-content h3 { color: #f8fafc; }
-.prose-content p {
-    font-size: 0.95rem;
-    line-height: 1.7;
-    color: #475569;
-    margin-bottom: 1.25rem;
+.prose-content p { color: #475569; }
+.dark .prose-content p { color: #cbd5e1; }
+
+/* --- VISI SECTION --- */
+.prose-content h2:first-of-type {
+    text-align: center;
+    font-size: 2.25rem;
+    background: linear-gradient(135deg, #127B8E, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+.prose-content p:first-of-type {
+    text-align: center;
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #334155;
+    font-style: italic;
+    font-weight: 600;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
+    border-radius: 2rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), inset 0 2px 4px rgba(255, 255, 255, 1);
+    margin-bottom: 5rem;
+    position: relative;
+    z-index: 1;
+}
+.dark .prose-content p:first-of-type {
+    background: linear-gradient(145deg, #1e293b, #0f172a);
+    color: #e2e8f0;
+    border-color: #334155;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+/* Quote Icons for Visi */
+.prose-content p:first-of-type::before {
+    content: '\F6B0'; /* quote-left from bootstrap icons */
+    font-family: 'bootstrap-icons';
+    position: absolute;
+    top: -1.5rem;
+    left: 2rem;
+    font-size: 3rem;
+    color: #127B8E;
+    opacity: 0.2;
+    z-index: -1;
+}
+.prose-content p:first-of-type::after {
+    content: '\F6B1'; /* quote-right */
+    font-family: 'bootstrap-icons';
+    position: absolute;
+    bottom: -1.5rem;
+    right: 2rem;
+    font-size: 3rem;
+    color: #3b82f6;
+    opacity: 0.2;
+    z-index: -1;
+}
+
+@media (min-width: 768px) {
+    .prose-content p:first-of-type { font-size: 1.35rem; padding: 3rem; }
+}
+
+/* --- MISI SECTION --- */
+.prose-content h2:nth-of-type(2) {
+    text-align: center;
+    font-size: 2.25rem;
+    background: linear-gradient(135deg, #3b82f6, #127B8E);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 2.5rem;
+}
+
+.prose-content ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
 }
 @media (min-width: 768px) {
-    .prose-content p { font-size: 1.05rem; line-height: 1.8; }
-    .prose-content ul li { font-size: 1.05rem !important; }
+    .prose-content ul {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
 }
-.dark .prose-content p { color: #cbd5e1; }
-.prose-content ul { list-style-type: none; padding-left: 0.5rem; margin-bottom: 1.5rem; }
-.prose-content ul li { position: relative; padding-left: 1.25rem; margin-bottom: 0.5rem; color: #475569; line-height: 1.6; font-size: 0.95rem;}
-.dark .prose-content ul li { color: #cbd5e1; }
-.prose-content ul li::before { content: '•'; position: absolute; left: 0; color: #127B8E; font-weight: bold; font-size: 1.2rem; line-height: 1; top: 1px;}
-.prose-content img { border-radius: 1rem; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); max-width: 100%; height: auto; margin-bottom: 2rem;}
+
+.prose-content ul li {
+    position: relative;
+    background: white;
+    padding: 1.75rem 1.75rem 1.75rem 4.5rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f1f5f9;
+    color: #475569;
+    line-height: 1.7;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+}
+.dark .prose-content ul li {
+    background: #1e293b;
+    border-color: #334155;
+    color: #cbd5e1;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+.prose-content ul li:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    border-color: #127B8E;
+    z-index: 10;
+}
+.dark .prose-content ul li:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+/* Custom Checkmark for Misi */
+.prose-content ul li::before {
+    content: '\F26E'; /* check-circle-fill */
+    font-family: 'bootstrap-icons';
+    position: absolute;
+    left: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #127B8E;
+    font-size: 1.75rem;
+    transition: transform 0.4s ease;
+}
+.prose-content ul li:hover::before {
+    transform: translateY(-50%) scale(1.2) rotate(360deg);
+}
+
+.prose-content img { border-radius: 1.5rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); max-width: 100%; height: auto; margin-bottom: 2rem;}
 </style>
 
 <!-- Page Hero Banner -->
