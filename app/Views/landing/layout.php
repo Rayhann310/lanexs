@@ -149,7 +149,7 @@
 
     <!-- ===== NAVBAR ===== -->
     <?php $navWhite = $navbarWhite ?? false; ?>
-    <nav class="fixed w-full z-50 transition-all duration-300 py-3 <?= $navWhite ? 'navbar-white' : '' ?>" id="navbar">
+    <nav class="fixed w-full z-50 transition-all duration-300 lg:py-3 <?= $navWhite ? 'navbar-white' : '' ?>" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
 
@@ -364,12 +364,10 @@
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 60) {
                 navbar.classList.add('nav-scrolled');
-                navbar.classList.remove('py-3');
-                navbar.classList.add('py-2');
+                navbar.classList.remove('lg:py-3');
             } else {
                 navbar.classList.remove('nav-scrolled');
-                navbar.classList.remove('py-2');
-                navbar.classList.add('py-3');
+                navbar.classList.add('lg:py-3');
             }
         });
         // Trigger once on load
