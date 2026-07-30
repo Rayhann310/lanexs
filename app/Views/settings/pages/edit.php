@@ -733,6 +733,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <?php endif; ?>
 
+            <?php endif; ?>
+
             <div class="px-6 pb-6 pt-4 flex items-center space-x-4 border-t border-slate-100">
                 <button type="submit" id="save-btn" class="bg-primary hover:bg-blue-700 text-white font-bold py-2.5 px-8 rounded-xl shadow-md transition-all active:scale-95 flex items-center">
                     <i class="bi bi-save mr-2"></i> Simpan Perubahan
