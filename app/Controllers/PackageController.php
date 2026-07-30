@@ -323,13 +323,29 @@ class PackageController extends BaseController
             
             \App\Services\AuditLogger::log('UPDATE_STATUS', 'Package', $id, ['status' => $oldData['status']], ['status' => $status, 'description' => $description]);
 
+            $imagePath = null;
+            if (isset($_FILES['proof_image']) && $_FILES['proof_image']['error'] == UPLOAD_ERR_OK) {
+                $uploadDir = __DIR__ . '/../../public/uploads/tracking/';
+                if (!is_dir($uploadDir)) {
+                    mkdir($uploadDir, 0777, true);
+                }
+                
+                $extension = pathinfo($_FILES['proof_image']['name'], PATHINFO_EXTENSION);
+                $filename = uniqid('proof_') . '_' . time() . '.' . $extension;
+                
+                if (move_uploaded_file($_FILES['proof_image']['tmp_name'], $uploadDir . $filename)) {
+                    $imagePath = 'uploads/tracking/' . $filename;
+                }
+            }
+
             $trackingModel = new TrackingHistory();
             $trackingModel->create([
                 'package_id' => $id,
                 'branch_id' => $branchId,
                 'user_id' => $_SESSION['user_id'],
                 'status' => $status,
-                'description' => $description
+                'description' => $description,
+                'proof_image' => $imagePath
             ]);
             
             if ($status === 'SELESAI') {

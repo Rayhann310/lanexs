@@ -329,7 +329,7 @@
                 </button>
             </div>
 
-            <form :action="statusFormAction" method="POST" class="p-6 space-y-4" id="statusUpdateForm">
+            <form :action="statusFormAction" method="POST" enctype="multipart/form-data" class="p-6 space-y-4" id="statusUpdateForm">
                 <!-- Status Select -->
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-1">Status Baru</label>
@@ -371,6 +371,12 @@
                         <!-- populated via JS from API -->
                     </select>
                     <p class="text-[11px] text-slate-400 mt-1"><i class="bi bi-lightbulb mr-1"></i>Ketik deskripsi baru atau pilih dari template yang tersimpan</p>
+                </div>
+
+                <!-- Image Proof Upload -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Bukti Pengiriman (Foto) <span class="text-slate-400 font-normal">(opsional)</span></label>
+                    <input type="file" name="proof_image" accept="image/*" class="w-full text-xs px-2 py-2 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition bg-white file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
                 </div>
 
                 <!-- Saved Templates Panel -->

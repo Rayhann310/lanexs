@@ -105,6 +105,17 @@
                                             <?php if ($history['location']): ?>
                                                 <p class="text-xs font-semibold text-primary mt-2"><i class="bi bi-geo-alt-fill"></i> <?= htmlspecialchars($history['location']) ?></p>
                                             <?php endif; ?>
+                                            <?php if (!empty($history['proof_image'])): ?>
+                                                <div class="mt-3">
+                                                    <a href="<?= BASE_URL ?>/<?= $history['proof_image'] ?>" target="_blank" class="inline-block relative group rounded-lg overflow-hidden shadow-sm border border-gray-200 dark:border-slate-700">
+                                                        <img src="<?= BASE_URL ?>/<?= $history['proof_image'] ?>" alt="Bukti Pengiriman" class="h-32 w-auto object-cover opacity-90 group-hover:opacity-100 transition-opacity" style="max-width: 100%;">
+                                                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                                            <i class="bi bi-zoom-in text-white text-2xl"></i>
+                                                        </div>
+                                                    </a>
+                                                    <a href="<?= BASE_URL ?>/<?= $history['proof_image'] ?>" download class="inline-block mt-2 text-xs text-primary hover:text-secondary font-medium bg-primary/10 px-3 py-1.5 rounded-lg transition-colors"><i class="bi bi-download mr-1"></i> Unduh Foto</a>
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
                                         <div class="mt-2 sm:mt-0 text-left sm:text-right">
                                             <span class="text-xs font-bold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-slate-700 px-3 py-1 rounded-full transition-colors"><?= date('d M Y, H:i', strtotime($history['created_at'])) ?></span>
@@ -150,6 +161,18 @@
                                           dateObj.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'});
                                           
                     const locHtml = data.location ? `<p class="text-xs font-semibold text-primary mt-2"><i class="bi bi-geo-alt-fill"></i> ${data.location}</p>` : '';
+                    
+                    const imgHtml = data.proof_image ? `
+                        <div class="mt-3">
+                            <a href="<?= BASE_URL ?>/${data.proof_image}" target="_blank" class="inline-block relative group rounded-lg overflow-hidden shadow-sm border border-blue-200 dark:border-blue-800">
+                                <img src="<?= BASE_URL ?>/${data.proof_image}" alt="Bukti Pengiriman" class="h-32 w-auto object-cover opacity-90 group-hover:opacity-100 transition-opacity" style="max-width: 100%;">
+                                <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <i class="bi bi-zoom-in text-white text-2xl"></i>
+                                </div>
+                            </a>
+                            <a href="<?= BASE_URL ?>/${data.proof_image}" download class="inline-block mt-2 text-xs text-primary hover:text-secondary font-medium bg-primary/10 px-3 py-1.5 rounded-lg transition-colors"><i class="bi bi-download mr-1"></i> Unduh Foto</a>
+                        </div>
+                    ` : '';
 
                     // Construct new HTML node
                     const newItem = document.createElement('div');
@@ -162,6 +185,7 @@
                                 <h4 class="font-bold text-gray-800 dark:text-gray-200 transition-colors">${data.status}</h4>
                                 <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 transition-colors">${data.description}</p>
                                 ${locHtml}
+                                ${imgHtml}
                             </div>
                             <div class="mt-2 sm:mt-0 text-left sm:text-right">
                                 <span class="text-xs font-bold text-primary bg-white dark:bg-slate-800 px-3 py-1 rounded-full shadow-sm transition-colors">${formattedDate}</span>
