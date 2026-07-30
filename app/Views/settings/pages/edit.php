@@ -302,7 +302,15 @@
                     <input type="hidden" name="org_chart_data" id="orgChartData" value="<?= htmlspecialchars($org_chart_data) ?>">
                 </div>
                 
-                <?php $org_team_data = $settingModel->get('org_team_data', '[]'); ?>
+                <?php 
+                    $org_team_data = $settingModel->get('org_team_data', '[]');
+                    $org_team_arr = json_decode($org_team_data, true) ?: [];
+                    foreach ($org_team_arr as &$m) {
+                        $m['photo'] = $settingModel->get('org_team_photo_' . $m['id'], '');
+                    }
+                    unset($m);
+                    $org_team_data = json_encode($org_team_arr);
+                ?>
                 <div class="p-6 border-t border-slate-100 bg-slate-50/50 mt-6">
                     <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
                         <i class="bi bi-people mr-2 text-primary"></i> Pengaturan Anggota Tim (Our Team)
@@ -540,9 +548,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 <button type="button" class="absolute -top-2 -right-2 bg-red-100 text-red-500 hover:bg-red-500 hover:text-white rounded-full w-8 h-8 flex items-center justify-center shadow-sm transition-colors" onclick="deleteTeam(${member.id})"><i class="bi bi-x-lg text-sm"></i></button>
                 
                 <div class="mb-3 text-center">
-                    <label class="block text-xs font-medium text-slate-500 mb-2">Foto Profil (Opsional)</label>
+                    <label class="block text-xs font-medium text-slate-500 mb-2">Foto Profil</label>
+                    ${member.photo
+                        ? '<img src="' + member.photo + '" class="w-20 h-28 object-cover object-top rounded-xl mx-auto mb-2 border-2 border-primary/30 shadow-sm">'
+                        : '<div class="w-20 h-28 bg-slate-200 rounded-xl mx-auto mb-2 flex items-center justify-center text-slate-400"><i class="bi bi-person text-3xl"></i></div>'
+                    }
                     <input type="file" name="org_team_photo_${member.id}" accept="image/*" class="w-full text-xs text-slate-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-slate-200 hover:file:bg-slate-300 transition-colors">
-                    <p class="text-[10px] text-slate-400 mt-1">Upload gambar baru untuk menimpa foto lama jika ada.</p>
+                    <p class="text-[10px] text-slate-400 mt-1">${member.photo ? 'Upload baru untuk mengganti foto.' : 'Belum ada foto. Silakan upload.'}</p>
                 </div>
                 
                 <div class="mb-3">
