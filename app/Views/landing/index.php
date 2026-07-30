@@ -22,10 +22,10 @@ ob_start();
                     <?php endforeach; ?>
                 </div>
             </div>
-            <!-- Overlay to ensure text readability -->
-            <div class="absolute inset-0 bg-white/80 dark:bg-slate-900/85 backdrop-blur-[2px] z-10 transition-colors"></div>
-            <!-- Additional gradient overlay for smooth transition to next section -->
-            <div class="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent dark:from-slate-900 dark:via-slate-900/40 z-10 transition-colors"></div>
+            <!-- Overlay to ensure text readability but keep the banner visible -->
+            <div class="absolute inset-0 bg-white/40 dark:bg-slate-900/60 z-10 transition-colors"></div>
+            <!-- Additional gradient overlay to make text pop -->
+            <div class="absolute inset-0 bg-gradient-to-t from-white via-white/60 to-transparent dark:from-slate-900 dark:via-slate-900/80 z-10 transition-colors"></div>
         </div>
 
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 text-center mt-2 lg:mt-10">
