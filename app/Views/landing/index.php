@@ -311,7 +311,7 @@ ob_start();
                     <p class="text-slate-600 dark:text-slate-400 font-light text-lg leading-relaxed mb-10 transition-colors">
                         Berbeda dari ekspedisi ritel konvensional, LANEXS diformulasikan khusus untuk menangani kerumitan rantai pasok B2B dengan pendekatan yang terstruktur, transparan, dan dapat diandalkan.
                     </p>
-                    <a href="#kontak" class="inline-flex items-center px-8 py-4 bg-slate-900 dark:bg-primary text-white font-bold rounded-full shadow-xl hover:shadow-slate-900/20 dark:hover:shadow-primary/40 hover:-translate-y-1 transition-all group">
+                    <a href="<?= BASE_URL ?>/page/kontak-kami" class="inline-flex items-center px-8 py-4 bg-slate-900 dark:bg-primary text-white font-bold rounded-full shadow-xl hover:shadow-slate-900/20 dark:hover:shadow-primary/40 hover:-translate-y-1 transition-all group">
                         Hubungi Tim Sales Kami <i class="bi bi-arrow-right ml-3 text-xl group-hover:translate-x-1 transition-transform"></i>
                     </a>
                 </div>
@@ -407,7 +407,7 @@ ob_start();
                         <p class="text-slate-300 font-light text-lg">Bergabunglah dengan ratusan perusahaan lain yang telah mempercayakan pengiriman B2B mereka kepada sistem handal LANEXS.</p>
                     </div>
                     <div class="shrink-0">
-                        <a href="#kontak" class="inline-flex items-center justify-center bg-white text-slate-900 font-bold px-8 py-5 rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 text-lg group">
+                        <a href="<?= BASE_URL ?>/page/kontak-kami" class="inline-flex items-center justify-center bg-white text-slate-900 font-bold px-8 py-5 rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 text-lg group">
                             Hubungi Tim Kami
                             <i class="bi bi-arrow-right-short text-3xl -mr-2 ml-2 group-hover:translate-x-1 transition-transform"></i>
                         </a>
