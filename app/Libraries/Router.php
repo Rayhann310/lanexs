@@ -107,6 +107,10 @@ class Router
         }
 
         http_response_code(404);
-        echo "404 Not Found";
+        if (file_exists(BASE_PATH . '/app/Views/errors/404.php')) {
+            require BASE_PATH . '/app/Views/errors/404.php';
+        } else {
+            echo "404 Not Found";
+        }
     }
 }

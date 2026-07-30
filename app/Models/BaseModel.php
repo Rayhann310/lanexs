@@ -36,7 +36,13 @@ abstract class BaseModel
                 PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
             ]);
         } catch (PDOException $e) {
-            die("Database connection failed. Please create database '{$config['database']}' first.");
+            http_response_code(503);
+            if (defined('BASE_PATH') && file_exists(BASE_PATH . '/app/Views/errors/503.php')) {
+                require BASE_PATH . '/app/Views/errors/503.php';
+            } else {
+                echo "Database connection failed. Please create database '{$config['database']}' first.";
+            }
+            die();
         }
     }
 
