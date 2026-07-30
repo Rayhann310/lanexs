@@ -15,10 +15,10 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#0ea5e9', // Neon Cyan
-                        primaryHover: '#0284c7', // Darker Cyan
-                        secondary: '#2dd4bf', // Teal/Neon Accent
-                        secondaryHover: '#14b8a6',
+                        primary: '#127B8E', // Logo Teal
+                        primaryHover: '#0e6272', // Darker Teal
+                        secondary: '#F8B017', // Logo Yellow
+                        secondaryHover: '#c68c12',
                         darkBg: '#030712' // Midnight Black
                     },
                     fontFamily: {

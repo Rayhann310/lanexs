@@ -20,7 +20,10 @@ ob_start();
                     </div>
                     
                     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-heading font-black text-slate-900 dark:text-white tracking-tight mb-6 leading-tight transition-colors">
-                        <?= htmlspecialchars($heroTitle) ?>
+                        Solusi Logistik Terbaik Untuk <br>
+                        <span class="text-primary relative inline-block">
+                            <span id="typewriter-text">Perusahaan</span><span class="animate-pulse border-r-4 border-primary ml-1 absolute h-[80%] top-[10%]"></span>
+                        </span>
                     </h1>
                     
                     <p class="text-lg text-slate-600 dark:text-slate-400 mb-10 leading-relaxed font-light max-w-lg transition-colors">
@@ -478,6 +481,50 @@ $extraScripts = '
             1024: { slidesPerView: 3, spaceBetween: 40 }
         }
     });
+    // Typewriter Effect
+    const words = ["Pergudangan", "Kargo Udara", "Distribusi Darat", "Perusahaan B2B", "E-Commerce"];
+    let i = 0;
+    let timer;
+
+    function typingEffect() {
+        let word = words[i].split("");
+        var loopTyping = function() {
+            if (word.length > 0) {
+                document.getElementById("typewriter-text").innerHTML += word.shift();
+            } else {
+                setTimeout(deletingEffect, 2000);
+                return false;
+            }
+            timer = setTimeout(loopTyping, 100);
+        };
+        loopTyping();
+    }
+
+    function deletingEffect() {
+        let word = words[i].split("");
+        var loopDeleting = function() {
+            if (word.length > 0) {
+                word.pop();
+                document.getElementById("typewriter-text").innerHTML = word.join("");
+            } else {
+                if (words.length > (i + 1)) {
+                    i++;
+                } else {
+                    i = 0;
+                }
+                setTimeout(typingEffect, 500);
+                return false;
+            }
+            timer = setTimeout(loopDeleting, 50);
+        };
+        loopDeleting();
+    }
+    
+    // Clear initial text and start typing
+    setTimeout(function() {
+        document.getElementById("typewriter-text").innerHTML = "";
+        typingEffect();
+    }, 1000);
 </script>
 ';
 
