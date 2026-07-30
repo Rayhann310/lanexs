@@ -45,14 +45,14 @@ ob_start();
 </section>
 
 <!-- Page Content -->
-<section class="py-16 bg-slate-50">
+<section class="py-16 bg-slate-50 dark:bg-slate-900 transition-colors">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 md:p-12" data-aos="fade-up" data-aos-delay="100">
-            <div class="prose-content">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-8 md:p-12 transition-colors hover:shadow-lg" data-aos="fade-up" data-aos-delay="100">
+            <div class="prose-content dark:text-slate-300">
                 <?php if (!empty($page['content'])): ?>
                     <?= $page['content'] ?>
                 <?php else: ?>
-                    <div class="text-center py-12 text-slate-400">
+                    <div class="text-center py-12 text-slate-400 dark:text-slate-500">
                         <i class="bi bi-file-earmark-plus text-5xl mb-4 block"></i>
                         <p class="font-medium">Konten halaman ini belum diisi.</p>
                         <?php if(isset($_SESSION['role_id']) && $_SESSION['role_id'] == 1): ?>

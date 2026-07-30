@@ -23,26 +23,32 @@
             width: 2px;
             background: #e5e7eb;
             z-index: 0;
+            transition: background-color 0.3s;
+        }
+        @media (prefers-color-scheme: dark) {
+            html.dark .timeline-container::before {
+                background: #334155;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-50 font-sans antialiased text-gray-800">
+<body class="bg-gray-50 dark:bg-slate-900 font-sans antialiased text-gray-800 dark:text-gray-200 transition-colors">
     <!-- Navbar -->
-    <nav class="bg-white shadow-sm py-4">
+    <nav class="bg-white dark:bg-slate-800 shadow-sm py-4 transition-colors">
         <div class="max-w-5xl mx-auto px-4 flex justify-between items-center">
             <a href="<?= BASE_URL ?>/" class="flex items-center space-x-2 text-primary">
                 <i class="bi bi-truck text-3xl"></i>
-                <span class="font-bold text-2xl tracking-tight">LANEXS</span>
+                <span class="font-bold text-2xl tracking-tight dark:text-white">LANEXS</span>
             </a>
-            <a href="<?= BASE_URL ?>/" class="text-gray-500 hover:text-primary transition font-medium"><i class="bi bi-house-door mr-1"></i> Beranda</a>
+            <a href="<?= BASE_URL ?>/" class="text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition font-medium"><i class="bi bi-house-door mr-1"></i> Beranda</a>
         </div>
     </nav>
 
     <div class="max-w-5xl mx-auto px-4 py-10">
         <div class="flex items-center justify-between mb-6">
             <div>
-                <h1 class="text-3xl font-bold text-gray-900 mb-1">Status Pengiriman</h1>
-                <p class="text-gray-500">Nomor Resi: <strong class="text-primary"><?= htmlspecialchars($package['resi']) ?></strong></p>
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-1 transition-colors">Status Pengiriman</h1>
+                <p class="text-gray-500 dark:text-gray-400 transition-colors">Nomor Resi: <strong class="text-primary"><?= htmlspecialchars($package['resi']) ?></strong></p>
             </div>
             <div class="hidden sm:block">
                 <span id="liveStatus" class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-green-100 text-green-700">
@@ -55,53 +61,53 @@
             <!-- Left Info Panel -->
             <div class="lg:col-span-1 space-y-6">
                 <!-- Package Details Card -->
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <h3 class="font-bold text-gray-800 border-b border-gray-100 pb-3 mb-4"><i class="bi bi-box-seam text-primary mr-2"></i> Detail Paket</h3>
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 transition-colors hover:shadow-lg">
+                    <h3 class="font-bold text-gray-800 dark:text-white border-b border-gray-100 dark:border-slate-700 pb-3 mb-4 transition-colors"><i class="bi bi-box-seam text-primary mr-2"></i> Detail Paket</h3>
                     
                     <div class="mb-4">
-                        <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">Pengirim</p>
-                        <p class="font-medium text-gray-800"><?= htmlspecialchars($package['sender_name']) ?></p>
-                        <p class="text-sm text-gray-500"><?= htmlspecialchars($package['origin_city'] ?? 'Unknown') ?></p>
+                        <p class="text-xs text-gray-400 dark:text-gray-500 font-semibold uppercase tracking-wider mb-1 transition-colors">Pengirim</p>
+                        <p class="font-medium text-gray-800 dark:text-gray-200 transition-colors"><?= htmlspecialchars($package['sender_name']) ?></p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 transition-colors"><?= htmlspecialchars($package['origin_city'] ?? 'Unknown') ?></p>
                     </div>
                     
                     <div class="mb-4">
-                        <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">Penerima</p>
-                        <p class="font-medium text-gray-800"><?= htmlspecialchars($package['receiver_name']) ?></p>
-                        <p class="text-sm text-gray-500"><?= htmlspecialchars($package['dest_city'] ?? 'Unknown') ?></p>
-                        <p class="text-sm text-gray-500 mt-1"><?= htmlspecialchars($package['receiver_address']) ?></p>
+                        <p class="text-xs text-gray-400 dark:text-gray-500 font-semibold uppercase tracking-wider mb-1 transition-colors">Penerima</p>
+                        <p class="font-medium text-gray-800 dark:text-gray-200 transition-colors"><?= htmlspecialchars($package['receiver_name']) ?></p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 transition-colors"><?= htmlspecialchars($package['dest_city'] ?? 'Unknown') ?></p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 transition-colors"><?= htmlspecialchars($package['receiver_address']) ?></p>
                     </div>
                     
                     <div>
-                        <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">Berat</p>
-                        <p class="font-medium text-gray-800"><?= number_format($package['weight'], 1) ?> Kg</p>
+                        <p class="text-xs text-gray-400 dark:text-gray-500 font-semibold uppercase tracking-wider mb-1 transition-colors">Berat</p>
+                        <p class="font-medium text-gray-800 dark:text-gray-200 transition-colors"><?= number_format($package['weight'], 1) ?> Kg</p>
                     </div>
                 </div>
             </div>
 
             <!-- Right Timeline Panel -->
             <div class="lg:col-span-2">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 min-h-[400px]">
-                    <h3 class="font-bold text-gray-800 border-b border-gray-100 pb-3 mb-6"><i class="bi bi-clock-history text-primary mr-2"></i> Riwayat Perjalanan</h3>
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 min-h-[400px] transition-colors hover:shadow-lg">
+                    <h3 class="font-bold text-gray-800 dark:text-white border-b border-gray-100 dark:border-slate-700 pb-3 mb-6 transition-colors"><i class="bi bi-clock-history text-primary mr-2"></i> Riwayat Perjalanan</h3>
                     
                     <div class="relative timeline-container pl-10 space-y-8" id="timelineList">
                         <?php if (empty($histories)): ?>
-                            <p class="text-gray-400 text-sm">Belum ada riwayat pergerakan.</p>
+                            <p class="text-gray-400 dark:text-gray-500 text-sm transition-colors">Belum ada riwayat pergerakan.</p>
                         <?php else: ?>
                             <?php foreach ($histories as $idx => $history): ?>
                                 <div class="relative z-10" id="hist-<?= $history['id'] ?>">
                                     <!-- Timeline dot -->
-                                    <div class="absolute -left-10 w-4 h-4 rounded-full border-4 border-white shadow-sm mt-1 <?= $idx === 0 ? 'bg-primary' : 'bg-gray-300' ?>"></div>
+                                    <div class="absolute -left-10 w-4 h-4 rounded-full border-4 border-white dark:border-slate-800 shadow-sm mt-1 <?= $idx === 0 ? 'bg-primary' : 'bg-gray-300 dark:bg-slate-600' ?> transition-colors"></div>
                                     
                                     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start">
                                         <div>
-                                            <h4 class="font-bold text-gray-800"><?= htmlspecialchars($history['status']) ?></h4>
-                                            <p class="text-sm text-gray-600 mt-1"><?= htmlspecialchars($history['description']) ?></p>
+                                            <h4 class="font-bold text-gray-800 dark:text-gray-200 transition-colors"><?= htmlspecialchars($history['status']) ?></h4>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 transition-colors"><?= htmlspecialchars($history['description']) ?></p>
                                             <?php if ($history['location']): ?>
                                                 <p class="text-xs font-semibold text-primary mt-2"><i class="bi bi-geo-alt-fill"></i> <?= htmlspecialchars($history['location']) ?></p>
                                             <?php endif; ?>
                                         </div>
                                         <div class="mt-2 sm:mt-0 text-left sm:text-right">
-                                            <span class="text-xs font-bold text-gray-500 bg-gray-100 px-3 py-1 rounded-full"><?= date('d M Y, H:i', strtotime($history['created_at'])) ?></span>
+                                            <span class="text-xs font-bold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-slate-700 px-3 py-1 rounded-full transition-colors"><?= date('d M Y, H:i', strtotime($history['created_at'])) ?></span>
                                         </div>
                                     </div>
                                 </div>
@@ -131,7 +137,7 @@
                     const oldDots = document.querySelectorAll('.bg-primary.rounded-full');
                     oldDots.forEach(dot => {
                         dot.classList.remove('bg-primary');
-                        dot.classList.add('bg-gray-300');
+                        dot.classList.add('bg-gray-300', 'dark:bg-slate-600');
                     });
 
                     // Remove empty message if exists
@@ -150,15 +156,15 @@
                     newItem.className = "relative z-10 opacity-0 transition-opacity duration-1000";
                     newItem.id = "hist-" + data.id;
                     newItem.innerHTML = `
-                        <div class="absolute -left-10 w-4 h-4 rounded-full border-4 border-white shadow-sm mt-1 bg-primary ring-4 ring-primary/20 animate-pulse"></div>
-                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start bg-blue-50 p-4 rounded-xl border border-blue-100 transition-all">
+                        <div class="absolute -left-10 w-4 h-4 rounded-full border-4 border-white dark:border-slate-800 shadow-sm mt-1 bg-primary ring-4 ring-primary/20 animate-pulse transition-colors"></div>
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl border border-blue-100 dark:border-blue-800/30 transition-all">
                             <div>
-                                <h4 class="font-bold text-gray-800">${data.status}</h4>
-                                <p class="text-sm text-gray-600 mt-1">${data.description}</p>
+                                <h4 class="font-bold text-gray-800 dark:text-gray-200 transition-colors">${data.status}</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 transition-colors">${data.description}</p>
                                 ${locHtml}
                             </div>
                             <div class="mt-2 sm:mt-0 text-left sm:text-right">
-                                <span class="text-xs font-bold text-primary bg-white px-3 py-1 rounded-full shadow-sm">${formattedDate}</span>
+                                <span class="text-xs font-bold text-primary bg-white dark:bg-slate-800 px-3 py-1 rounded-full shadow-sm transition-colors">${formattedDate}</span>
                             </div>
                         </div>
                     `;

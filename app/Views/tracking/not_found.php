@@ -13,14 +13,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
-<body class="bg-gray-50 font-sans antialiased text-gray-800 flex items-center justify-center min-h-screen">
-    <div class="bg-white p-10 rounded-3xl shadow-xl max-w-md w-full text-center">
-        <div class="w-24 h-24 bg-red-50 text-red-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">
+<body class="bg-gray-50 dark:bg-slate-900 font-sans antialiased text-gray-800 dark:text-gray-200 flex items-center justify-center min-h-screen transition-colors">
+    <div class="bg-white dark:bg-slate-800 p-10 rounded-3xl shadow-xl max-w-md w-full text-center border border-transparent dark:border-slate-700 transition-colors">
+        <div class="w-24 h-24 bg-red-50 dark:bg-red-900/30 text-red-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-6 transition-colors">
             <i class="bi bi-x-circle-fill"></i>
         </div>
-        <h2 class="text-2xl font-bold mb-2">Resi Tidak Ditemukan</h2>
-        <p class="text-gray-500 mb-8">Maaf, paket dengan nomor resi <strong class="text-gray-800"><?= htmlspecialchars($resi) ?></strong> tidak dapat kami temukan di dalam sistem.</p>
-        <a href="<?= BASE_URL ?>/" class="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-xl font-bold transition flex items-center justify-center">
+        <h2 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white transition-colors">Resi Tidak Ditemukan</h2>
+        <p class="text-gray-500 dark:text-gray-400 mb-8 transition-colors">Maaf, paket dengan nomor resi <strong class="text-gray-800 dark:text-white transition-colors"><?= htmlspecialchars($resi) ?></strong> tidak dapat kami temukan di dalam sistem.</p>
+        <a href="<?= BASE_URL ?>/" class="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-xl font-bold transition flex items-center justify-center shadow-sm">
             <i class="bi bi-arrow-left mr-2"></i> Kembali ke Beranda
         </a>
     </div>

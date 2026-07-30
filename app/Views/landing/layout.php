@@ -11,6 +11,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -18,7 +19,7 @@
                         primaryHover: '#0d6573',
                         secondary: '#f3aa00',
                         secondaryHover: '#d99700',
-                        darkBg: '#1e293b'
+                        darkBg: '#0f172a'
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -43,10 +44,18 @@
             backdrop-filter: blur(12px);
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
+        .dark .nav-scrolled {
+            background-color: rgba(15, 23, 42, 0.97); /* slate-900 */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
         .hero-bg {
             background-color: #f8fafc;
             background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
             background-size: 32px 32px;
+        }
+        .dark .hero-bg {
+            background-color: #0f172a;
+            background-image: radial-gradient(#1e293b 1px, transparent 1px);
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -73,6 +82,12 @@
         .prose-content strong { color: #1e293b; }
         .prose-content blockquote { border-left: 4px solid #107c8c; padding-left: 1rem; color: #64748b; font-style: italic; margin: 1.5rem 0; }
 
+        /* Dark mode prose content */
+        .dark .prose-content h1, .dark .prose-content h2, .dark .prose-content h3 { color: #f8fafc; }
+        .dark .prose-content p, .dark .prose-content li { color: #cbd5e1; }
+        .dark .prose-content strong { color: #f8fafc; }
+        .dark .prose-content blockquote { color: #94a3b8; border-left-color: #f3aa00; }
+
         /* ── Navbar White Mode (for inner pages with dark hero) ── */
         .navbar-white:not(.nav-scrolled) .nav-link { color: rgba(255,255,255,0.85) !important; }
         .navbar-white:not(.nav-scrolled) .nav-link:hover { color: #fff !important; background-color: rgba(255,255,255,0.15) !important; }
@@ -83,12 +98,29 @@
         .navbar-white:not(.nav-scrolled) .nav-cta-outline:hover { background-color: #fff !important; color: #107c8c !important; }
         .navbar-white:not(.nav-scrolled) .nav-cta-filled { background-color: rgba(255,255,255,0.15) !important; border: 2px solid rgba(255,255,255,0.5) !important; color: #fff !important; }
         .navbar-white:not(.nav-scrolled) .nav-hamburger { color: #fff !important; }
+        
+        /* Dark Mode overrides for navbar elements */
+        .dark .nav-logo { filter: brightness(0) invert(1); }
+        .dark .nav-link, .dark .nav-btn, .dark .mobile-accordion-btn { color: #cbd5e1; }
+        .dark .nav-link:hover, .dark .nav-btn:hover, .dark .mobile-accordion-btn:hover { color: #f8fafc; background-color: #1e293b; }
+        .dark .nav-dropdown > div { background-color: #1e293b; border-color: #334155; }
+        .dark .nav-dropdown a { color: #cbd5e1; }
+        .dark .nav-dropdown a:hover { background-color: #334155; color: #f8fafc; }
+        
         /* Smooth transition for all nav elements */
         #navbar, #navbar * { transition: color 0.25s, background-color 0.25s, filter 0.25s, border-color 0.25s, box-shadow 0.25s; }
     </style>
+    <!-- Prevent FOUC -->
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
     <?php if(isset($extraHead)) echo $extraHead; ?>
 </head>
-<body class="font-sans antialiased text-slate-700 bg-slate-50 selection:bg-primary selection:text-white overflow-x-hidden">
+<body class="font-sans antialiased text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-900 selection:bg-primary selection:text-white overflow-x-hidden transition-colors duration-300">
 
     <!-- ===== NAVBAR ===== -->
     <?php $navWhite = $navbarWhite ?? false; ?>
@@ -150,7 +182,13 @@
                 </div>
 
                 <!-- CTA -->
-                <div class="hidden lg:flex items-center">
+                <div class="hidden lg:flex items-center ml-4">
+                    <!-- Dark Mode Toggle Desktop -->
+                    <button id="theme-toggle" type="button" class="text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none rounded-lg text-sm p-2.5 mr-4 transition-colors">
+                        <i id="theme-toggle-dark-icon" class="bi bi-moon-fill hidden text-lg"></i>
+                        <i id="theme-toggle-light-icon" class="bi bi-sun-fill hidden text-lg"></i>
+                    </button>
+                    
                     <?php if(isset($_SESSION['user_id'])): ?>
                         <a href="<?= BASE_URL ?>/dashboard" class="nav-cta-filled px-5 py-2.5 bg-primary text-white font-semibold rounded-lg hover:bg-primaryHover shadow-sm flex items-center text-sm">
                             <i class="bi bi-grid-fill mr-2"></i> Dashboard
@@ -162,9 +200,13 @@
                     <?php endif; ?>
                 </div>
 
-                <!-- Mobile Hamburger -->
+                <!-- Mobile Hamburger & Theme Toggle -->
                 <div class="lg:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="nav-hamburger text-slate-800 p-2 focus:outline-none">
+                    <button id="theme-toggle-mobile" type="button" class="text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none rounded-lg text-sm p-2 mr-2 transition-colors">
+                        <i id="theme-toggle-dark-icon-mobile" class="bi bi-moon-fill hidden text-xl"></i>
+                        <i id="theme-toggle-light-icon-mobile" class="bi bi-sun-fill hidden text-xl"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="nav-hamburger text-slate-800 dark:text-white p-2 focus:outline-none">
                         <i class="bi bi-list text-3xl"></i>
                     </button>
                 </div>
@@ -172,48 +214,48 @@
         </div>
 
         <!-- Mobile Menu Panel -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-slate-100 absolute w-full shadow-xl left-0 top-full max-h-[80vh] overflow-y-auto">
+        <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 absolute w-full shadow-xl left-0 top-full max-h-[80vh] overflow-y-auto transition-colors">
             <div class="flex flex-col px-5 pt-3 pb-6 space-y-1">
-                <a href="<?= BASE_URL ?>/" class="text-slate-700 font-medium py-2.5 px-3 border-b border-slate-50 rounded-lg hover:bg-slate-50">Beranda</a>
+                <a href="<?= BASE_URL ?>/" class="text-slate-700 dark:text-slate-200 font-medium py-2.5 px-3 border-b border-slate-50 dark:border-slate-800 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800">Beranda</a>
 
                 <!-- Mobile: Profil accordion -->
-                <div class="border-b border-slate-50">
-                    <button class="mobile-accordion-btn w-full flex justify-between items-center text-slate-700 font-medium py-2.5 px-3 rounded-lg hover:bg-slate-50 text-left">
+                <div class="border-b border-slate-50 dark:border-slate-800">
+                    <button class="mobile-accordion-btn w-full flex justify-between items-center text-slate-700 dark:text-slate-200 font-medium py-2.5 px-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 text-left">
                         Profil <i class="bi bi-chevron-down text-xs transition-transform"></i>
                     </button>
                     <div class="mobile-accordion-content pl-6 space-y-1 pb-2">
-                        <a href="<?= BASE_URL ?>/page/sejarah-perusahaan" class="flex items-center py-2 px-3 text-sm text-slate-600 rounded-lg hover:bg-slate-50">
-                            <i class="bi bi-clock-history mr-2 text-primary/60"></i> Sejarah Perusahaan
+                        <a href="<?= BASE_URL ?>/page/sejarah-perusahaan" class="flex items-center py-2 px-3 text-sm text-slate-600 dark:text-slate-400 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800">
+                            <i class="bi bi-clock-history mr-2 text-primary/60 dark:text-primary"></i> Sejarah Perusahaan
                         </a>
-                        <a href="<?= BASE_URL ?>/page/visi-misi" class="flex items-center py-2 px-3 text-sm text-slate-600 rounded-lg hover:bg-slate-50">
-                            <i class="bi bi-eye mr-2 text-primary/60"></i> Visi &amp; Misi
+                        <a href="<?= BASE_URL ?>/page/visi-misi" class="flex items-center py-2 px-3 text-sm text-slate-600 dark:text-slate-400 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800">
+                            <i class="bi bi-eye mr-2 text-primary/60 dark:text-primary"></i> Visi &amp; Misi
                         </a>
-                        <a href="<?= BASE_URL ?>/page/struktur-organisasi" class="flex items-center py-2 px-3 text-sm text-slate-600 rounded-lg hover:bg-slate-50">
-                            <i class="bi bi-diagram-3 mr-2 text-primary/60"></i> Struktur Organisasi
+                        <a href="<?= BASE_URL ?>/page/struktur-organisasi" class="flex items-center py-2 px-3 text-sm text-slate-600 dark:text-slate-400 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800">
+                            <i class="bi bi-diagram-3 mr-2 text-primary/60 dark:text-primary"></i> Struktur Organisasi
                         </a>
                     </div>
                 </div>
 
                 <!-- Mobile: Layanan accordion -->
-                <div class="border-b border-slate-50">
-                    <button class="mobile-accordion-btn w-full flex justify-between items-center text-slate-700 font-medium py-2.5 px-3 rounded-lg hover:bg-slate-50 text-left">
+                <div class="border-b border-slate-50 dark:border-slate-800">
+                    <button class="mobile-accordion-btn w-full flex justify-between items-center text-slate-700 dark:text-slate-200 font-medium py-2.5 px-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 text-left">
                         Layanan <i class="bi bi-chevron-down text-xs transition-transform"></i>
                     </button>
                     <div class="mobile-accordion-content pl-6 space-y-1 pb-2">
-                        <a href="<?= BASE_URL ?>/page/layanan-pengiriman" class="flex items-center py-2 px-3 text-sm text-slate-600 rounded-lg hover:bg-slate-50">
-                            <i class="bi bi-truck mr-2 text-primary/60"></i> Layanan Pengiriman
+                        <a href="<?= BASE_URL ?>/page/layanan-pengiriman" class="flex items-center py-2 px-3 text-sm text-slate-600 dark:text-slate-400 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800">
+                            <i class="bi bi-truck mr-2 text-primary/60 dark:text-primary"></i> Layanan Pengiriman
                         </a>
-                        <a href="<?= BASE_URL ?>/page/layanan-pengemasan" class="flex items-center py-2 px-3 text-sm text-slate-600 rounded-lg hover:bg-slate-50">
-                            <i class="bi bi-box-seam mr-2 text-primary/60"></i> Layanan Pengemasan
+                        <a href="<?= BASE_URL ?>/page/layanan-pengemasan" class="flex items-center py-2 px-3 text-sm text-slate-600 dark:text-slate-400 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800">
+                            <i class="bi bi-box-seam mr-2 text-primary/60 dark:text-primary"></i> Layanan Pengemasan
                         </a>
-                        <a href="<?= BASE_URL ?>/page/layanan-tracking" class="flex items-center py-2 px-3 text-sm text-slate-600 rounded-lg hover:bg-slate-50">
-                            <i class="bi bi-geo-alt mr-2 text-primary/60"></i> Tracking &amp; FAQ
+                        <a href="<?= BASE_URL ?>/page/layanan-tracking" class="flex items-center py-2 px-3 text-sm text-slate-600 dark:text-slate-400 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800">
+                            <i class="bi bi-geo-alt mr-2 text-primary/60 dark:text-primary"></i> Tracking &amp; FAQ
                         </a>
                     </div>
                 </div>
 
-                <a href="<?= BASE_URL ?>/page/experience" class="text-slate-700 font-medium py-2.5 px-3 border-b border-slate-50 rounded-lg hover:bg-slate-50">Experience</a>
-                <a href="<?= BASE_URL ?>/page/kontak-kami" class="text-slate-700 font-medium py-2.5 px-3 border-b border-slate-50 rounded-lg hover:bg-slate-50">Kontak Kami</a>
+                <a href="<?= BASE_URL ?>/page/experience" class="text-slate-700 dark:text-slate-200 font-medium py-2.5 px-3 border-b border-slate-50 dark:border-slate-800 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800">Experience</a>
+                <a href="<?= BASE_URL ?>/page/kontak-kami" class="text-slate-700 dark:text-slate-200 font-medium py-2.5 px-3 border-b border-slate-50 dark:border-slate-800 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800">Kontak Kami</a>
 
                 <div class="pt-3">
                     <?php if(isset($_SESSION['user_id'])): ?>
@@ -327,6 +369,66 @@
                 chevron.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : '';
             });
         });
+
+        // Dark Mode Logic
+        function setupThemeToggle(btnId, darkIconId, lightIconId) {
+            var themeToggleDarkIcon = document.getElementById(darkIconId);
+            var themeToggleLightIcon = document.getElementById(lightIconId);
+            var themeToggleBtn = document.getElementById(btnId);
+
+            if (!themeToggleBtn) return;
+
+            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                themeToggleLightIcon.classList.remove('hidden');
+            } else {
+                themeToggleDarkIcon.classList.remove('hidden');
+            }
+
+            themeToggleBtn.addEventListener('click', function() {
+                themeToggleDarkIcon.classList.toggle('hidden');
+                themeToggleLightIcon.classList.toggle('hidden');
+                
+                // Sync the other button if it exists
+                const otherBtnId = btnId === 'theme-toggle' ? 'theme-toggle-mobile' : 'theme-toggle';
+                const otherDarkId = otherBtnId === 'theme-toggle' ? 'theme-toggle-dark-icon' : 'theme-toggle-dark-icon-mobile';
+                const otherLightId = otherBtnId === 'theme-toggle' ? 'theme-toggle-light-icon' : 'theme-toggle-light-icon-mobile';
+                
+                const otherDark = document.getElementById(otherDarkId);
+                const otherLight = document.getElementById(otherLightId);
+                
+                if (otherDark && otherLight) {
+                    if (themeToggleDarkIcon.classList.contains('hidden')) {
+                        otherDark.classList.add('hidden');
+                        otherLight.classList.remove('hidden');
+                    } else {
+                        otherDark.classList.remove('hidden');
+                        otherLight.classList.add('hidden');
+                    }
+                }
+
+                if (localStorage.getItem('color-theme')) {
+                    if (localStorage.getItem('color-theme') === 'light') {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('color-theme', 'dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('color-theme', 'light');
+                    }
+                } else {
+                    if (document.documentElement.classList.contains('dark')) {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('color-theme', 'light');
+                    } else {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('color-theme', 'dark');
+                    }
+                }
+            });
+        }
+        
+        setupThemeToggle('theme-toggle', 'theme-toggle-dark-icon', 'theme-toggle-light-icon');
+        setupThemeToggle('theme-toggle-mobile', 'theme-toggle-dark-icon-mobile', 'theme-toggle-light-icon-mobile');
+
     </script>
     <?php if(isset($extraScripts)) echo $extraScripts; ?>
 </body>
