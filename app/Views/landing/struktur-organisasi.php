@@ -42,30 +42,64 @@ ob_start();
 .org-tree { display: flex; justify-content: center; width: max-content; margin: 0 auto; padding: 20px;}
 .org-tree ul { padding-top: 20px; position: relative; transition: all 0.5s; display: flex; justify-content: center; }
 .org-tree li { float: left; text-align: center; list-style-type: none; position: relative; padding: 20px 5px 0 5px; transition: all 0.5s; }
-.org-tree li::before, .org-tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid #cbd5e1; width: 50%; height: 20px; }
-.org-tree li::after { right: auto; left: 50%; border-left: 2px solid #cbd5e1; }
+.org-tree li::before, .org-tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid #94a3b8; width: 50%; height: 20px; }
+.org-tree li::after { right: auto; left: 50%; border-left: 2px solid #94a3b8; }
 .org-tree li:only-child::after, .org-tree li:only-child::before { display: none; }
 .org-tree li:only-child { padding-top: 0; }
 .org-tree li:first-child::before, .org-tree li:last-child::after { border: 0 none; }
-.org-tree li:last-child::before { border-right: 2px solid #cbd5e1; border-radius: 0 5px 0 0; }
+.org-tree li:last-child::before { border-right: 2px solid #94a3b8; border-radius: 0 5px 0 0; }
 .org-tree li:first-child::after { border-radius: 5px 0 0 0; }
-.org-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #cbd5e1; width: 0; height: 20px; }
-.org-tree .node-card { display: inline-block; padding: 12px 20px; text-decoration: none; transition: all 0.3s; min-width: 140px; }
-.org-tree .node-name { font-weight: 700; font-size: 0.95rem; display: block; margin-bottom: 2px; }
-.org-tree .node-title { font-size: 0.8rem; display: block; opacity: 0.9;}
+.org-tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid #94a3b8; width: 0; height: 20px; }
+.org-tree .node-card { display: inline-block; padding: 16px 28px; text-decoration: none; transition: all 0.3s; min-width: 180px; }
+.org-tree .node-title { font-size: 0.95rem; font-weight: 600; display: block; opacity: 0.95; letter-spacing: 0.02em;}
 
 /* Styles */
 /* Model 1: Corporate Blue */
 .org-tree.model_1 .node-card { background: #0f172a; color: #fff; border-radius: 8px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); border: 2px solid #1e293b; }
-.org-tree.model_1 .node-title { color: #94a3b8; }
+.org-tree.model_1 .node-title { color: #f8fafc; }
 /* Model 2: Modern Card */
 .org-tree.model_2 .node-card { background: #fff; color: #334155; border-radius: 12px; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); border: 1px solid #e2e8f0; border-top: 4px solid #3b82f6; }
-.org-tree.model_2 .node-title { color: #64748b; font-weight: 500;}
+.org-tree.model_2 .node-title { color: #475569; font-weight: 700;}
 /* Model 3: Minimalist */
-.org-tree.model_3 .node-card { background: transparent; color: #334155; border: 1px solid #cbd5e1; border-radius: 0; }
-.org-tree.model_3 .node-name { color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em;}
-.dark .org-tree.model_3 .node-name { color: #f8fafc; }
-.dark .org-tree.model_3 .node-title { color: #94a3b8; }
+.org-tree.model_3 .node-card { background: transparent; color: #334155; border: 2px solid #94a3b8; border-radius: 0; }
+.org-tree.model_3 .node-title { color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;}
+.dark .org-tree.model_3 .node-title { color: #f8fafc; }
+
+/* Responsive Mobile Tree (Vertical) */
+@media (max-width: 768px) {
+    .org-tree { width: 100%; justify-content: flex-start; padding: 10px; overflow: hidden; }
+    .org-tree ul { display: block; padding-top: 0; }
+    .org-tree ul ul { margin-left: 20px; padding-left: 0; margin-top: 15px; }
+    .org-tree li { float: none; text-align: left; padding: 15px 0 0 24px; position: relative; }
+    
+    /* Hide all desktop horizontal lines */
+    .org-tree li::before, .org-tree li::after, .org-tree ul ul::before { display: none !important; border: none !important; }
+    
+    /* Draw L-shape connectors for children */
+    .org-tree ul ul > li::before {
+        content: ''; position: absolute; top: -15px; left: 0;
+        width: 24px; height: 50px;
+        border-left: 2px solid #94a3b8 !important;
+        border-bottom: 2px solid #94a3b8 !important;
+        display: block !important;
+        border-radius: 0 0 0 8px;
+    }
+    
+    /* Vertical continuation line for siblings */
+    .org-tree ul ul > li::after {
+        content: ''; position: absolute; top: 35px; left: 0;
+        bottom: -15px;
+        border-left: 2px solid #94a3b8 !important;
+        display: block !important;
+    }
+    /* Hide downward line for the last child */
+    .org-tree ul ul > li:last-child::after { display: none !important; }
+    
+    .org-tree .node-card { width: 100%; max-width: 280px; min-width: 0; display: block; padding: 14px 20px; font-size: 1rem; }
+    
+    /* Remove padding for root element so it's flush left */
+    .org-tree > ul > li { padding-left: 0; }
+}
 </style>
 
 <!-- Page Hero Banner -->
