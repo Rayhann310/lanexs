@@ -15,7 +15,7 @@ error_reporting(E_ALL);
 // Define Base Path and Global constants
 define('BASE_PATH', dirname(__DIR__));
 $scriptName = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
-$baseUrl = str_ends_with($scriptName, '/public') ? substr($scriptName, 0, -7) : $scriptName;
+$baseUrl = (substr($scriptName, -7) === '/public') ? substr($scriptName, 0, -7) : $scriptName;
 $baseUrl = rtrim($baseUrl, '/');
 define('BASE_URL', $baseUrl);
 define('APP_NAME', 'LANEXS Logistics');
