@@ -293,10 +293,10 @@ ob_start();
         
         <form action="<?= BASE_URL ?>/tracking" method="GET" class="max-w-xl mx-auto relative group">
             <div class="absolute -inset-1 bg-gradient-to-r from-teal-400 to-cyan-400 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-            <div class="relative flex items-center bg-white dark:bg-slate-800 rounded-2xl p-2 shadow-xl border border-slate-200 dark:border-slate-700">
-                <div class="pl-4 text-slate-400"><i class="bi bi-upc-scan text-xl"></i></div>
+            <div class="relative flex flex-col md:flex-row md:items-center bg-white dark:bg-slate-800 rounded-2xl p-2 shadow-xl border border-slate-200 dark:border-slate-700">
+                <div class="hidden md:block pl-4 text-slate-400"><i class="bi bi-upc-scan text-xl"></i></div>
                 <input type="text" name="resi" placeholder="Masukkan Nomor Resi..." required class="w-full py-3 px-4 bg-transparent outline-none text-slate-700 dark:text-white font-medium placeholder-slate-400">
-                <button type="submit" class="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-md shrink-0">
+                <button type="submit" class="w-full md:w-auto bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-md shrink-0">
                     Lacak Paket
                 </button>
             </div>

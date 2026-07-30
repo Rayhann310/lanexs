@@ -298,7 +298,9 @@
     <!-- ===== END NAVBAR ===== -->
 
     <!-- ===== PAGE CONTENT ===== -->
-    <?= $slot ?? '' ?>
+    <main class="w-full relative overflow-x-hidden">
+        <?= $slot ?? '' ?>
+    </main>
     <!-- ===== END PAGE CONTENT ===== -->
 
     <!-- ===== FOOTER ===== -->
