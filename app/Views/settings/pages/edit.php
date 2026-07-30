@@ -823,6 +823,115 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
 
+                </div>
+
+                <?php elseif ($page['slug'] === 'experience'): ?>
+                <?php 
+                    $exp_gallery_data = $settingModel->get('exp_gallery_data', '[]');
+                    $exp_gallery_arr = json_decode($exp_gallery_data, true) ?: [];
+                    foreach ($exp_gallery_arr as &$g) {
+                        $g['photo'] = $settingModel->get('exp_img_' . $g['id'], '');
+                    }
+                    unset($g);
+                    $exp_gallery_data = json_encode($exp_gallery_arr);
+                ?>
+                <div class="p-6 border-t border-slate-100 bg-slate-50/50 space-y-6">
+                    <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">
+                        <i class="bi bi-images mr-2 text-indigo-600"></i> Pengaturan Halaman Experience (Galeri)
+                    </h3>
+                    
+                    <div>
+                        <h4 class="font-bold text-slate-700 mb-4 flex items-center gap-2"><i class="bi bi-card-heading text-indigo-600"></i> Header Experience</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white rounded-xl p-4 border border-slate-200">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-600 mb-1">Tagline / Label</label>
+                                <input type="text" name="<?= $prefix ?>_tagline" value="<?= htmlspecialchars($settingModel->get($prefix . '_tagline', 'Our Experience')) ?>" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-indigo-600 text-sm">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-slate-600 mb-1">Deskripsi Singkat</label>
+                                <textarea name="<?= $prefix ?>_desc" class="w-full px-3 py-2 border border-slate-200 rounded-lg outline-none focus:border-indigo-600 text-sm" rows="2"><?= htmlspecialchars($settingModel->get($prefix . '_desc', 'Galeri pengalaman kami')) ?></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h4 class="font-bold text-slate-700 flex items-center gap-2"><i class="bi bi-grid text-indigo-600"></i> Foto Galeri</h4>
+                            <button type="button" id="btnAddGallery" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-colors shadow-sm flex items-center">
+                                <i class="bi bi-plus-lg mr-1.5"></i> Tambah Foto
+                            </button>
+                        </div>
+                        <input type="hidden" name="exp_gallery_data" id="expGalleryData" value="<?= htmlspecialchars($exp_gallery_data) ?>">
+                        
+                        <div id="galleryContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                            <!-- Container JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const galleryDataInput = document.getElementById('expGalleryData');
+                    const galleryListEl = document.getElementById('galleryContainer');
+                    let gallery = [];
+                    try {
+                        gallery = JSON.parse(galleryDataInput.value);
+                    } catch(e) {
+                        gallery = [];
+                    }
+
+                    function renderGallery() {
+                        galleryListEl.innerHTML = '';
+                        gallery.forEach(item => {
+                            const div = document.createElement('div');
+                            div.className = "bg-white border border-slate-200 rounded-xl p-3 relative group";
+                            div.innerHTML = `
+                                <button type="button" onclick="deleteGallery(${item.id})" class="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shadow-md z-10 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <i class="bi bi-x-lg"></i>
+                                </button>
+                                <div class="mb-3 text-center bg-slate-50 rounded-lg p-2 border border-slate-100">
+                                    ${item.photo
+                                        ? '<img src="' + item.photo + '" class="w-full h-32 object-cover rounded-lg mx-auto mb-2 border border-slate-200">'
+                                        : '<div class="w-full h-32 bg-slate-200 rounded-lg mx-auto mb-2 flex items-center justify-center text-slate-400"><i class="bi bi-image text-3xl"></i></div>'
+                                    }
+                                    <input type="file" name="exp_img_${item.id}" accept="image/*" class="w-full text-[10px] text-slate-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-indigo-50 file:text-indigo-600 hover:file:bg-indigo-100 transition-colors">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-500 mb-1">Caption / Keterangan</label>
+                                    <input type="text" class="w-full border border-slate-300 rounded px-2 py-1.5 text-xs focus:border-indigo-600 outline-none" value="${item.caption || ''}" onchange="updateGallery(${item.id}, 'caption', this.value)" placeholder="Misal: Event Logistik 2024">
+                                </div>
+                            `;
+                            galleryListEl.appendChild(div);
+                        });
+                    }
+
+                    window.updateGallery = function(id, field, value) {
+                        const item = gallery.find(m => m.id == id);
+                        if(item) {
+                            item[field] = value;
+                            galleryDataInput.value = JSON.stringify(gallery);
+                        }
+                    };
+
+                    window.deleteGallery = function(id) {
+                        if(confirm('Hapus foto ini dari galeri?')) {
+                            gallery = gallery.filter(m => m.id != id);
+                            galleryDataInput.value = JSON.stringify(gallery);
+                            renderGallery();
+                        }
+                    };
+
+                    document.getElementById('btnAddGallery').addEventListener('click', () => {
+                        const newId = gallery.length > 0 ? Math.max(...gallery.map(m => m.id)) + 1 : 1;
+                        gallery.push({id: newId, caption: ""});
+                        galleryDataInput.value = JSON.stringify(gallery);
+                        renderGallery();
+                    });
+
+                    renderGallery();
+                });
+                </script>
+
                 <?php else: ?>
                 <div class="p-6 border-t border-slate-100 bg-slate-50/50">
                     <h3 class="text-lg font-bold text-slate-800 mb-6 flex items-center">

@@ -50,7 +50,7 @@ class LandingPageController extends BaseController
         // Save extra settings for specific pages (like sejarah-perusahaan or page_xxx)
         $settingModel = new \App\Models\Setting();
         foreach ($_POST as $key => $value) {
-            if (strpos($key, 'sejarah_') === 0 || strpos($key, 'page_') === 0 || strpos($key, 'vm_') === 0 || strpos($key, 'org_') === 0) {
+            if (strpos($key, 'sejarah_') === 0 || strpos($key, 'page_') === 0 || strpos($key, 'vm_') === 0 || strpos($key, 'org_') === 0 || strpos($key, 'exp_') === 0) {
                 $settingModel->set($key, $value);
             }
         }
@@ -61,8 +61,8 @@ class LandingPageController extends BaseController
             mkdir($uploadDir, 0755, true);
         }
         foreach ($_FILES as $key => $file) {
-            // Allow: sejarah_, page_, org_ (includes org_chart_img, org_team_photo_*)
-            $allowedPrefixes = ['sejarah_', 'page_', 'org_'];
+            // Allow: sejarah_, page_, org_, exp_
+            $allowedPrefixes = ['sejarah_', 'page_', 'org_', 'exp_'];
             $isAllowed = false;
             foreach ($allowedPrefixes as $prefix) {
                 if (strpos($key, $prefix) === 0) { $isAllowed = true; break; }
