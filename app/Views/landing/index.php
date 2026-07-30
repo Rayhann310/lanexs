@@ -196,49 +196,49 @@ ob_start();
     </section>
 
     <!-- Services Section -->
-    <section id="layanan" class="py-16 md:py-24 bg-slate-50 dark:bg-slate-900/50 border-y border-slate-200 dark:border-slate-800 transition-colors">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
-            <div class="text-center max-w-3xl mx-auto mb-10 md:mb-16" data-aos="fade-up">
-                <span class="text-primary font-bold tracking-widest uppercase text-sm mb-3 block">Layanan Utama</span>
-                <h2 class="text-3xl md:text-4xl font-heading font-black text-slate-900 dark:text-white mb-4 transition-colors">Solusi Ekspedisi Komprehensif</h2>
-                <p class="text-slate-500 dark:text-slate-400 font-light transition-colors">Layanan terpadu yang dirancang khusus untuk memenuhi kebutuhan distribusi barang perusahaan skala menengah hingga besar.</p>
+    <section id="layanan" class="py-16 md:py-24 bg-slate-50 dark:bg-slate-900/50 border-y border-slate-200 dark:border-slate-800 transition-colors relative z-10 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12 md:mb-16" data-aos="fade-up">
+                <span class="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-4 block">Layanan Utama</span>
+                <h2 class="text-3xl md:text-5xl font-heading font-black text-slate-900 dark:text-white mb-6 transition-colors tracking-tight">Solusi Ekspedisi Komprehensif</h2>
+                <p class="text-slate-500 dark:text-slate-400 font-light text-lg transition-colors">Layanan terpadu yang dirancang khusus untuk memenuhi kebutuhan distribusi barang perusahaan skala menengah hingga besar.</p>
             </div>
             
-            <div class="swiper servicesSwiper !overflow-visible md:!overflow-hidden">
-                <div class="swiper-wrapper md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6 lg:gap-8">
+            <div class="swiper servicesSwiper !overflow-visible md:!overflow-hidden pb-10 md:pb-0">
+                <div class="swiper-wrapper md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-8">
                     <!-- Card 1 -->
-                    <div class="swiper-slide md:!w-auto md:!mr-0 bg-white dark:bg-slate-800 p-6 md:p-8 rounded-3xl shadow-sm hover:shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-700 transition-all duration-300 hover:-translate-y-2 group relative overflow-hidden" data-aos="fade-up" data-aos-delay="100">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/5 to-transparent rounded-bl-full -mr-8 -mt-8 transition-transform duration-500 group-hover:scale-110"></div>
-                        <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-2xl text-primary mb-6 transition-all group-hover:scale-110 group-hover:rotate-3 duration-300 relative z-10">
+                    <div class="swiper-slide md:!w-auto md:!mr-0 bg-white dark:bg-slate-800 p-8 rounded-[2.5rem] shadow-sm hover:shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-700 transition-all duration-500 hover:-translate-y-2 group relative overflow-hidden h-full flex flex-col" data-aos="fade-up" data-aos-delay="100">
+                        <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-primary/10 to-transparent rounded-bl-full -mr-10 -mt-10 transition-transform duration-700 group-hover:scale-150"></div>
+                        <div class="w-16 h-16 bg-primary/10 rounded-[1.25rem] flex items-center justify-center text-3xl text-primary mb-8 transition-all group-hover:scale-110 group-hover:rotate-6 duration-300 relative z-10 shadow-sm border border-primary/20">
                             <i class="bi bi-truck"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 transition-colors">Cargo Darat & Laut</h3>
-                        <p class="text-slate-600 dark:text-slate-400 font-light text-sm leading-relaxed transition-colors">
+                        <h3 class="text-2xl font-black font-heading text-slate-900 dark:text-white mb-4 transition-colors">Cargo Darat & Laut</h3>
+                        <p class="text-slate-600 dark:text-slate-400 font-light text-sm leading-relaxed transition-colors flex-grow">
                             Pengiriman reguler (RES) dan ekspres (ES) lintas pulau. Melayani model FTL (Full Truck Load) maupun LTL dengan keamanan armada terpantau.
                         </p>
                     </div>
                     
                     <!-- Card 2 -->
-                    <div class="swiper-slide md:!w-auto md:!mr-0 bg-white dark:bg-slate-800 p-6 md:p-8 rounded-3xl shadow-sm hover:shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-700 transition-all duration-300 hover:-translate-y-2 group relative overflow-hidden" data-aos="fade-up" data-aos-delay="200">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/5 to-transparent rounded-bl-full -mr-8 -mt-8 transition-transform duration-500 group-hover:scale-110"></div>
-                        <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-2xl text-primary mb-6 transition-all group-hover:scale-110 group-hover:rotate-3 duration-300 relative z-10">
+                    <div class="swiper-slide md:!w-auto md:!mr-0 bg-white dark:bg-slate-800 p-8 rounded-[2.5rem] shadow-sm hover:shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-700 transition-all duration-500 hover:-translate-y-2 group relative overflow-hidden h-full flex flex-col" data-aos="fade-up" data-aos-delay="200">
+                        <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-secondary/10 to-transparent rounded-bl-full -mr-10 -mt-10 transition-transform duration-700 group-hover:scale-150"></div>
+                        <div class="w-16 h-16 bg-secondary/10 rounded-[1.25rem] flex items-center justify-center text-3xl text-secondary mb-8 transition-all group-hover:scale-110 group-hover:rotate-6 duration-300 relative z-10 shadow-sm border border-secondary/20">
                             <i class="bi bi-airplane-engines"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 transition-colors">Top Urgent Service (Udara)</h3>
-                        <p class="text-slate-600 dark:text-slate-400 font-light text-sm leading-relaxed transition-colors">
+                        <h3 class="text-2xl font-black font-heading text-slate-900 dark:text-white mb-4 transition-colors">Top Urgent Service</h3>
+                        <p class="text-slate-600 dark:text-slate-400 font-light text-sm leading-relaxed transition-colors flex-grow">
                             Layanan prioritas tinggi via kargo udara. Solusi tepat untuk pengiriman dokumen penting, alat medis, atau barang berharga dengan SLA 1x24 jam.
                         </p>
                     </div>
 
                     <!-- Card 3 -->
-                    <div class="swiper-slide md:!w-auto md:!mr-0 bg-white dark:bg-slate-800 p-6 md:p-8 rounded-3xl shadow-sm hover:shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-700 transition-all duration-300 hover:-translate-y-2 group relative overflow-hidden" data-aos="fade-up" data-aos-delay="300">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/5 to-transparent rounded-bl-full -mr-8 -mt-8 transition-transform duration-500 group-hover:scale-110"></div>
-                        <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-2xl text-primary mb-6 transition-all group-hover:scale-110 group-hover:rotate-3 duration-300 relative z-10">
+                    <div class="swiper-slide md:!w-auto md:!mr-0 bg-white dark:bg-slate-800 p-8 rounded-[2.5rem] shadow-sm hover:shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-700 transition-all duration-500 hover:-translate-y-2 group relative overflow-hidden h-full flex flex-col" data-aos="fade-up" data-aos-delay="300">
+                        <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-primary/10 to-transparent rounded-bl-full -mr-10 -mt-10 transition-transform duration-700 group-hover:scale-150"></div>
+                        <div class="w-16 h-16 bg-primary/10 rounded-[1.25rem] flex items-center justify-center text-3xl text-primary mb-8 transition-all group-hover:scale-110 group-hover:rotate-6 duration-300 relative z-10 shadow-sm border border-primary/20">
                             <i class="bi bi-box-seam"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 transition-colors">Pergudangan & Packing</h3>
-                        <p class="text-slate-600 dark:text-slate-400 font-light text-sm leading-relaxed transition-colors">
-                            Manajemen WMS yang akurat, fasilitas *pickup* barang massal, serta layanan *repacking* (kayu/bubble wrap) sesuai standar keselamatan tinggi.
+                        <h3 class="text-2xl font-black font-heading text-slate-900 dark:text-white mb-4 transition-colors">Gudang & Packing</h3>
+                        <p class="text-slate-600 dark:text-slate-400 font-light text-sm leading-relaxed transition-colors flex-grow">
+                            Manajemen WMS akurat, layanan pickup massal, serta repacking (kayu/bubble wrap) yang memenuhi standar proteksi keamanan tinggi.
                         </p>
                     </div>
                 </div>
@@ -247,94 +247,106 @@ ob_start();
     </section>
 
     <!-- Cara Kerja Section -->
-    <section class="py-16 md:py-24 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 transition-colors">
+    <section class="py-16 md:py-24 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 transition-colors relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
-                <span class="text-primary font-bold tracking-widest uppercase text-sm mb-3 block">Cara Kerja</span>
-                <h2 class="text-3xl md:text-4xl font-heading font-black text-slate-900 dark:text-white mb-4 transition-colors">Proses Pengiriman Mudah & Transparan</h2>
-                <p class="text-slate-500 dark:text-slate-400 font-light transition-colors">Hanya 4 langkah mudah dari penjemputan hingga barang tiba di tujuan dengan aman.</p>
+            <div class="text-center max-w-3xl mx-auto mb-16 md:mb-20" data-aos="fade-up">
+                <span class="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-4 block">Cara Kerja</span>
+                <h2 class="text-3xl md:text-5xl font-heading font-black text-slate-900 dark:text-white mb-6 transition-colors tracking-tight">Pengiriman Mudah & Transparan</h2>
+                <p class="text-slate-500 dark:text-slate-400 font-light text-lg transition-colors">Hanya 4 langkah mudah dari penjemputan hingga barang tiba di tujuan dengan aman.</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
-                <div class="hidden md:block absolute top-12 left-0 w-full h-px bg-slate-200 dark:bg-slate-700" data-aos="fade-right" data-aos-duration="1500"></div>
-                
-                <div class="relative text-center" data-aos="fade-up" data-aos-delay="100">
-                    <div class="w-24 h-24 mx-auto bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full flex items-center justify-center relative z-10 mb-6 shadow-sm text-primary transition-colors">
-                        <i class="bi bi-box-seam text-3xl"></i>
-                    </div>
-                    <h4 class="font-bold text-slate-900 dark:text-white text-lg mb-2">1. Booking & Pickup</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 font-light">Buat pesanan via sistem kami, tim akan langsung menjemput barang di lokasi Anda.</p>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 relative">
+                <!-- Connecting Line Desktop -->
+                <div class="hidden md:block absolute top-[4.5rem] left-[10%] w-[80%] h-[2px] bg-slate-100 dark:bg-slate-800 z-0">
+                    <div class="h-full bg-gradient-to-r from-primary to-secondary w-full origin-left transform scale-x-0 transition-transform duration-1000 delay-500" data-aos="fade-right"></div>
                 </div>
                 
-                <div class="relative text-center" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-24 h-24 mx-auto bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full flex items-center justify-center relative z-10 mb-6 shadow-sm text-primary transition-colors">
-                        <i class="bi bi-check2-square text-3xl"></i>
+                <div class="relative text-center group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-28 h-28 mx-auto bg-white dark:bg-slate-900 border-4 border-slate-100 dark:border-slate-800 rounded-full flex items-center justify-center relative z-10 mb-6 shadow-sm group-hover:border-primary/50 group-hover:-translate-y-2 group-hover:shadow-lg transition-all duration-300">
+                        <i class="bi bi-box-seam text-4xl text-slate-400 dark:text-slate-500 group-hover:text-primary transition-colors"></i>
+                        <div class="absolute -bottom-3 right-0 w-8 h-8 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center font-bold text-xs text-slate-500 dark:text-slate-400 border-[3px] border-white dark:border-slate-900">1</div>
                     </div>
-                    <h4 class="font-bold text-slate-900 dark:text-white text-lg mb-2">2. Sortir & Packing</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 font-light">Barang diverifikasi, diukur, dan dipacking ulang sesuai standar keselamatan barang.</p>
+                    <h4 class="font-bold font-heading text-slate-900 dark:text-white text-xl mb-3">Booking & Pickup</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 font-light leading-relaxed px-2">Buat pesanan via sistem kami, tim akan langsung menjemput barang di lokasi Anda.</p>
                 </div>
                 
-                <div class="relative text-center" data-aos="fade-up" data-aos-delay="300">
-                    <div class="w-24 h-24 mx-auto bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full flex items-center justify-center relative z-10 mb-6 shadow-sm text-primary transition-colors">
-                        <i class="bi bi-truck text-3xl"></i>
+                <div class="relative text-center group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-28 h-28 mx-auto bg-white dark:bg-slate-900 border-4 border-slate-100 dark:border-slate-800 rounded-full flex items-center justify-center relative z-10 mb-6 shadow-sm group-hover:border-primary/50 group-hover:-translate-y-2 group-hover:shadow-lg transition-all duration-300">
+                        <i class="bi bi-check2-square text-4xl text-slate-400 dark:text-slate-500 group-hover:text-primary transition-colors"></i>
+                        <div class="absolute -bottom-3 right-0 w-8 h-8 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center font-bold text-xs text-slate-500 dark:text-slate-400 border-[3px] border-white dark:border-slate-900">2</div>
                     </div>
-                    <h4 class="font-bold text-slate-900 dark:text-white text-lg mb-2">3. Transit Pengiriman</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 font-light">Proses pengiriman via udara, laut, atau darat secara aman dan terpantau real-time.</p>
+                    <h4 class="font-bold font-heading text-slate-900 dark:text-white text-xl mb-3">Sortir & Packing</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 font-light leading-relaxed px-2">Barang diverifikasi, diukur, dan dipacking ulang sesuai standar keselamatan tinggi.</p>
                 </div>
                 
-                <div class="relative text-center" data-aos="fade-up" data-aos-delay="400">
-                    <div class="w-24 h-24 mx-auto bg-primary border-4 border-primary/30 rounded-full flex items-center justify-center relative z-10 mb-6 shadow-lg shadow-primary/30 text-white transition-colors">
-                        <i class="bi bi-house-check text-3xl"></i>
+                <div class="relative text-center group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-28 h-28 mx-auto bg-white dark:bg-slate-900 border-4 border-slate-100 dark:border-slate-800 rounded-full flex items-center justify-center relative z-10 mb-6 shadow-sm group-hover:border-primary/50 group-hover:-translate-y-2 group-hover:shadow-lg transition-all duration-300">
+                        <i class="bi bi-truck text-4xl text-slate-400 dark:text-slate-500 group-hover:text-primary transition-colors"></i>
+                        <div class="absolute -bottom-3 right-0 w-8 h-8 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center font-bold text-xs text-slate-500 dark:text-slate-400 border-[3px] border-white dark:border-slate-900">3</div>
                     </div>
-                    <h4 class="font-bold text-slate-900 dark:text-white text-lg mb-2">4. Tiba di Tujuan</h4>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 font-light">Barang sampai di lokasi tujuan dengan tepat waktu dan Bukti Penerimaan valid.</p>
+                    <h4 class="font-bold font-heading text-slate-900 dark:text-white text-xl mb-3">Transit Aman</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 font-light leading-relaxed px-2">Proses pengiriman via udara, laut, atau darat secara aman dan terpantau *real-time*.</p>
+                </div>
+                
+                <div class="relative text-center group" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-28 h-28 mx-auto bg-primary border-[6px] border-primary/20 rounded-full flex items-center justify-center relative z-10 mb-6 shadow-xl shadow-primary/30 text-white transition-all duration-300 group-hover:scale-110">
+                        <i class="bi bi-house-check text-4xl"></i>
+                        <div class="absolute -bottom-3 right-0 w-8 h-8 bg-secondary rounded-full flex items-center justify-center font-bold text-xs text-slate-900 border-[3px] border-white dark:border-slate-900">4</div>
+                    </div>
+                    <h4 class="font-bold font-heading text-slate-900 dark:text-white text-xl mb-3">Tiba di Tujuan</h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 font-light leading-relaxed px-2">Barang sampai di lokasi tujuan dengan tepat waktu dan Bukti Penerimaan valid.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Keunggulan Section -->
-    <section id="keunggulan" class="py-16 md:py-24 bg-white dark:bg-slate-900 relative transition-colors">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16">
+    <section id="keunggulan" class="py-16 md:py-24 bg-white dark:bg-slate-900 relative transition-colors overflow-hidden">
+        <div class="absolute right-0 top-1/2 -translate-y-1/2 w-1/3 h-1/2 bg-primary/5 dark:bg-primary/10 blur-[100px] rounded-full pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-center">
                 <div data-aos="fade-right">
-                    <h2 class="text-3xl md:text-4xl font-heading font-black text-slate-900 dark:text-white mb-6 leading-tight transition-colors">Mengapa Memilih LANEXS?</h2>
-                    <p class="text-slate-600 dark:text-slate-400 font-light leading-relaxed mb-8 transition-colors">
+                    <span class="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-4 block">Nilai Lebih</span>
+                    <h2 class="text-3xl md:text-5xl font-heading font-black text-slate-900 dark:text-white mb-6 leading-tight transition-colors tracking-tight">Mengapa Memilih LANEXS?</h2>
+                    <p class="text-slate-600 dark:text-slate-400 font-light text-lg leading-relaxed mb-10 transition-colors">
                         Berbeda dari ekspedisi ritel konvensional, LANEXS diformulasikan khusus untuk menangani kerumitan rantai pasok B2B dengan pendekatan yang terstruktur, transparan, dan dapat diandalkan.
                     </p>
-                    <a href="#kontak" class="inline-flex items-center px-6 py-3 bg-slate-900 dark:bg-primary text-white font-semibold rounded-lg hover:bg-slate-800 dark:hover:bg-primaryHover transition-all hover:gap-3 group">
-                        Hubungi Tim Sales Kami <i class="bi bi-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    <a href="#kontak" class="inline-flex items-center px-8 py-4 bg-slate-900 dark:bg-primary text-white font-bold rounded-full shadow-xl hover:shadow-slate-900/20 dark:hover:shadow-primary/40 hover:-translate-y-1 transition-all group">
+                        Hubungi Tim Sales Kami <i class="bi bi-arrow-right ml-3 text-xl group-hover:translate-x-1 transition-transform"></i>
                     </a>
                 </div>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6" data-aos="fade-left">
-                    <div class="bg-slate-50 dark:bg-slate-800 p-5 md:p-6 rounded-xl border border-slate-100 dark:border-slate-700 transition-all hover:border-primary/50 hover:shadow-lg hover:-translate-y-1 duration-300 group">
-                        <div class="w-12 h-12 bg-white dark:bg-slate-900 rounded-lg flex items-center justify-center shadow-sm mb-4 transition-all group-hover:scale-110 origin-left">
-                            <i class="bi bi-shield-check text-primary text-2xl md:text-3xl"></i>
+                    <div class="bg-white dark:bg-slate-800 p-6 md:p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700/50 shadow-sm transition-all hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-2 duration-300 group relative overflow-hidden">
+                        <div class="w-14 h-14 bg-slate-50 dark:bg-slate-900 rounded-2xl flex items-center justify-center shadow-sm mb-6 transition-all group-hover:scale-110 origin-left border border-slate-100 dark:border-slate-800 group-hover:bg-primary/10 group-hover:border-primary/20">
+                            <i class="bi bi-shield-check text-primary text-3xl"></i>
                         </div>
-                        <h4 class="font-bold text-slate-900 dark:text-white mb-1 md:mb-2 transition-colors group-hover:text-primary">Keamanan Ekstra</h4>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 font-light transition-colors">Asuransi komprehensif dan standar penanganan (*handling*) barang yang ketat.</p>
+                        <h4 class="font-bold text-slate-900 dark:text-white text-xl mb-2 transition-colors group-hover:text-primary">Keamanan Ekstra</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 font-light transition-colors leading-relaxed">Asuransi komprehensif dan standar penanganan (*handling*) barang yang ketat.</p>
                     </div>
-                    <div class="bg-slate-50 dark:bg-slate-800 p-5 md:p-6 rounded-xl border border-slate-100 dark:border-slate-700 transition-all hover:border-primary/50 hover:shadow-lg hover:-translate-y-1 duration-300 group">
-                        <div class="w-12 h-12 bg-white dark:bg-slate-900 rounded-lg flex items-center justify-center shadow-sm mb-4 transition-all group-hover:scale-110 origin-left">
-                            <i class="bi bi-lightning-charge-fill text-primary text-2xl md:text-3xl"></i>
+                    
+                    <div class="bg-white dark:bg-slate-800 p-6 md:p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700/50 shadow-sm transition-all hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-2 duration-300 group relative overflow-hidden mt-0 sm:mt-8">
+                        <div class="w-14 h-14 bg-slate-50 dark:bg-slate-900 rounded-2xl flex items-center justify-center shadow-sm mb-6 transition-all group-hover:scale-110 origin-left border border-slate-100 dark:border-slate-800 group-hover:bg-primary/10 group-hover:border-primary/20">
+                            <i class="bi bi-lightning-charge-fill text-primary text-3xl"></i>
                         </div>
-                        <h4 class="font-bold text-slate-900 dark:text-white mb-1 md:mb-2 transition-colors group-hover:text-primary">Tepat Waktu</h4>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 font-light transition-colors">Komitmen kuat pada Service Level Agreement (SLA) dengan tingkat keberhasilan tinggi.</p>
+                        <h4 class="font-bold text-slate-900 dark:text-white text-xl mb-2 transition-colors group-hover:text-primary">Tepat Waktu</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 font-light transition-colors leading-relaxed">Komitmen kuat pada Service Level Agreement (SLA) dengan tingkat keberhasilan tinggi.</p>
                     </div>
-                    <div class="bg-slate-50 dark:bg-slate-800 p-5 md:p-6 rounded-xl border border-slate-100 dark:border-slate-700 transition-all hover:border-primary/50 hover:shadow-lg hover:-translate-y-1 duration-300 group">
-                        <div class="w-12 h-12 bg-white dark:bg-slate-900 rounded-lg flex items-center justify-center shadow-sm mb-4 transition-all group-hover:scale-110 origin-left">
-                            <i class="bi bi-phone-vibrate text-primary text-2xl md:text-3xl"></i>
+                    
+                    <div class="bg-white dark:bg-slate-800 p-6 md:p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700/50 shadow-sm transition-all hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-2 duration-300 group relative overflow-hidden">
+                        <div class="w-14 h-14 bg-slate-50 dark:bg-slate-900 rounded-2xl flex items-center justify-center shadow-sm mb-6 transition-all group-hover:scale-110 origin-left border border-slate-100 dark:border-slate-800 group-hover:bg-primary/10 group-hover:border-primary/20">
+                            <i class="bi bi-phone-vibrate text-primary text-3xl"></i>
                         </div>
-                        <h4 class="font-bold text-slate-900 dark:text-white mb-1 md:mb-2 transition-colors group-hover:text-primary">Real-time Tracking</h4>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 font-light transition-colors">Pantau status dan lokasi barang secara presisi melalui sistem kami.</p>
+                        <h4 class="font-bold text-slate-900 dark:text-white text-xl mb-2 transition-colors group-hover:text-primary">Real-time Tracking</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 font-light transition-colors leading-relaxed">Pantau status dan lokasi barang secara presisi melalui sistem kami yang transparan.</p>
                     </div>
-                    <div class="bg-slate-50 dark:bg-slate-800 p-5 md:p-6 rounded-xl border border-slate-100 dark:border-slate-700 transition-all hover:border-primary/50 hover:shadow-lg hover:-translate-y-1 duration-300 group">
-                        <div class="w-12 h-12 bg-white dark:bg-slate-900 rounded-lg flex items-center justify-center shadow-sm mb-4 transition-all group-hover:scale-110 origin-left">
-                            <i class="bi bi-headset text-primary text-2xl md:text-3xl"></i>
+                    
+                    <div class="bg-white dark:bg-slate-800 p-6 md:p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700/50 shadow-sm transition-all hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-2 duration-300 group relative overflow-hidden mt-0 sm:mt-8">
+                        <div class="w-14 h-14 bg-slate-50 dark:bg-slate-900 rounded-2xl flex items-center justify-center shadow-sm mb-6 transition-all group-hover:scale-110 origin-left border border-slate-100 dark:border-slate-800 group-hover:bg-primary/10 group-hover:border-primary/20">
+                            <i class="bi bi-headset text-primary text-3xl"></i>
                         </div>
-                        <h4 class="font-bold text-slate-900 dark:text-white mb-1 md:mb-2 transition-colors group-hover:text-primary">Support Prioritas</h4>
-                        <p class="text-sm text-slate-500 dark:text-slate-400 font-light transition-colors">Akun manajer khusus untuk menangani kebutuhan logistik perusahaan Anda.</p>
+                        <h4 class="font-bold text-slate-900 dark:text-white text-xl mb-2 transition-colors group-hover:text-primary">Support Prioritas</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 font-light transition-colors leading-relaxed">Akun manajer khusus untuk menangani kebutuhan unik logistik perusahaan Anda.</p>
                     </div>
                 </div>
             </div>
@@ -342,32 +354,32 @@ ob_start();
     </section>
 
     <!-- Testimoni Section -->
-    <section id="testimoni" class="py-16 md:py-24 bg-slate-50 dark:bg-slate-900 relative border-y border-slate-100 dark:border-slate-800 transition-colors">
+    <section id="testimoni" class="py-16 md:py-24 bg-slate-50 dark:bg-slate-900/50 relative border-y border-slate-100 dark:border-slate-800 transition-colors">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
-                <span class="text-primary font-bold tracking-widest uppercase text-sm mb-3 block">Testimoni Klien</span>
-                <h2 class="text-3xl md:text-4xl font-heading font-black text-slate-900 dark:text-white mb-4 transition-colors">Ulasan Mitra Bisnis</h2>
+            <div class="text-center max-w-3xl mx-auto mb-12 md:mb-16" data-aos="fade-up">
+                <span class="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-4 block">Testimoni Klien</span>
+                <h2 class="text-3xl md:text-5xl font-heading font-black text-slate-900 dark:text-white mb-4 transition-colors tracking-tight">Ulasan Mitra Bisnis</h2>
             </div>
             
-            <div class="swiper testSwiper" data-aos="fade-up" data-aos-delay="100">
+            <div class="swiper testSwiper pb-12" data-aos="fade-up" data-aos-delay="100">
                 <div class="swiper-wrapper cursor-grab active:cursor-grabbing">
                     <?php if(empty($testimonials)): ?>
-                        <div class="swiper-slide bg-white dark:bg-slate-800 p-6 md:p-8 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm transition-colors">
-                            <p class="text-slate-600 dark:text-slate-400 font-light text-sm leading-relaxed mb-6 transition-colors">Belum ada testimoni.</p>
+                        <div class="swiper-slide bg-white dark:bg-slate-800 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700 shadow-sm transition-colors text-center">
+                            <p class="text-slate-500 dark:text-slate-400 font-light text-sm leading-relaxed transition-colors">Belum ada testimoni.</p>
                         </div>
                     <?php else: ?>
                         <?php foreach($testimonials as $testi): ?>
-                        <div class="swiper-slide bg-white dark:bg-slate-800 p-6 md:p-8 rounded-2xl border border-slate-100 dark:border-slate-700 transition-all hover:-translate-y-2 hover:shadow-lg group">
-                            <div class="flex text-secondary mb-3 md:mb-4 text-sm">
+                        <div class="swiper-slide bg-white dark:bg-slate-800 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-700 transition-all hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/5 group">
+                            <div class="flex text-secondary mb-5 text-sm gap-1">
                                 <?php for($i=0; $i<$testi['rating']; $i++): ?><i class="bi bi-star-fill"></i><?php endfor; ?>
                             </div>
-                            <p class="text-slate-600 dark:text-slate-300 font-light text-sm leading-relaxed mb-4 md:mb-6 transition-colors">"<?= htmlspecialchars($testi['content']) ?>"</p>
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center font-bold text-sm mr-3 uppercase text-primary"><?= htmlspecialchars($testi['avatar_initials']) ?></div>
+                            <p class="text-slate-700 dark:text-slate-300 font-light text-base leading-relaxed mb-6 transition-colors italic">"<?= htmlspecialchars($testi['content']) ?>"</p>
+                            <div class="flex items-center pt-4 border-t border-slate-100 dark:border-slate-700/50">
+                                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center font-bold text-sm mr-4 uppercase text-primary border border-primary/20"><?= htmlspecialchars($testi['avatar_initials']) ?></div>
                                 <div>
-                                    <h4 class="font-bold text-sm text-slate-900 dark:text-white transition-colors"><?= htmlspecialchars($testi['name']) ?></h4>
+                                    <h4 class="font-bold text-slate-900 dark:text-white transition-colors"><?= htmlspecialchars($testi['name']) ?></h4>
                                     <?php if(!empty($testi['position'])): ?>
-                                        <p class="text-xs text-slate-500 dark:text-slate-400 transition-colors"><?= htmlspecialchars($testi['position']) ?></p>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium transition-colors"><?= htmlspecialchars($testi['position']) ?></p>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -376,27 +388,28 @@ ob_start();
                     <?php endif; ?>
                 </div>
                 <!-- Pagination -->
-                <div class="swiper-pagination !relative !mt-8"></div>
+                <div class="swiper-pagination"></div>
             </div>
         </div>
     </section>
 
     <!-- CTA Banner Section -->
-    <section class="py-16 md:py-24 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 relative transition-colors">
+    <section class="py-12 md:py-20 bg-white dark:bg-slate-900 transition-colors">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-primary border border-primary/20 rounded-3xl overflow-hidden relative shadow-2xl shadow-primary/20 dark:shadow-none" data-aos="zoom-in" data-aos-duration="1000">
-                <div class="absolute inset-0 bg-gradient-to-r from-primary to-primaryHover pointer-events-none"></div>
-                <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
-                <div class="absolute bottom-0 left-0 w-64 h-64 bg-secondary/20 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 pointer-events-none"></div>
+            <div class="bg-slate-900 dark:bg-slate-800 rounded-[2.5rem] overflow-hidden relative shadow-2xl" data-aos="zoom-in" data-aos-duration="1000">
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 pointer-events-none mix-blend-overlay"></div>
+                <div class="absolute top-0 right-0 w-[30rem] h-[30rem] bg-gradient-to-br from-primary to-secondary rounded-full blur-[80px] opacity-30 -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+                <div class="absolute bottom-0 left-0 w-[20rem] h-[20rem] bg-secondary rounded-full blur-[60px] opacity-20 translate-y-1/3 -translate-x-1/4 pointer-events-none"></div>
                 
-                <div class="relative z-10 p-10 md:p-16 flex flex-col md:flex-row items-center justify-between text-center md:text-left gap-8">
+                <div class="relative z-10 p-10 md:p-20 flex flex-col md:flex-row items-center justify-between text-center md:text-left gap-10">
                     <div class="max-w-2xl">
-                        <h2 class="text-3xl md:text-5xl font-heading font-black text-white mb-4 leading-tight">Tingkatkan Efisiensi Logistik Perusahaan Anda.</h2>
-                        <p class="text-white/80 font-light text-lg">Bergabunglah dengan ratusan perusahaan lain yang telah mempercayakan pengiriman B2B mereka kepada LANEXS.</p>
+                        <h2 class="text-3xl md:text-5xl font-heading font-black text-white mb-6 leading-[1.2] tracking-tight">Tingkatkan Efisiensi Logistik Perusahaan Anda.</h2>
+                        <p class="text-slate-300 font-light text-lg">Bergabunglah dengan ratusan perusahaan lain yang telah mempercayakan pengiriman B2B mereka kepada sistem handal LANEXS.</p>
                     </div>
-                    <div class="shrink-0 flex gap-4 flex-col sm:flex-row">
-                        <a href="#kontak" class="bg-white text-primary hover:bg-slate-50 font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                    <div class="shrink-0">
+                        <a href="#kontak" class="inline-flex items-center justify-center bg-white text-slate-900 font-bold px-8 py-5 rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 text-lg group">
                             Hubungi Tim Kami
+                            <i class="bi bi-arrow-right-short text-3xl -mr-2 ml-2 group-hover:translate-x-1 transition-transform"></i>
                         </a>
                     </div>
                 </div>
@@ -405,51 +418,53 @@ ob_start();
     </section>
 
     <!-- Contact Section -->
-    <section id="kontak" class="py-16 md:py-24 bg-slate-50 dark:bg-slate-900 relative transition-colors">
+    <section id="kontak" class="py-16 md:py-24 bg-slate-50 dark:bg-slate-900/30 relative transition-colors">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-slate-800 rounded-[2rem] border border-slate-200 dark:border-slate-700/50 overflow-hidden shadow-xl shadow-slate-200/50 dark:shadow-none transition-colors duration-300" data-aos="fade-up">
-                <div class="grid grid-cols-1 lg:grid-cols-5">
+            <div class="bg-white dark:bg-slate-800 rounded-[2.5rem] border border-slate-200 dark:border-slate-700/50 overflow-hidden shadow-2xl shadow-slate-200/50 dark:shadow-none transition-colors duration-300 relative" data-aos="fade-up">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-5 h-full">
                     
                     <!-- Contact Info -->
-                    <div class="p-8 lg:p-14 lg:col-span-2 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-slate-100 dark:border-slate-700/50 transition-colors">
-                        <h2 class="text-3xl font-heading font-black text-slate-900 dark:text-white mb-4 tracking-tight transition-colors">Hubungi Kami</h2>
-                        <p class="text-slate-600 dark:text-slate-400 mb-10 text-sm font-light leading-relaxed transition-colors">Punya pertanyaan seputar layanan kami atau ingin konsultasi kerjasama pengiriman B2B?</p>
+                    <div class="p-8 md:p-12 lg:p-16 lg:col-span-2 flex flex-col justify-center relative z-10 bg-white dark:bg-slate-800">
+                        <span class="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-4 block">Konsultasi</span>
+                        <h2 class="text-4xl font-heading font-black text-slate-900 dark:text-white mb-4 tracking-tight transition-colors">Hubungi Kami</h2>
+                        <p class="text-slate-500 dark:text-slate-400 mb-12 text-sm font-light leading-relaxed transition-colors">Punya pertanyaan seputar layanan kami atau ingin konsultasi kerjasama pengiriman B2B?</p>
                         
-                        <ul class="space-y-6">
+                        <ul class="space-y-8">
                             <li class="flex items-start group">
-                                <div class="w-10 h-10 bg-primary/10 border border-primary/20 rounded-lg flex items-center justify-center text-primary shrink-0 mr-4 transition-all group-hover:bg-primary group-hover:text-white group-hover:shadow-md group-hover:shadow-primary/30">
-                                    <i class="bi bi-geo-alt-fill"></i>
+                                <div class="w-12 h-12 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-700/50 rounded-2xl flex items-center justify-center text-primary shrink-0 mr-5 transition-all group-hover:bg-primary group-hover:text-white group-hover:shadow-lg group-hover:shadow-primary/30 group-hover:scale-110">
+                                    <i class="bi bi-geo-alt-fill text-xl"></i>
                                 </div>
                                 <div>
-                                    <h5 class="font-bold text-slate-800 dark:text-slate-200 text-sm transition-colors group-hover:text-primary">Headquarter</h5>
-                                    <p class="text-slate-500 dark:text-slate-400 text-sm mt-1 leading-relaxed font-light transition-colors"><?= $contactAddress ?></p>
+                                    <h5 class="font-bold text-slate-800 dark:text-slate-200 text-sm mb-1 transition-colors group-hover:text-primary">Headquarter</h5>
+                                    <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed font-light transition-colors"><?= $contactAddress ?></p>
                                 </div>
                             </li>
                             <li class="flex items-start group">
-                                <div class="w-10 h-10 bg-primary/10 border border-primary/20 rounded-lg flex items-center justify-center text-primary shrink-0 mr-4 transition-all group-hover:bg-primary group-hover:text-white group-hover:shadow-md group-hover:shadow-primary/30">
-                                    <i class="bi bi-telephone-fill"></i>
+                                <div class="w-12 h-12 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-700/50 rounded-2xl flex items-center justify-center text-primary shrink-0 mr-5 transition-all group-hover:bg-primary group-hover:text-white group-hover:shadow-lg group-hover:shadow-primary/30 group-hover:scale-110">
+                                    <i class="bi bi-telephone-fill text-xl"></i>
                                 </div>
                                 <div>
-                                    <h5 class="font-bold text-slate-800 dark:text-slate-200 text-sm transition-colors group-hover:text-primary">Call Center</h5>
-                                    <p class="text-slate-500 dark:text-slate-400 text-sm mt-1 leading-relaxed font-light transition-colors"><?= $contactPhone ?></p>
+                                    <h5 class="font-bold text-slate-800 dark:text-slate-200 text-sm mb-1 transition-colors group-hover:text-primary">Call Center</h5>
+                                    <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed font-light transition-colors"><?= $contactPhone ?></p>
                                 </div>
                             </li>
                             <li class="flex items-start group">
-                                <div class="w-10 h-10 bg-primary/10 border border-primary/20 rounded-lg flex items-center justify-center text-primary shrink-0 mr-4 transition-all group-hover:bg-primary group-hover:text-white group-hover:shadow-md group-hover:shadow-primary/30">
-                                    <i class="bi bi-envelope-fill"></i>
+                                <div class="w-12 h-12 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-700/50 rounded-2xl flex items-center justify-center text-primary shrink-0 mr-5 transition-all group-hover:bg-primary group-hover:text-white group-hover:shadow-lg group-hover:shadow-primary/30 group-hover:scale-110">
+                                    <i class="bi bi-envelope-fill text-xl"></i>
                                 </div>
                                 <div>
-                                    <h5 class="font-bold text-slate-800 dark:text-slate-200 text-sm transition-colors group-hover:text-primary">Email Support</h5>
-                                    <p class="text-slate-500 dark:text-slate-400 text-sm mt-1 font-light transition-colors"><?= htmlspecialchars($contactEmail) ?></p>
+                                    <h5 class="font-bold text-slate-800 dark:text-slate-200 text-sm mb-1 transition-colors group-hover:text-primary">Email Support</h5>
+                                    <p class="text-slate-500 dark:text-slate-400 text-sm font-light transition-colors"><?= htmlspecialchars($contactEmail) ?></p>
                                 </div>
                             </li>
                         </ul>
                     </div>
-
+                    
                     <!-- Map -->
-                    <div class="relative h-[300px] lg:h-auto lg:col-span-3 bg-slate-100 dark:bg-slate-900 transition-colors">
+                    <div class="relative h-[400px] lg:h-auto lg:col-span-3 bg-slate-100 dark:bg-slate-900 transition-colors">
                         <iframe src="<?= htmlspecialchars(explode('"', explode('src="', $contactMap)[1] ?? $contactMap)[0]) ?>" 
-                            class="absolute inset-0 w-full h-full border-0 dark:opacity-60 dark:invert-[90%] dark:hue-rotate-180 dark:mix-blend-screen transition-all duration-300 dark:hover:opacity-80" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            class="absolute inset-0 w-full h-full border-0 dark:opacity-70 dark:invert-[90%] dark:hue-rotate-180 dark:mix-blend-screen transition-all duration-300 dark:hover:opacity-100" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
 
                 </div>
