@@ -354,7 +354,7 @@ ob_start();
         </div>
 
         <!-- Team grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
             <?php foreach ($org_team as $i => $member): 
                 $photo = $settingModel->get('org_team_photo_' . $member['id'], 'https://ui-avatars.com/api/?name=' . urlencode($member['name']) . '&background=0f172a&color=38bdf8&size=512&bold=true&length=2');
             ?>
@@ -366,16 +366,16 @@ ob_start();
                              alt="<?= htmlspecialchars($member['name']) ?>" 
                              class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-700">
                         <!-- Gradient overlay on hover -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-5">
+                        <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-3 md:p-5">
                             <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                <p class="text-white text-xs font-semibold uppercase tracking-wider opacity-80"><?= htmlspecialchars($member['title']) ?></p>
+                                <p class="text-white text-[10px] md:text-xs font-semibold uppercase tracking-wider opacity-80"><?= htmlspecialchars($member['title']) ?></p>
                             </div>
                         </div>
                     </div>
                     <!-- Info -->
-                    <div class="p-5 text-center">
-                        <h3 class="text-base font-bold text-slate-800 dark:text-white leading-tight"><?= htmlspecialchars($member['name']) ?></h3>
-                        <p class="text-xs font-semibold text-primary/80 mt-1 tracking-wide"><?= htmlspecialchars($member['title']) ?></p>
+                    <div class="p-3 md:p-5 text-center">
+                        <h3 class="text-sm md:text-base font-bold text-slate-800 dark:text-white leading-tight"><?= htmlspecialchars($member['name']) ?></h3>
+                        <p class="text-[10px] md:text-xs font-semibold text-primary/80 mt-1 tracking-wide"><?= htmlspecialchars($member['title']) ?></p>
                     </div>
                 </div>
             </div>
