@@ -175,9 +175,6 @@ ob_start();
     .hero-bg-container .swiper-slide {
         height: 100% !important;
         width: 100% !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
     }
     .hero-bg-container img {
         height: 100% !important;
