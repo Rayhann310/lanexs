@@ -18,18 +18,21 @@ ob_start();
 ?>
 <style>
 .masonry-grid {
-    column-count: 1;
-    column-gap: 1.5rem;
+    column-count: 2;
+    column-gap: 0.75rem;
 }
 @media (min-width: 640px) {
-    .masonry-grid { column-count: 2; }
+    .masonry-grid { column-count: 2; column-gap: 1.5rem; }
 }
 @media (min-width: 1024px) {
     .masonry-grid { column-count: 3; }
 }
 .masonry-item {
     break-inside: avoid;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+@media (min-width: 640px) {
+    .masonry-item { margin-bottom: 1.5rem; }
 }
 </style>
 
@@ -75,9 +78,9 @@ ob_start();
                             <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                             
                             <!-- Caption -->
-                            <div class="absolute bottom-0 left-0 right-0 p-6 translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                            <div class="absolute bottom-0 left-0 right-0 p-3 md:p-6 translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
                                 <?php if (!empty($item['caption'])): ?>
-                                    <p class="text-white font-medium text-lg drop-shadow-md border-l-4 border-indigo-500 pl-3">
+                                    <p class="text-white font-medium text-xs md:text-lg drop-shadow-md border-l-2 md:border-l-4 border-indigo-500 pl-2 md:pl-3">
                                         <?= htmlspecialchars($item['caption']) ?>
                                     </p>
                                 <?php endif; ?>
