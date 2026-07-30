@@ -15,11 +15,11 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#3b82f6',
-                        primaryHover: '#2563eb',
-                        secondary: '#f59e0b',
-                        secondaryHover: '#d97706',
-                        darkBg: '#020617'
+                        primary: '#0ea5e9', // Neon Cyan
+                        primaryHover: '#0284c7', // Darker Cyan
+                        secondary: '#2dd4bf', // Teal/Neon Accent
+                        secondaryHover: '#14b8a6',
+                        darkBg: '#030712' // Midnight Black
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -56,25 +56,23 @@
         .hero-bg {
             background-color: #f8fafc;
             background-image: 
-                radial-gradient(at 10% 20%, rgba(59, 130, 246, 0.12) 0px, transparent 50%),
-                radial-gradient(at 90% 80%, rgba(245, 158, 11, 0.08) 0px, transparent 50%),
-                radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
-            background-size: 100% 100%, 100% 100%, 32px 32px;
+                linear-gradient(to right, rgba(14, 165, 233, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(14, 165, 233, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
         .dark .hero-bg {
-            background-color: #020617;
+            background-color: #0f172a;
             background-image: 
-                radial-gradient(at 10% 20%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
-                radial-gradient(at 90% 80%, rgba(245, 158, 11, 0.1) 0px, transparent 50%),
-                radial-gradient(#1e293b 1.5px, transparent 1.5px);
-            background-size: 100% 100%, 100% 100%, 32px 32px;
+                linear-gradient(to right, rgba(14, 165, 233, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(14, 165, 233, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .accent-border-hover:hover {
-            border-color: #3b82f6;
-            box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.15), 0 8px 10px -6px rgba(59, 130, 246, 0.1);
-            transform: translateY(-6px);
+            border-color: #0ea5e9;
+            box-shadow: 0 0 20px rgba(14,165,233, 0.3), inset 0 0 10px rgba(14,165,233, 0.1);
+            transform: translateY(-4px);
         }
         /* Dropdown menu */
         .nav-dropdown { display: none; }
@@ -128,19 +126,19 @@
         .nav-link::after {
             content: ''; position: absolute; width: 0; height: 2px;
             bottom: 4px; left: 50%; transform: translateX(-50%);
-            background-color: #3b82f6; transition: width 0.3s ease;
+            background-color: #0ea5e9; transition: width 0.3s ease;
             border-radius: 2px;
         }
-        .nav-link:hover::after { width: 60%; }
-        
-        .glow-shadow-primary { box-shadow: 0 0 25px rgba(59,130,246,0.4); }
+        .nav-link:hover::after { width: 100%; }
     </style>
     <!-- Prevent FOUC -->
     <script>
+        // Set Light Mode as default
         if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
         } else {
             document.documentElement.classList.remove('dark');
+            if(!localStorage.getItem('color-theme')) localStorage.setItem('color-theme', 'light');
         }
     </script>
     <?php if(isset($extraHead)) echo $extraHead; ?>
@@ -149,7 +147,7 @@
 
     <!-- ===== NAVBAR ===== -->
     <?php $navWhite = $navbarWhite ?? false; ?>
-    <nav class="fixed w-full z-50 transition-all duration-300 lg:py-3 <?= $navWhite ? 'navbar-white' : '' ?>" id="navbar">
+    <nav class="fixed w-full z-50 transition-all duration-300 <?= $navWhite ? 'navbar-white' : '' ?>" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
 
@@ -356,7 +354,12 @@
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ once: true, offset: 20 });
+        AOS.init({ 
+            once: false, // Make it alive on scroll up and down
+            offset: 20,
+            duration: 800,
+            easing: 'ease-out-cubic'
+        });
 
         // Navbar on scroll — also manages white-mode reversal
         const isNavbarWhite = <?= ($navbarWhite ?? false) ? 'true' : 'false' ?>;
@@ -364,10 +367,8 @@
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 60) {
                 navbar.classList.add('nav-scrolled');
-                navbar.classList.remove('lg:py-3');
             } else {
                 navbar.classList.remove('nav-scrolled');
-                navbar.classList.add('lg:py-3');
             }
         });
         // Trigger once on load
@@ -402,10 +403,11 @@
 
             if (!themeToggleBtn) return;
 
-            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                themeToggleLightIcon.classList.remove('hidden');
-            } else {
+            // Since default is dark, check if light mode is active
+            if (localStorage.getItem('color-theme') === 'light') {
                 themeToggleDarkIcon.classList.remove('hidden');
+            } else {
+                themeToggleLightIcon.classList.remove('hidden');
             }
 
             themeToggleBtn.addEventListener('click', function() {
