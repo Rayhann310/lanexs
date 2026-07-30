@@ -90,34 +90,97 @@ ob_start();
         </div>
     </section>
 
-    <!-- Partners Logos -->
-    <!-- Partners Logos -->
-    <section class="py-12 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 transition-colors relative z-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center" data-aos="fade-up">
-            <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-8 transition-colors">Dipercaya Oleh Perusahaan Terkemuka</p>
-            <div class="flex flex-wrap justify-center items-center gap-10 md:gap-16 opacity-60 dark:opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
-                <?php if(empty($partners)): ?>
-                    <span class="text-xl font-black uppercase tracking-widest font-heading text-slate-800 dark:text-slate-400 transition-colors">Nama Dipercaya Perusahaan</span>
-                <?php else: ?>
-                    <?php foreach($partners as $partner): ?>
-                        <?php $type = $partner['display_type'] ?? 'logo'; ?>
-                        
-                        <div class="flex flex-col items-center justify-center gap-2 group cursor-default transition-all duration-300 hover:scale-105" <?php if(!empty($partner['description'])) echo 'title="'.htmlspecialchars($partner['description']).'"'; ?>>
-                            <?php if($type === 'logo' || $type === 'both'): ?>
-                                <?php if(!empty($partner['logo_path']) && file_exists(BASE_PATH . '/public' . $partner['logo_path'])): ?>
-                                    <img src="<?= BASE_URL . $partner['logo_path'] ?>" alt="<?= htmlspecialchars($partner['name']) ?>" class="h-8 md:h-12 w-auto object-contain dark:brightness-200 dark:contrast-100 transition-all group-hover:opacity-100 duration-300">
-                                <?php endif; ?>
-                            <?php endif; ?>
-                            
-                            <?php if($type === 'text' || $type === 'both'): ?>
-                                <span class="text-sm md:text-base font-bold uppercase tracking-widest font-heading text-slate-800 dark:text-slate-200 transition-colors opacity-70 group-hover:opacity-100 group-hover:text-primary"><?= htmlspecialchars($partner['name']) ?></span>
-                            <?php endif; ?>
-                        </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+    <!-- Partners Logos Marquee -->
+    <!-- Partners Logos Marquee -->
+    <section class="py-10 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 transition-colors relative z-20 overflow-hidden">
+        <div class="text-center mb-8 px-4" data-aos="fade-up">
+            <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] transition-colors">Dipercaya Oleh Perusahaan Terkemuka</p>
+        </div>
+
+        <!-- Fade edges -->
+        <div class="relative overflow-hidden">
+            <div class="partners-fade-left absolute left-0 top-0 bottom-0 w-24 md:w-40 z-10 pointer-events-none"></div>
+            <div class="partners-fade-right absolute right-0 top-0 bottom-0 w-24 md:w-40 z-10 pointer-events-none"></div>
+
+            <?php
+            // Build partner items HTML to repeat for seamless loop
+            ob_start();
+            if(empty($partners)): ?>
+                <div class="flex items-center gap-3 px-10">
+                    <span class="text-2xl font-black uppercase tracking-widest font-heading text-slate-800 dark:text-slate-200">NAMA DIPERCAYA PERUSAHAAN</span>
+                    <span class="text-slate-300 dark:text-slate-600 text-3xl font-thin select-none">·</span>
+                </div>
+                <div class="flex items-center gap-3 px-10">
+                    <span class="text-2xl font-black uppercase tracking-widest font-heading text-slate-800 dark:text-slate-200">MITRA TERPERCAYA ANDA</span>
+                    <span class="text-slate-300 dark:text-slate-600 text-3xl font-thin select-none">·</span>
+                </div>
+            <?php else:
+                foreach($partners as $partner):
+                    $type = $partner['display_type'] ?? 'logo'; ?>
+                    <div class="inline-flex flex-col items-center justify-center gap-1.5 px-8 md:px-12 cursor-default group shrink-0">
+                        <?php if(($type === 'logo' || $type === 'both') && !empty($partner['logo_path']) && file_exists(BASE_PATH . '/public' . $partner['logo_path'])): ?>
+                            <img src="<?= BASE_URL . $partner['logo_path'] ?>" alt="<?= htmlspecialchars($partner['name']) ?>"
+                                 class="h-12 md:h-16 w-auto object-contain dark:brightness-200 transition-all duration-300 group-hover:scale-110">
+                        <?php endif; ?>
+                        <?php if($type === 'text' || $type === 'both'): ?>
+                            <span class="text-base md:text-lg font-black uppercase tracking-widest font-heading text-slate-700 dark:text-slate-200 whitespace-nowrap group-hover:text-primary transition-colors duration-300"><?= htmlspecialchars($partner['name']) ?></span>
+                        <?php endif; ?>
+                    </div>
+                    <span class="text-slate-200 dark:text-slate-700 text-4xl font-thin select-none self-center shrink-0">·</span>
+                <?php endforeach;
+            endif;
+            $itemsHtml = ob_get_clean();
+            ?>
+
+            <!-- Marquee track — items duplicated for seamless infinite loop -->
+            <div class="partners-marquee flex items-center w-full">
+                <div class="partners-track flex items-center">
+                    <?= $itemsHtml ?>
+                </div>
+                <!-- Duplicate for seamless loop -->
+                <div class="partners-track flex items-center" aria-hidden="true">
+                    <?= $itemsHtml ?>
+                </div>
             </div>
         </div>
     </section>
+
+    <style>
+    .partners-marquee {
+        overflow: hidden;
+    }
+    .partners-track {
+        animation: partnersScroll 30s linear infinite;
+        will-change: transform;
+    }
+    .partners-marquee:hover .partners-track {
+        animation-play-state: paused;
+    }
+    @keyframes partnersScroll {
+        0%   { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+    /* Dark mode fade edges */
+    .dark .partners-fade-left  { background: linear-gradient(to right, rgb(15 23 42), transparent); }
+    .dark .partners-fade-right { background: linear-gradient(to left,  rgb(15 23 42), transparent); }
+    </style>
+
+    <script>
+    // Adjust dark mode fade edge colours dynamically
+    (function() {
+        function setFades() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const colour = isDark ? 'rgb(15,23,42)' : 'white';
+            document.querySelectorAll('.partners-fade-left, .partners-fade-right').forEach(el => {
+                const dir = el.classList.contains('partners-fade-left') ? 'to right' : 'to left';
+                el.style.background = `linear-gradient(${dir}, ${colour}, transparent)`;
+            });
+        }
+        setFades();
+        const obs = new MutationObserver(setFades);
+        obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    })();
+    </script>
 
     <!-- Statistik Pencapaian (Counter) -->
     <!-- Statistik Pencapaian (Counter) -->
