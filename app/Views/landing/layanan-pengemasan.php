@@ -37,8 +37,6 @@ ob_start();
 ?>
 <style>
 /* ===== LAYANAN PENGEMASAN PREMIUM ===== */
-.lpk-hero { background: linear-gradient(135deg, #f97316 0%, #ea580c 40%, #c2410c 100%); }
-
 /* Feature Card */
 .feat-card { 
     background: #fff;
@@ -96,38 +94,51 @@ ob_start();
 </style>
 
 <!-- ====================================
-     HERO SECTION
+     HERO SECTION (White/Light)
      ==================================== -->
-<section class="lpk-hero pt-32 pb-24 relative overflow-hidden">
-    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(white 1px, transparent 1px); background-size: 28px 28px;"></div>
-    <div class="absolute top-0 right-0 w-1/2 h-full opacity-10 pointer-events-none" style="background: url('<?= htmlspecialchars($img) ?>') right center/cover no-repeat;"></div>
-    <div class="absolute inset-0 bg-gradient-to-r from-orange-700/80 via-orange-500/40 to-transparent pointer-events-none"></div>
+<section class="pt-32 pb-24 bg-white dark:bg-slate-900 relative overflow-hidden border-b border-slate-100 dark:border-slate-800 transition-colors">
+    <div class="absolute inset-0 opacity-[0.03] dark:opacity-[0.06]" style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 28px 28px;"></div>
+    <div class="absolute top-0 right-0 w-96 h-96 bg-orange-400/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-72 h-72 bg-red-300/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <nav class="flex items-center space-x-2 text-white/70 text-sm mb-8" aria-label="Breadcrumb">
-            <a href="<?= BASE_URL ?>/" class="hover:text-white transition-colors">Beranda</a>
+        <nav class="flex items-center space-x-2 text-slate-400 dark:text-slate-500 text-sm mb-8" aria-label="Breadcrumb">
+            <a href="<?= BASE_URL ?>/" class="hover:text-orange-600 transition-colors">Beranda</a>
             <i class="bi bi-chevron-right text-xs"></i>
-            <span class="text-white/70"><?= htmlspecialchars($meta['label']) ?></span>
+            <span class="text-slate-500 dark:text-slate-400"><?= htmlspecialchars($meta['label']) ?></span>
             <i class="bi bi-chevron-right text-xs"></i>
-            <span class="text-white font-semibold"><?= htmlspecialchars($page['title']) ?></span>
+            <span class="text-slate-800 dark:text-white font-semibold"><?= htmlspecialchars($page['title']) ?></span>
         </nav>
 
-        <div class="max-w-2xl" data-aos="fade-up">
-            <div class="inline-flex items-center space-x-2 bg-white/15 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 mb-6">
-                <i class="bi bi-box-seam text-white"></i>
-                <span class="text-white font-semibold text-sm tracking-wide uppercase"><?= htmlspecialchars($tagline) ?></span>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div data-aos="fade-up">
+                <div class="inline-flex items-center space-x-2 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-full px-4 py-1.5 mb-6">
+                    <i class="bi bi-box-seam text-orange-600"></i>
+                    <span class="text-orange-600 font-semibold text-sm tracking-wide uppercase"><?= htmlspecialchars($tagline) ?></span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-heading font-black text-slate-900 dark:text-white leading-tight mb-4">
+                    <?= htmlspecialchars($page['title']) ?>
+                </h1>
+                <p class="text-xl text-slate-500 dark:text-slate-400 font-light leading-relaxed mb-8"><?= htmlspecialchars($desc) ?></p>
+                <div class="flex flex-wrap gap-3">
+                    <a href="<?= BASE_URL ?>/contact" class="px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold rounded-xl hover:from-orange-600 hover:to-red-600 transition-all hover:scale-105 shadow-lg flex items-center gap-2">
+                        <i class="bi bi-chat-dots-fill"></i> Konsultasi Gratis
+                    </a>
+                    <a href="<?= BASE_URL ?>/contact" class="px-6 py-3 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-white font-bold rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all flex items-center gap-2">
+                        <i class="bi bi-telephone"></i> Hubungi Kami
+                    </a>
+                </div>
             </div>
-            <h1 class="text-4xl md:text-6xl font-heading font-black text-white leading-tight mb-4">
-                <?= htmlspecialchars($page['title']) ?>
-            </h1>
-            <p class="text-xl text-white/80 font-light leading-relaxed mb-8"><?= htmlspecialchars($desc) ?></p>
-            <div class="flex flex-wrap gap-3">
-                <a href="<?= BASE_URL ?>/contact" class="px-6 py-3 bg-white text-orange-600 font-bold rounded-xl hover:bg-orange-50 transition-all hover:scale-105 shadow-lg flex items-center gap-2">
-                    <i class="bi bi-chat-dots-fill"></i> Konsultasi Gratis
-                </a>
-                <a href="<?= BASE_URL ?>/contact" class="px-6 py-3 bg-white/15 backdrop-blur-sm text-white font-bold rounded-xl border border-white/30 hover:bg-white/25 transition-all flex items-center gap-2">
-                    <i class="bi bi-telephone"></i> Hubungi Kami
-                </a>
+            <!-- Hero image -->
+            <div class="relative hidden lg:block" data-aos="fade-left">
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl group">
+                    <img src="<?= htmlspecialchars($img) ?>" alt="<?= htmlspecialchars($page['title']) ?>" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-orange-900/60 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-6">
+                        <span class="inline-block bg-orange-500 text-white text-xs font-bold uppercase tracking-wider py-1.5 px-3 rounded-full mb-2"><?= htmlspecialchars($subtitle) ?></span>
+                        <h3 class="text-white font-heading font-bold text-xl"><?= htmlspecialchars($title) ?></h3>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
