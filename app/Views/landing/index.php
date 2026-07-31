@@ -242,26 +242,7 @@ ob_start();
                         LANEXS (Lintas Area Nusantara) didirikan dengan visi kuat untuk menjadi mitra strategis dalam rantai pasok bisnis di Indonesia. Kami mengombinasikan keandalan operasional dengan teknologi modern untuk menghadirkan layanan logistik yang presisi.
                     </p>
                     
-                    <div class="space-y-4">
-                        <div class="flex items-start" data-aos="fade-right" data-aos-delay="200">
-                            <div class="mt-1 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0 mr-4 transition-colors">
-                                <i class="bi bi-check2"></i>
-                            </div>
-                            <div>
-                                <h5 class="font-bold text-slate-800 dark:text-slate-200 transition-colors">Visi</h5>
-                                <p class="text-sm text-slate-600 dark:text-slate-400 font-light mt-1 transition-colors">Menjadi pionir logistik modern yang paling diandalkan di tingkat nasional.</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start" data-aos="fade-right" data-aos-delay="300">
-                            <div class="mt-1 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0 mr-4 transition-colors">
-                                <i class="bi bi-check2"></i>
-                            </div>
-                            <div>
-                                <h5 class="font-bold text-slate-800 dark:text-slate-200 transition-colors">Misi</h5>
-                                <p class="text-sm text-slate-600 dark:text-slate-400 font-light mt-1 transition-colors">Menyediakan layanan pengiriman multi-moda yang cepat, aman, dan inovatif.</p>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
                 
             </div>
