@@ -15,10 +15,4 @@ ALTER TABLE `packages`
     ADD COLUMN IF NOT EXISTS `service_id` INT NULL,
     ADD COLUMN IF NOT EXISTS `service_name` VARCHAR(100) NULL;
 
--- Seed default services
-INSERT IGNORE INTO `services` (`code`, `name`, `description`, `estimated_days`) VALUES
-    ('REG', 'Reguler', 'Pengiriman reguler standar', 3),
-    ('EXP', 'Express', 'Pengiriman ekspres lebih cepat', 1),
-    ('KARGO', 'Kargo', 'Pengiriman kargo/barang besar', 5),
-    ('FROZEN', 'Frozen', 'Pengiriman barang beku/dingin', 2),
-    ('MOTOR', 'Motor', 'Pengiriman via motor untuk jarak dekat', 1);
+-- Seed default services (Removed to prevent self-healing re-insertion)
