@@ -39,8 +39,8 @@ ob_start();
                 
                 <h1 class="text-3xl sm:text-5xl lg:text-[4.5rem] font-heading font-black text-slate-900 dark:text-white tracking-tighter mb-4 sm:mb-6 leading-[1.2] transition-colors drop-shadow-sm flex flex-col items-center justify-center min-h-[100px] sm:min-h-[160px] lg:min-h-[180px] px-4 w-full">
                     <span class="text-wrap leading-tight max-w-[90vw]">Solusi Logistik Terbaik Untuk</span>
-                    <span class="text-primary relative flex mt-2 h-[40px] sm:h-[80px] lg:h-[100px] items-center justify-center w-full overflow-hidden">
-                        <span id="typewriter-text" class="truncate">Perusahaan</span><span class="animate-pulse border-r-[4px] border-primary ml-1 sm:ml-2 h-[70%]"></span>
+                    <span class="text-primary dark:text-secondary relative flex mt-2 h-[40px] sm:h-[80px] lg:h-[100px] items-center justify-center w-full overflow-hidden">
+                        <span id="typewriter-text" class="truncate drop-shadow-[0_2px_8px_rgba(18,123,142,0.4)] dark:drop-shadow-[0_2px_12px_rgba(255,214,0,0.5)]">Perusahaan</span><span class="animate-pulse border-r-[4px] border-primary dark:border-secondary ml-1 sm:ml-2 h-[70%]"></span>
                     </span>
                 </h1>
                 
