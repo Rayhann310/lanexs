@@ -32,6 +32,32 @@ $storagePaths = [
     BASE_PATH . '/public/assets/images'
 ];
 
+// Self-Healing Symlinks for Hostinger Git Deployment (Safe Check)
+if (function_exists('symlink')) {
+    $symlinks = [
+        BASE_PATH . '/public/uploads' => '/home/u965947052/uploads_permanen',
+        BASE_PATH . '/public/assets/images/partners' => '/home/u965947052/uploads_permanen/partners',
+        BASE_PATH . '/public/assets/images/hero' => '/home/u965947052/uploads_permanen/hero',
+        BASE_PATH . '/public/assets/images/testimonials' => '/home/u965947052/uploads_permanen/testimonials'
+    ];
+    foreach ($symlinks as $link => $target) {
+        // If it's a real directory created by git, remove it if it's empty
+        if (is_dir($link) && !is_link($link)) {
+            $files = array_diff(scandir($link), ['.', '..', '.gitkeep']);
+            if (empty($files)) {
+                @unlink($link . '/.gitkeep');
+                @rmdir($link);
+            }
+        }
+        // Recreate symlink if it doesn't exist
+        if (!file_exists($link) && !is_link($link)) {
+            $parent = dirname($link);
+            if (!is_dir($parent)) @mkdir($parent, 0755, true);
+            @symlink($target, $link);
+        }
+    }
+}
+
 // Require Composer Autoloader
 require_once BASE_PATH . '/vendor/autoload.php';
 
