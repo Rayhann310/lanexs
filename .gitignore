@@ -20,4 +20,6 @@
 !/public/uploads/pages/*
 !/public/uploads/testimonials/
 !/public/uploads/testimonials/*
+!/public/uploads/tracking/
+!/public/uploads/tracking/*
 .DS_Store
