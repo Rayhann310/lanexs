@@ -45,7 +45,7 @@
 
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-1">Nama Perusahaan</label>
-                                <input type="text" name="name" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" required placeholder="PT Contoh Sukses">
+                                <input type="text" name="name" autocomplete="off" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" required placeholder="PT Contoh Sukses">
                             </div>
                             
                             <div>
