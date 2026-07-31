@@ -209,16 +209,8 @@ ob_start();
                 <div class="absolute -bottom-32 -left-32 w-64 h-64 bg-secondary/20 rounded-full blur-3xl pointer-events-none group-hover:scale-150 transition-transform duration-700 delay-100"></div>
                 
                 <div class="prose-content dark:text-slate-300 relative z-10">
-                    <h2>Visi</h2>
-                    <p><?= nl2br(htmlspecialchars($visi_text)) ?></p>
-                    
-                    <h2>Misi</h2>
-                    <ul>
-                        <?php if(!empty($m1)): ?><li><?= htmlspecialchars($m1) ?></li><?php endif; ?>
-                        <?php if(!empty($m2)): ?><li><?= htmlspecialchars($m2) ?></li><?php endif; ?>
-                        <?php if(!empty($m3)): ?><li><?= htmlspecialchars($m3) ?></li><?php endif; ?>
-                        <?php if(!empty($m4)): ?><li><?= htmlspecialchars($m4) ?></li><?php endif; ?>
-                    </ul>
+                    <h2>🧪 Test Mode</h2>
+                    <p>Konten Visi &amp; Misi sedang diuji. Silakan lakukan <code>git pull</code> di server dan cek apakah gambar-gambar tetap ada.</p>
                 </div>
             </div>
 
