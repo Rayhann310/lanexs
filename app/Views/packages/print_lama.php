@@ -4,25 +4,39 @@
     <meta charset="UTF-8">
     <title>Cetak Resi Lama</title>
     <style>
-        @page { margin: 2px; }
-        body { font-family: 'Times New Roman', Times, serif; font-size: 11px; margin: 0; padding: 0; }
+        /* Setting ukuran thermal label standar 100mm x 150mm (A6) untuk XPrinter XP-420B */
+        @page { 
+            size: 100mm 150mm; 
+            margin: 0mm; 
+        }
+        body { font-family: 'Times New Roman', Times, serif; font-size: 11px; margin: 0; padding: 0; background: #fff; }
         .page-break { page-break-after: always; }
-        .wrapper { width: 100%; border: 2px solid #000; box-sizing: border-box; margin-bottom: 0; }
+        .wrapper { 
+            width: 100mm; 
+            height: 149mm; 
+            border: 2px solid #000; 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 2mm;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
         .header { display: flex; border-bottom: 2px solid #000; }
         .logo { width: 30%; border-right: 2px solid #000; text-align: center; padding: 5px; }
-        .logo img { max-height: 50px; }
-        .company-name { width: 70%; text-align: center; font-weight: bold; font-size: 14px; padding-top: 15px; }
+        .logo img { max-height: 40px; }
+        .company-name { width: 70%; text-align: center; font-weight: bold; font-size: 14px; padding-top: 10px; }
         
         table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid #000; padding: 4px; text-align: center; }
+        th, td { border: 1px solid #000; padding: 2px; text-align: center; font-size: 10px; }
         .no-border-top { border-top: none; }
         .no-border-bottom { border-bottom: none; }
         .text-left { text-align: left; }
         .font-bold { font-weight: bold; }
         
-        .resi-header { font-size: 14px; font-weight: bold; }
+        .resi-header { font-size: 14px; font-weight: bold; padding: 5px; }
         
-        .footer-note { text-align: center; border-top: 2px solid #000; font-size: 10px; padding: 5px; background: #fff; }
+        .footer-note { text-align: center; border-top: 2px solid #000; font-size: 10px; padding: 5px; background: #fff; margin-top: auto; }
     </style>
 </head>
 <body>

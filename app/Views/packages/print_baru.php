@@ -5,21 +5,34 @@
     <title>Cetak Resi Baru</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-        @page { margin: 2px; }
+        
+        /* Setting ukuran thermal label standar 100mm x 150mm (A6) untuk XPrinter XP-420B */
+        @page { 
+            size: 100mm 150mm; 
+            margin: 0mm; 
+        }
+        
         body {
             font-family: 'Inter', sans-serif;
-            font-size: 11px;
-            color: #1e293b;
+            font-size: 12px;
+            color: #000;
             margin: 0;
             padding: 0;
+            background: #fff;
         }
+        
         .page-break { page-break-after: always; }
+        
         .wrapper {
-            width: 100%;
+            width: 100mm;
+            height: 149mm;
             border: 2px solid #000;
-            margin-bottom: 0;
-            padding: 2px;
+            padding: 3mm;
             box-sizing: border-box;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
         .text-center { text-align: center; }
         .text-left { text-align: left; }
