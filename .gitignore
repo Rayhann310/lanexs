@@ -5,21 +5,25 @@
 /storage/uploads/*
 !/storage/uploads/.gitkeep
 
-# CMS Images - Tracked in Git so they sync across environments
-!/public/assets/images/partners/
-!/public/assets/images/partners/*
-!/public/assets/images/testimonials/
-!/public/assets/images/testimonials/*
-!/public/assets/images/hero/
-!/public/assets/images/hero/*
-
-# Operational Uploads - Ignored in Git
+# =====================================================
+# USER-UPLOADED FILES — Stored on server, NOT in Git
+# git pull does NOT delete these (untracked = safe)
+# =====================================================
+/public/assets/images/partners/*
+!/public/assets/images/partners/.gitkeep
+/public/assets/images/testimonials/*
+!/public/assets/images/testimonials/.gitkeep
+/public/assets/images/hero/*
+!/public/assets/images/hero/.gitkeep
+/public/uploads/pages/*
+!/public/uploads/pages/.gitkeep
+/public/uploads/testimonials/*
+!/public/uploads/testimonials/.gitkeep
+/public/uploads/tracking/*
+!/public/uploads/tracking/.gitkeep
 /public/uploads/*
 !/public/uploads/.gitkeep
 !/public/uploads/pages/
-!/public/uploads/pages/*
 !/public/uploads/testimonials/
-!/public/uploads/testimonials/*
 !/public/uploads/tracking/
-!/public/uploads/tracking/*
 .DS_Store
