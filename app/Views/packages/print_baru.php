@@ -4,90 +4,112 @@
     <meta charset="UTF-8">
     <title>Cetak Resi Baru</title>
     <style>
+        /* Font import boleh dipakai untuk PREVIEW DI BROWSER.
+           Jika dokumen ini dirender lewat engine PDF server-side (DomPDF/mPDF/TCPDF),
+           @import ke Google Fonts BIASANYA GAGAL (tidak ada akses internet dari server)
+           sehingga font balik ke default dan semua ukuran/posisi jadi geser dari preview.
+           Kalau itu terjadi: download file font ke server lalu @font-face dengan path lokal,
+           atau ganti ke font sistem seperti DejaVu Sans / Arial. */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-        @page { size: 100mm 150mm; margin: 0; }
+        /* === XPRINTER B420 - 100mm x 150mm === */
+        @page {
+            size: 100mm 150mm;
+            margin: 0;
+        }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', 'DejaVu Sans', Arial, sans-serif;
             font-size: 9px;
             color: #000;
             background: #fff;
+        }
+
+        .page-break { page-break-after: always; }
+
+        /* Wrapper = persis satu halaman kertas.
+           Dipaksa exact 100mm x 150mm dan tidak boleh membesar/mengecil. */
+        .wrapper {
+            position: relative;      /* anchor untuk footer absolute */
             width: 100mm;
-        }
-
-        /* Receipt border lives INSIDE body padding agar konten tidak terpotong */
-        .receipt {
-            margin: 2mm;                /* jarak dari tepi kertas */
-            border: 1.5px solid #000;
-            padding: 2mm 2.5mm;
+            height: 150mm;
+            min-height: 150mm;
+            max-height: 150mm;
+            padding: 3mm 4mm 8mm 4mm; /* bottom diperbesar utk kasih ruang footer absolute */
             overflow: hidden;
-            page-break-inside: avoid;
-            width: calc(100mm - 4mm);   /* 100mm - 2×margin */
         }
 
-        /* --- Header --- */
+        /* ---- Header ---- */
         .hdr { text-align: center; margin-bottom: 1mm; }
-        .hdr img { max-width: 20mm; max-height: 7mm; display: block; margin: 0 auto 1px; }
-        .hdr-company { font-size: 8px; font-weight: 700; line-height: 1.3; }
+        .hdr img { max-width: 22mm; max-height: 7mm; display: inline-block; }
+        .hdr-company { font-size: 8px; font-weight: 700; line-height: 1.2; }
         .hdr-date { font-size: 7px; }
 
-        /* --- Barcode --- */
-        .barcode { text-align: center; margin: 1mm 0; }
-        .barcode img { width: 100%; max-height: 9mm; display: block; }
-        .barcode-num { font-size: 12px; font-weight: 700; margin-top: 0.5mm; }
+        /* ---- Barcode ---- */
+        .barcode { text-align: center; margin: 1mm 0 0.5mm; }
+        .barcode img { max-width: 90mm; height: 8mm; display: inline-block; }
+        .barcode-num { font-size: 12px; font-weight: 700; letter-spacing: 0.5px; }
 
-        /* --- Route --- */
+        /* ---- Route ---- */
         .route {
-            font-size: 7px; font-weight: 700; text-align: center;
-            text-transform: uppercase;
+            font-size: 7px; font-weight: 700;
+            text-align: center; text-transform: uppercase;
             border-top: 1.5px solid #000; border-bottom: 1.5px solid #000;
-            padding: 1.2mm 0; margin: 1.2mm 0;
-            word-break: break-all;
+            padding: 1mm 0; margin: 1mm 0;
         }
 
-        /* --- Sections --- */
-        .divider { border-top: 1px dashed #999; margin: 1.2mm 0; }
-        .lbl  { font-size: 7px; font-weight: 700; margin-bottom: 0.3mm; }
-        .name { font-size: 9px; font-weight: 700; line-height: 1.2; }
+        /* ---- Sections ---- */
+        .divider { border-top: 1px dashed #888; margin: 1mm 0; }
+        .lbl   { font-size: 7px; font-weight: 700; margin: 0; line-height: 1.3; }
+        .name  { font-size: 9px; font-weight: 700; line-height: 1.2; word-break: break-word; }
         .phone { font-size: 7.5px; }
-        .addr  { font-size: 7px; line-height: 1.3; word-break: break-word; }
+        .addr  { font-size: 7px; line-height: 1.2; word-break: break-word; }
 
-        /* --- Info Barang --- */
+        /* ---- Info Barang ---- */
         .box {
-            border: 1px solid #bbb; border-radius: 2px;
-            padding: 1mm 2mm; margin-top: 1.2mm;
+            border: 1px solid #aaa;
+            border-radius: 2px;
+            padding: 1mm 2mm;
+            margin-top: 1mm;
             font-size: 7.5px;
         }
         .box-title {
-            text-align: center; font-weight: 700; font-size: 7.5px;
-            border-bottom: 1px dashed #aaa;
-            margin-bottom: 1mm; padding-bottom: 0.5mm;
+            text-align: center; font-weight: 700; font-size: 8px;
+            border-bottom: 1px dashed #999; margin-bottom: 1mm; padding-bottom: 0.5mm;
         }
-        /* Pakai grid 2 baris sederhana, bukan table, agar tidak overflow */
-        .info-row {
-            display: flex; justify-content: space-between;
-            margin-bottom: 0.5mm;
-        }
-        .info-row span { flex: 1; }
-        .info-row span:last-child { text-align: right; flex: 0 0 auto; max-width: 50%; }
+        table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+        td { vertical-align: top; padding: 0; word-break: break-word; }
+        .tr { text-align: right; }
 
-        /* --- Footer --- */
+        /* ---- Footer ----
+           Absolute, bukan flex margin-top:auto, supaya konsisten di semua
+           browser print engine maupun PDF renderer server-side. */
         .footer {
-            text-align: center; font-size: 7px;
+            position: absolute;
+            left: 4mm;
+            right: 4mm;
+            bottom: 2mm;
+            text-align: center;
+            font-size: 7px;
             border-top: 1px solid #000;
-            padding-top: 1mm; margin-top: 1.2mm;
+            padding-top: 1mm;
         }
-
-        .note { font-size: 7px; margin-top: 1mm; word-break: break-word; }
     </style>
 </head>
 <body>
 <?php foreach($packages as $i => $pkg): ?>
-<?php if ($i > 0): ?><div style="page-break-after:always;height:0;overflow:hidden;"></div><?php endif; ?>
-<div class="receipt">
+<div class="wrapper">
 
     <!-- Header -->
     <div class="hdr">
@@ -106,6 +128,15 @@
 
     <!-- Barcode -->
     <div class="barcode">
+        <?php
+            /* Catatan: jika halaman ini dirender via PDF engine server-side
+               (DomPDF/mPDF), request https ke tec-it.com butuh allow_url_fopen
+               / cURL aktif dan koneksi internet dari server. Kalau gagal,
+               barcode tidak muncul walau tampil normal saat preview browser.
+               Untuk hasil paling konsisten, generate barcode secara lokal
+               (mis. pakai library picqer/php-barcode-generator) lalu embed
+               sebagai base64, sama seperti logo di atas. */
+        ?>
         <img src="https://barcode.tec-it.com/barcode.ashx?data=<?= urlencode($pkg['resi']) ?>&code=Code128&dpi=96" alt="Barcode">
         <div class="barcode-num"><?= htmlspecialchars($pkg['resi']) ?></div>
     </div>
@@ -113,7 +144,7 @@
     <!-- Route -->
     <div class="route">
         <?= htmlspecialchars($pkg['origin_city'] ?: ($pkg['branch_origin_city'] ?? ($pkg['origin_branch_name'] ?? '-'))) ?>
-        &rarr;
+        &nbsp;&rarr;&nbsp;
         <?= htmlspecialchars($pkg['destination_city'] ?: ($pkg['dest_city'] ?? ($pkg['branch_dest_city'] ?? ($pkg['dest_branch_name'] ?? '-')))) ?>
     </div>
 
@@ -134,19 +165,23 @@
     <!-- Info Barang -->
     <div class="box">
         <div class="box-title">INFORMASI BARANG</div>
-        <div class="info-row">
-            <span><strong>Isi:</strong> <?= htmlspecialchars($pkg['item_type'] ?: '-') ?></span>
-            <span><strong>Layanan:</strong> <?= htmlspecialchars($pkg['service_name'] ?: 'Reguler') ?></span>
-        </div>
-        <div class="info-row">
-            <span><strong>Berat:</strong> <?= (float)$pkg['weight'] ?> kg</span>
-            <span><strong>Koli:</strong> <?= (int)$pkg['koli'] ?> pcs</span>
-        </div>
-        <div><strong>Volume:</strong> <?= number_format(($pkg['length']*$pkg['width']*$pkg['height'])/1000000, 4) ?> m&sup3;</div>
+        <table>
+            <tr>
+                <td><strong>Isi:</strong> <?= htmlspecialchars($pkg['item_type'] ?: '-') ?></td>
+                <td class="tr"><strong>Layanan:</strong> <?= htmlspecialchars($pkg['service_name'] ?: 'Reguler') ?></td>
+            </tr>
+            <tr>
+                <td><strong>Berat:</strong> <?= (float)$pkg['weight'] ?> kg</td>
+                <td class="tr"><strong>Koli:</strong> <?= (int)$pkg['koli'] ?> pcs</td>
+            </tr>
+            <tr>
+                <td colspan="2"><strong>Volume:</strong> <?= number_format(($pkg['length']*$pkg['width']*$pkg['height'])/1000000, 4) ?> m&sup3;</td>
+            </tr>
+        </table>
     </div>
 
     <?php if(!empty($pkg['description'])): ?>
-    <div class="note"><strong>Catatan:</strong> <?= htmlspecialchars($pkg['description']) ?></div>
+    <div class="addr" style="margin-top:1mm;"><strong>Catatan:</strong> <?= htmlspecialchars($pkg['description']) ?></div>
     <?php endif; ?>
 
     <!-- Footer -->
@@ -155,6 +190,7 @@
     </div>
 
 </div>
+<?php if ($i < count($packages) - 1): ?><div class="page-break"></div><?php endif; ?>
 <?php endforeach; ?>
 </body>
 </html>
