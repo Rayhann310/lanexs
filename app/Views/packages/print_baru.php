@@ -6,15 +6,15 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         
-        /* Setting ukuran thermal label standar 100mm x 150mm (A6) untuk XPrinter XP-420B */
+        /* XPrinter B420: 100mm x 150mm */
         @page { 
             size: 100mm 150mm; 
-            margin: 0mm; 
+            margin: 2mm 2mm 0mm 2mm;
         }
         
         body {
             font-family: 'Inter', sans-serif;
-            font-size: 12px;
+            font-size: 9px;
             color: #000;
             margin: 0;
             padding: 0;
@@ -25,57 +25,59 @@
         
         .wrapper {
             width: 96mm;
-            height: 142mm;
             border: 2px solid #000;
-            padding: 3mm;
+            padding: 2mm;
             box-sizing: border-box;
-            margin: 2mm auto;
+            page-break-inside: avoid;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
         }
+        
         .text-center { text-align: center; }
         .text-left { text-align: left; }
         .text-right { text-align: right; }
         .font-bold { font-weight: 700; }
         .font-semibold { font-weight: 600; }
-        .text-xs { font-size: 9px; }
-        .text-sm { font-size: 10px; }
-        .text-lg { font-size: 14px; }
-        .text-xl { font-size: 18px; }
-        .mt-1 { margin-top: 5px; }
-        .mt-2 { margin-top: 10px; }
-        .mb-1 { margin-bottom: 5px; }
-        .mb-2 { margin-bottom: 10px; }
-        .border-t { border-top: 1px dashed #cbd5e1; }
-        .border-b { border-bottom: 1px dashed #cbd5e1; }
-        .py-1 { padding-top: 5px; padding-bottom: 5px; }
-        .py-2 { padding-top: 10px; padding-bottom: 10px; }
         
-        .logo { max-width: 120px; max-height: 40px; margin-bottom: 5px; }
+        .logo { max-width: 80px; max-height: 25px; margin-bottom: 1px; }
         
         table { width: 100%; border-collapse: collapse; }
-        td { vertical-align: top; padding: 2px 0; }
+        td { vertical-align: top; padding: 1px 0; }
         
-        .barcode { text-align: center; margin: 5px 0; }
-        .barcode img { max-width: 100%; height: 40px; }
+        .barcode { text-align: center; margin: 2px 0; }
+        .barcode img { max-width: 100%; height: 30px; }
+        .barcode-num { font-size: 11px; font-weight: 700; margin-top: 1px; }
         
-        .box {
-            border: 1px solid #cbd5e1;
-            border-radius: 4px;
-            padding: 5px;
-            margin-top: 5px;
+        .route { 
+            font-size: 8px; font-weight: bold; 
+            padding: 2px 0; 
+            border-top: 2px solid #000; border-bottom: 2px solid #000; 
+            margin: 2px 0; text-transform: uppercase; 
+            text-align: center;
         }
         
-        .route { font-size: 9px; font-weight: bold; padding: 5px 0; border-top: 2px solid #000; border-bottom: 2px solid #000; margin: 5px 0; text-transform: uppercase; }
+        .section-label { font-size: 8px; font-weight: 700; margin: 0; }
+        .section-name  { font-size: 9px; font-weight: 600; }
+        .section-phone { font-size: 8px; }
+        .section-addr  { font-size: 7px; }
+        .divider { border-top: 1px dashed #888; margin: 2px 0; }
         
+        .box {
+            border: 1px solid #aaa;
+            border-radius: 3px;
+            padding: 2px 3px;
+            margin-top: 2px;
+            font-size: 8px;
+        }
+        .box-title { text-align: center; font-weight: 700; font-size: 8px; border-bottom: 1px dashed #aaa; margin-bottom: 2px; padding-bottom: 1px; }
+        
+        .footer { text-align: center; font-size: 7px; border-top: 1px solid #000; padding-top: 2px; margin-top: 2px; }
     </style>
 </head>
 <body>
     <?php foreach($packages as $i => $pkg): ?>
     <div class="wrapper">
         <!-- Header -->
-        <div class="text-center mb-2">
+        <div class="text-center" style="margin-bottom:1px;">
             <?php 
                 $logoPath = $_SERVER['DOCUMENT_ROOT'] . '/lanex/public/assets/images/a.png';
                 if(!file_exists($logoPath)) $logoPath = dirname(dirname(dirname(__DIR__))) . '/public/assets/images/a.png';
@@ -85,13 +87,11 @@
                     $base64 = 'data:image/' . $imgType . ';base64,' . base64_encode($imgData);
                     echo '<img src="'.$base64.'" class="logo">';
                 } else {
-                    echo '<h2 style="margin:0;">LANEXS</h2>';
+                    echo '<strong style="font-size:12px;">LANEXS</strong>';
                 }
             ?>
-            <div class="font-bold text-sm">PT. LINTAS AREA NUSANTARA EXPRESS</div>
-            <div class="text-xs text-center mt-1">
-                Tgl Kirim: <?= date('d M Y', strtotime($pkg['created_at'])) ?>
-            </div>
+            <div style="font-size:9px; font-weight:700;">PT. LINTAS AREA NUSANTARA EXPRESS</div>
+            <div style="font-size:7px;">Tgl Kirim: <?= date('d M Y', strtotime($pkg['created_at'])) ?></div>
         </div>
 
         <!-- Barcode -->
@@ -100,35 +100,34 @@
                 $resiUrl = "https://barcode.tec-it.com/barcode.ashx?data=" . urlencode($pkg['resi']) . "&code=Code128&dpi=96";
                 echo '<img src="'.$resiUrl.'" alt="Barcode">';
             ?>
-            <div class="font-bold text-lg mt-1"><?= htmlspecialchars($pkg['resi']) ?></div>
+            <div class="barcode-num"><?= htmlspecialchars($pkg['resi']) ?></div>
         </div>
         
         <!-- Route -->
-        <div class="route text-center">
+        <div class="route">
             <?= htmlspecialchars($pkg['origin_city'] ?: ($pkg['branch_origin_city'] ?? ($pkg['origin_branch_name'] ?? '-'))) ?> 
             &nbsp;&rarr;&nbsp; 
             <?= htmlspecialchars($pkg['destination_city'] ?: ($pkg['dest_city'] ?? ($pkg['branch_dest_city'] ?? ($pkg['dest_branch_name'] ?? '-')))) ?>
         </div>
 
-        <!-- Pengirim & Penerima -->
-        <div class="border-t py-1">
-            <div class="font-bold">PENGIRIM:</div>
-            <div class="font-semibold"><?= htmlspecialchars($pkg['sender_name']) ?></div>
-            <div class="text-xs"><?= htmlspecialchars($pkg['sender_phone']) ?></div>
-            <div class="text-xs mt-1"><?= htmlspecialchars($pkg['sender_address']) ?></div>
-        </div>
+        <!-- Pengirim -->
+        <div class="divider"></div>
+        <div class="section-label">PENGIRIM:</div>
+        <div class="section-name"><?= htmlspecialchars($pkg['sender_name']) ?></div>
+        <div class="section-phone"><?= htmlspecialchars($pkg['sender_phone']) ?></div>
+        <div class="section-addr"><?= htmlspecialchars($pkg['sender_address']) ?></div>
         
-        <div class="border-t border-b py-1 mb-2">
-            <div class="font-bold">PENERIMA:</div>
-            <div class="font-semibold text-sm"><?= htmlspecialchars($pkg['receiver_name']) ?></div>
-            <div class="text-xs font-bold"><?= htmlspecialchars($pkg['receiver_phone']) ?></div>
-            <div class="text-xs mt-1"><?= htmlspecialchars($pkg['receiver_address']) ?></div>
-        </div>
+        <!-- Penerima -->
+        <div class="divider"></div>
+        <div class="section-label">PENERIMA:</div>
+        <div class="section-name"><?= htmlspecialchars($pkg['receiver_name']) ?></div>
+        <div class="section-phone"><?= htmlspecialchars($pkg['receiver_phone']) ?></div>
+        <div class="section-addr"><?= htmlspecialchars($pkg['receiver_address']) ?></div>
 
         <!-- Info Barang -->
         <div class="box">
-            <div class="text-center font-bold mb-1 border-b pb-1">INFORMASI BARANG</div>
-            <table class="text-xs">
+            <div class="box-title">INFORMASI BARANG</div>
+            <table>
                 <tr>
                     <td><strong>Isi:</strong> <?= htmlspecialchars($pkg['item_type'] ?: '-') ?></td>
                     <td class="text-right"><strong>Layanan:</strong> <?= htmlspecialchars($pkg['service_name'] ?: 'Reguler') ?></td>
@@ -144,16 +143,12 @@
         </div>
         
         <?php if(!empty($pkg['description'])): ?>
-        <div class="text-xs mt-1">
-            <strong>Catatan:</strong> <?= htmlspecialchars($pkg['description']) ?>
-        </div>
+        <div style="font-size:7px; margin-top:1px;"><strong>Catatan:</strong> <?= htmlspecialchars($pkg['description']) ?></div>
         <?php endif; ?>
 
         <!-- Footer -->
-        <div class="text-center text-xs mt-2 border-t pt-2">
-            <div class="font-bold">Lacak pengiriman di:</div>
-            <div>www.lanexgroup.com</div>
-            <div class="mt-1 font-bold">Terima Kasih</div>
+        <div class="footer">
+            <strong>Lacak: www.lanexgroup.com</strong> &nbsp;|&nbsp; <strong>Terima Kasih</strong>
         </div>
     </div>
     <?php if ($i < count($packages) - 1): ?><div class="page-break"></div><?php endif; ?>
