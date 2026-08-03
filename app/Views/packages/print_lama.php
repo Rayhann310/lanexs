@@ -33,13 +33,14 @@
            height/min-height/max-height dipaksa sama semua supaya tidak
            membesar/mengecil mengikuti isi konten. */
         .wrapper {
-            width: 100mm;
+            width: 96mm;
             height: 150mm;
             min-height: 150mm;
             max-height: 150mm;
             padding: 2mm 3mm 1mm 3mm;
             overflow: hidden;
             border: none;
+            margin: 0;
         }
 
         /* Border luar seluruh wrapper.
