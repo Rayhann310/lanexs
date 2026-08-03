@@ -42,13 +42,13 @@
            Dipaksa exact 100mm x 150mm dan tidak boleh membesar/mengecil. */
         .wrapper {
             position: relative;      /* anchor untuk footer absolute */
-            width: 96mm;
+            width: 95mm;
             height: 150mm;
             min-height: 150mm;
             max-height: 150mm;
             padding: 3mm 4mm 8mm 4mm; /* bottom diperbesar utk kasih ruang footer absolute */
             overflow: hidden;
-            margin: 0;
+            margin: 0 0 0 -2mm;
         }
 
         /* ---- Header ---- */
