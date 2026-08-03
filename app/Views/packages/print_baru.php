@@ -24,12 +24,12 @@
         .page-break { page-break-after: always; }
         
         .wrapper {
-            width: 100mm;
-            height: 149mm;
+            width: 96mm;
+            height: 146mm;
             border: 2px solid #000;
             padding: 3mm;
             box-sizing: border-box;
-            margin: 0;
+            margin: 2mm auto;
             overflow: hidden;
             display: flex;
             flex-direction: column;

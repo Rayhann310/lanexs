@@ -12,11 +12,11 @@
         body { font-family: 'Times New Roman', Times, serif; font-size: 11px; margin: 0; padding: 0; background: #fff; }
         .page-break { page-break-after: always; }
         .wrapper { 
-            width: 100mm; 
-            height: 149mm; 
+            width: 96mm; 
+            height: 146mm; 
             border: 2px solid #000; 
             box-sizing: border-box; 
-            margin: 0; 
+            margin: 2mm auto; 
             padding: 2mm;
             overflow: hidden;
             display: flex;
