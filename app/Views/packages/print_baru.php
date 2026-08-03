@@ -41,12 +41,10 @@
         /* Wrapper = persis satu halaman kertas.
            Dipaksa exact 100mm x 150mm dan tidak boleh membesar/mengecil. */
         .wrapper {
-            position: relative;      /* anchor untuk footer absolute */
+            display: flex;
+            flex-direction: column;
             width: 95mm;
-            height: 150mm;
-            min-height: 150mm;
-            max-height: 150mm;
-            padding: 3mm 4mm 8mm 4mm; /* bottom diperbesar utk kasih ruang footer absolute */
+            padding: 3mm 4mm 2mm 4mm;
             overflow: hidden;
             margin: 0 0 0 -2mm;
         }
@@ -93,14 +91,9 @@
         td { vertical-align: top; padding: 0; word-break: break-word; }
         .tr { text-align: right; }
 
-        /* ---- Footer ----
-           Absolute, bukan flex margin-top:auto, supaya konsisten di semua
-           browser print engine maupun PDF renderer server-side. */
+        /* ---- Footer ---- */
         .footer {
-            position: absolute;
-            left: 4mm;
-            right: 4mm;
-            bottom: 2mm;
+            margin-top: auto;
             text-align: center;
             font-size: 7px;
             border-top: 1px solid #000;

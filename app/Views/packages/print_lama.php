@@ -34,9 +34,6 @@
            membesar/mengecil mengikuti isi konten. */
         .wrapper {
             width: 95mm;
-            height: 150mm;
-            min-height: 150mm;
-            max-height: 150mm;
             padding: 2mm 3mm 1mm 3mm;
             overflow: hidden;
             border: none;
@@ -48,12 +45,12 @@
            bukan pakai flex + margin-top:auto (sering tidak konsisten
            di berbagai browser/print-engine sehingga footer hilang/geser). */
         .inner {
-            position: relative;
+            display: flex;
+            flex-direction: column;
             width: 100%;
-            height: 100%;
             border: 1.5px solid #000;
             overflow: hidden;
-            padding-bottom: 10mm; /* ruang aman utk footer absolute */
+            padding-bottom: 2px;
         }
 
         table { width: 100%; border-collapse: collapse; table-layout: fixed; }
@@ -76,10 +73,7 @@
         .ttd-cell { height: 40px; }
 
         .footer-note {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            margin-top: auto;
             text-align: center;
             border-top: 1.5px solid #000;
             font-size: 8px;
