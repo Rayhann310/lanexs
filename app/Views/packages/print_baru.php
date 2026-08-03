@@ -25,7 +25,7 @@
         
         .wrapper {
             width: 96mm;
-            height: 146mm;
+            height: 142mm;
             border: 2px solid #000;
             padding: 3mm;
             box-sizing: border-box;

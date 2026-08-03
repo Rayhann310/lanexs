@@ -13,7 +13,7 @@
         .page-break { page-break-after: always; }
         .wrapper { 
             width: 96mm; 
-            height: 146mm; 
+            height: 142mm; 
             border: 2px solid #000; 
             box-sizing: border-box; 
             margin: 2mm auto; 
