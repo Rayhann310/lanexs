@@ -4,73 +4,72 @@
     <meta charset="UTF-8">
     <title>Cetak Resi Lama</title>
     <style>
-        /* === XPRINTER B420 - 100mm x 150mm === */
-        @page {
-            size: 100mm 150mm;
-            margin: 0;
-        }
+        @page { size: 100mm 150mm; margin: 0; }
 
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Times New Roman', Times, serif;
             font-size: 9px;
-            margin: 0; padding: 0; background: #fff;
-        }
-
-        .page-break { page-break-after: always; }
-
-        /* Wrapper = persis satu halaman kertas */
-        .wrapper {
+            background: #fff;
             width: 100mm;
-            height: 150mm;
-            padding: 2mm 3mm 1mm 3mm;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            border: none;
         }
 
-        /* Border luar seluruh wrapper */
-        .inner {
-            width: 100%;
-            height: 100%;
+        /* Receipt border INSIDE body padding */
+        .receipt {
+            margin: 2mm;
             border: 1.5px solid #000;
+            padding: 1.5mm;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
+            page-break-inside: avoid;
+            width: calc(100mm - 4mm);
         }
 
         table { width: 100%; border-collapse: collapse; }
         th, td { border: 1px solid #000; padding: 1px 2px; text-align: center; font-size: 8.5px; }
         .no-bt { border-top: none; }
         .no-bb { border-bottom: none; }
-        .no-bl { border-left: none; }
-        .no-br { border-right: none; }
         .tl { text-align: left; }
         .bold { font-weight: bold; }
 
-        .hdr-logo td { border: none; border-bottom: 1.5px solid #000; padding: 2px; }
-        .resi-big { font-size: 13px; font-weight: bold; padding: 2px 3px; }
-        .ttd-cell { height: 40px; }
+        /* Header row */
+        .hdr-logo-td {
+            width: 28%;
+            border: none !important;
+            border-right: 1.5px solid #000 !important;
+            border-bottom: 1.5px solid #000 !important;
+            text-align: center;
+            padding: 2px !important;
+        }
+        .hdr-name-td {
+            border: none !important;
+            border-bottom: 1.5px solid #000 !important;
+            font-size: 11px;
+            font-weight: bold;
+            text-align: center;
+            padding: 3px 2px !important;
+        }
+
+        .resi-big { font-size: 12px; font-weight: bold; text-align: left; padding: 2px 3px !important; }
+        .ttd-cell { height: 35px; }
         .footer-note {
             text-align: center;
             border-top: 1.5px solid #000;
-            font-size: 8px;
+            font-size: 7.5px;
             padding: 2px;
-            margin-top: auto;
+            word-break: break-word;
         }
     </style>
 </head>
 <body>
 <?php foreach($packages as $i => $pkg): ?>
-<div class="wrapper">
-<div class="inner">
+<?php if ($i > 0): ?><div style="page-break-after:always;height:0;overflow:hidden;"></div><?php endif; ?>
+<div class="receipt">
 
-    <!-- Header: Logo + Nama Perusahaan -->
-    <table class="hdr-logo">
+    <!-- Header: Logo + Nama -->
+    <table>
         <tr>
-            <td style="width:28%; border-right:1.5px solid #000; text-align:center;">
+            <td class="hdr-logo-td">
                 <?php
                     $logoPath = $_SERVER['DOCUMENT_ROOT'] . '/lanex/public/assets/images/a.png';
                     if(!file_exists($logoPath)) $logoPath = dirname(dirname(dirname(__DIR__))) . '/public/assets/images/a.png';
@@ -81,32 +80,30 @@
                     } else { echo '<strong>LANEXS</strong>'; }
                 ?>
             </td>
-            <td style="width:72%; font-size:12px; font-weight:bold; text-align:center;">
-                PT. LINTAS AREA NUSANTARA EXPRESS
-            </td>
+            <td class="hdr-name-td">PT. LINTAS AREA NUSANTARA EXPRESS</td>
         </tr>
     </table>
 
-    <!-- Resi + Tgl + Origin/Dest -->
+    <!-- Resi + Tanggal + Origin/Dest -->
     <table>
         <tr>
-            <td colspan="3" class="resi-big no-bt" style="width:50%; text-align:left;">
+            <td colspan="3" class="resi-big no-bt" style="width:50%;">
                 <?= htmlspecialchars($pkg['resi']) ?>
             </td>
-            <td colspan="2" class="no-bt" style="width:50%; padding:1px 2px;">
-                <div style="border-bottom:1px solid #000; font-weight:bold; font-size:8px; padding-bottom:1px;">
+            <td colspan="2" class="no-bt" style="width:50%; padding:1px 2px; font-size:7.5px;">
+                <div style="border-bottom:1px solid #000; font-weight:bold; padding-bottom:1px;">
                     Tgl : <?= date('Y-m-d', strtotime($pkg['created_at'])) ?>
                 </div>
                 <table style="width:100%; border:none; margin-top:1px;">
                     <tr>
-                        <td style="width:50%; border:none; border-right:1px solid #000; font-weight:bold; font-size:7.5px;">ORIGIN</td>
-                        <td style="width:50%; border:none; font-weight:bold; font-size:7.5px;">DESTINATION</td>
+                        <td style="width:50%; border:none; border-right:1px solid #000; font-weight:bold; font-size:7px;">ORIGIN</td>
+                        <td style="width:50%; border:none; font-weight:bold; font-size:7px;">DESTINATION</td>
                     </tr>
                     <tr>
-                        <td style="border:none; border-right:1px solid #000; font-size:7.5px;">
+                        <td style="border:none; border-right:1px solid #000; font-size:7px; text-align:left;">
                             <?= htmlspecialchars($pkg['origin_city'] ?: ($pkg['branch_origin_city'] ?? ($pkg['origin_branch_name'] ?? '-'))) ?>
                         </td>
-                        <td style="border:none; font-size:7.5px;">
+                        <td style="border:none; font-size:7px; text-align:left;">
                             <?= htmlspecialchars($pkg['destination_city'] ?: ($pkg['dest_city'] ?? ($pkg['branch_dest_city'] ?? ($pkg['dest_branch_name'] ?? '-')))) ?>
                         </td>
                     </tr>
@@ -146,15 +143,15 @@
         </tr>
         <tr>
             <td class="bold" style="width:12%;">Nama</td>
-            <td style="width:38%; text-align:left; font-size:8px;"><?= htmlspecialchars($pkg['sender_name']) ?></td>
+            <td style="width:38%; text-align:left; font-size:8px; word-break:break-word;"><?= htmlspecialchars($pkg['sender_name']) ?></td>
             <td class="bold" style="width:12%;">Nama</td>
-            <td style="width:38%; text-align:left; font-size:8px;"><?= htmlspecialchars($pkg['receiver_name']) ?></td>
+            <td style="width:38%; text-align:left; font-size:8px; word-break:break-word;"><?= htmlspecialchars($pkg['receiver_name']) ?></td>
         </tr>
         <tr>
             <td class="bold">Alamat</td>
-            <td style="font-size:7.5px; text-align:left;"><?= htmlspecialchars($pkg['sender_address']) ?></td>
+            <td style="font-size:7px; text-align:left; word-break:break-word;"><?= htmlspecialchars($pkg['sender_address']) ?></td>
             <td class="bold">Alamat</td>
-            <td style="font-size:7.5px; text-align:left;"><?= htmlspecialchars($pkg['receiver_address']) ?></td>
+            <td style="font-size:7px; text-align:left; word-break:break-word;"><?= htmlspecialchars($pkg['receiver_address']) ?></td>
         </tr>
         <tr>
             <td class="bold">No.Telp</td>
@@ -181,7 +178,7 @@
     <!-- Remarks -->
     <table>
         <tr>
-            <td class="bold no-bt tl" style="padding-left:4px;">
+            <td class="bold no-bt tl" style="padding-left:4px; font-size:8px; word-break:break-word;">
                 Remarks : <?= htmlspecialchars($pkg['description'] ?? '') ?>
             </td>
         </tr>
@@ -193,8 +190,6 @@
     </div>
 
 </div>
-</div>
-<?php if ($i < count($packages) - 1): ?><div class="page-break"></div><?php endif; ?>
 <?php endforeach; ?>
 </body>
 </html>

@@ -6,90 +6,88 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-        /* === XPRINTER B420 - 100mm x 150mm === */
-        @page {
-            size: 100mm 150mm;
-            margin: 0;
-        }
+        @page { size: 100mm 150mm; margin: 0; }
 
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Inter', sans-serif;
             font-size: 9px;
             color: #000;
-            margin: 0;
-            padding: 0;
             background: #fff;
-        }
-
-        .page-break { page-break-after: always; }
-
-        /* Wrapper = persis satu halaman kertas */
-        .wrapper {
             width: 100mm;
-            height: 150mm;
-            padding: 3mm 4mm 2mm 4mm; /* top right bottom left */
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
         }
 
-        /* ---- Header ---- */
+        /* Receipt border lives INSIDE body padding agar konten tidak terpotong */
+        .receipt {
+            margin: 2mm;                /* jarak dari tepi kertas */
+            border: 1.5px solid #000;
+            padding: 2mm 2.5mm;
+            overflow: hidden;
+            page-break-inside: avoid;
+            width: calc(100mm - 4mm);   /* 100mm - 2×margin */
+        }
+
+        /* --- Header --- */
         .hdr { text-align: center; margin-bottom: 1mm; }
-        .hdr img { max-width: 22mm; max-height: 7mm; }
-        .hdr-company { font-size: 8px; font-weight: 700; line-height: 1.2; }
+        .hdr img { max-width: 20mm; max-height: 7mm; display: block; margin: 0 auto 1px; }
+        .hdr-company { font-size: 8px; font-weight: 700; line-height: 1.3; }
         .hdr-date { font-size: 7px; }
 
-        /* ---- Barcode ---- */
-        .barcode { text-align: center; margin: 1mm 0 0.5mm; }
-        .barcode img { max-width: 100%; height: 8mm; }
-        .barcode-num { font-size: 12px; font-weight: 700; }
+        /* --- Barcode --- */
+        .barcode { text-align: center; margin: 1mm 0; }
+        .barcode img { width: 100%; max-height: 9mm; display: block; }
+        .barcode-num { font-size: 12px; font-weight: 700; margin-top: 0.5mm; }
 
-        /* ---- Route ---- */
+        /* --- Route --- */
         .route {
-            font-size: 7px; font-weight: 700;
-            text-align: center; text-transform: uppercase;
+            font-size: 7px; font-weight: 700; text-align: center;
+            text-transform: uppercase;
             border-top: 1.5px solid #000; border-bottom: 1.5px solid #000;
-            padding: 1mm 0; margin: 1mm 0;
+            padding: 1.2mm 0; margin: 1.2mm 0;
+            word-break: break-all;
         }
 
-        /* ---- Sections ---- */
-        .divider { border-top: 1px dashed #888; margin: 1mm 0; }
-        .lbl   { font-size: 7px; font-weight: 700; margin: 0; line-height: 1.3; }
-        .name  { font-size: 9px; font-weight: 700; line-height: 1.2; }
+        /* --- Sections --- */
+        .divider { border-top: 1px dashed #999; margin: 1.2mm 0; }
+        .lbl  { font-size: 7px; font-weight: 700; margin-bottom: 0.3mm; }
+        .name { font-size: 9px; font-weight: 700; line-height: 1.2; }
         .phone { font-size: 7.5px; }
-        .addr  { font-size: 7px; line-height: 1.2; }
+        .addr  { font-size: 7px; line-height: 1.3; word-break: break-word; }
 
-        /* ---- Info Barang ---- */
+        /* --- Info Barang --- */
         .box {
-            border: 1px solid #aaa;
-            border-radius: 2px;
-            padding: 1mm 2mm;
-            margin-top: 1mm;
+            border: 1px solid #bbb; border-radius: 2px;
+            padding: 1mm 2mm; margin-top: 1.2mm;
             font-size: 7.5px;
         }
         .box-title {
-            text-align: center; font-weight: 700; font-size: 8px;
-            border-bottom: 1px dashed #999; margin-bottom: 1mm; padding-bottom: 0.5mm;
+            text-align: center; font-weight: 700; font-size: 7.5px;
+            border-bottom: 1px dashed #aaa;
+            margin-bottom: 1mm; padding-bottom: 0.5mm;
         }
-        table { width: 100%; border-collapse: collapse; }
-        td { vertical-align: top; padding: 0; }
-        .tr { text-align: right; }
+        /* Pakai grid 2 baris sederhana, bukan table, agar tidak overflow */
+        .info-row {
+            display: flex; justify-content: space-between;
+            margin-bottom: 0.5mm;
+        }
+        .info-row span { flex: 1; }
+        .info-row span:last-child { text-align: right; flex: 0 0 auto; max-width: 50%; }
 
-        /* ---- Footer ---- */
+        /* --- Footer --- */
         .footer {
-            margin-top: auto;
-            text-align: center;
-            font-size: 7px;
+            text-align: center; font-size: 7px;
             border-top: 1px solid #000;
-            padding-top: 1mm;
+            padding-top: 1mm; margin-top: 1.2mm;
         }
+
+        .note { font-size: 7px; margin-top: 1mm; word-break: break-word; }
     </style>
 </head>
 <body>
 <?php foreach($packages as $i => $pkg): ?>
-<div class="wrapper">
+<?php if ($i > 0): ?><div style="page-break-after:always;height:0;overflow:hidden;"></div><?php endif; ?>
+<div class="receipt">
 
     <!-- Header -->
     <div class="hdr">
@@ -115,7 +113,7 @@
     <!-- Route -->
     <div class="route">
         <?= htmlspecialchars($pkg['origin_city'] ?: ($pkg['branch_origin_city'] ?? ($pkg['origin_branch_name'] ?? '-'))) ?>
-        &nbsp;&rarr;&nbsp;
+        &rarr;
         <?= htmlspecialchars($pkg['destination_city'] ?: ($pkg['dest_city'] ?? ($pkg['branch_dest_city'] ?? ($pkg['dest_branch_name'] ?? '-')))) ?>
     </div>
 
@@ -136,23 +134,19 @@
     <!-- Info Barang -->
     <div class="box">
         <div class="box-title">INFORMASI BARANG</div>
-        <table>
-            <tr>
-                <td><strong>Isi:</strong> <?= htmlspecialchars($pkg['item_type'] ?: '-') ?></td>
-                <td class="tr"><strong>Layanan:</strong> <?= htmlspecialchars($pkg['service_name'] ?: 'Reguler') ?></td>
-            </tr>
-            <tr>
-                <td><strong>Berat:</strong> <?= (float)$pkg['weight'] ?> kg</td>
-                <td class="tr"><strong>Koli:</strong> <?= (int)$pkg['koli'] ?> pcs</td>
-            </tr>
-            <tr>
-                <td colspan="2"><strong>Volume:</strong> <?= number_format(($pkg['length']*$pkg['width']*$pkg['height'])/1000000, 4) ?> m&sup3;</td>
-            </tr>
-        </table>
+        <div class="info-row">
+            <span><strong>Isi:</strong> <?= htmlspecialchars($pkg['item_type'] ?: '-') ?></span>
+            <span><strong>Layanan:</strong> <?= htmlspecialchars($pkg['service_name'] ?: 'Reguler') ?></span>
+        </div>
+        <div class="info-row">
+            <span><strong>Berat:</strong> <?= (float)$pkg['weight'] ?> kg</span>
+            <span><strong>Koli:</strong> <?= (int)$pkg['koli'] ?> pcs</span>
+        </div>
+        <div><strong>Volume:</strong> <?= number_format(($pkg['length']*$pkg['width']*$pkg['height'])/1000000, 4) ?> m&sup3;</div>
     </div>
 
     <?php if(!empty($pkg['description'])): ?>
-    <div class="addr" style="margin-top:1mm;"><strong>Catatan:</strong> <?= htmlspecialchars($pkg['description']) ?></div>
+    <div class="note"><strong>Catatan:</strong> <?= htmlspecialchars($pkg['description']) ?></div>
     <?php endif; ?>
 
     <!-- Footer -->
@@ -161,7 +155,6 @@
     </div>
 
 </div>
-<?php if ($i < count($packages) - 1): ?><div class="page-break"></div><?php endif; ?>
 <?php endforeach; ?>
 </body>
 </html>
