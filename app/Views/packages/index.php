@@ -1068,7 +1068,19 @@
     </script>
 
 <script>
-    // Alpine.js component for Package Manager
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+
+    // Fetch and init template select for Package Manager
     function packageManager() {
         return {
             ...importMixin(),
