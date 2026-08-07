@@ -353,6 +353,10 @@ class PackageController extends BaseController
                 $historyData['city_name'] = $request->get('city_name');
             }
 
+            if ($request->get('created_at')) {
+                $historyData['created_at'] = str_replace('T', ' ', $request->get('created_at'));
+            }
+
             $trackingModel->create($historyData);
             
             if ($status === 'SELESAI') {

@@ -310,7 +310,7 @@
          style="display: none;"
          class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center"
          x-transition.opacity>
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl mx-4"
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto"
              x-show="statusModal"
              x-transition:enter="transition ease-out duration-300"
              x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
@@ -441,6 +441,13 @@
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-1">Bukti Pengiriman (Foto) <span class="text-slate-400 font-normal">(opsional)</span></label>
                     <input type="file" name="proof_image" accept="image/*" class="w-full text-xs px-2 py-2 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition bg-white file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                </div>
+
+                <!-- Date Time Override -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Tanggal & Waktu Status <span class="text-slate-400 font-normal">(opsional)</span></label>
+                    <input type="datetime-local" name="created_at" class="w-full text-sm px-3 py-2 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition bg-white">
+                    <p class="text-[11px] text-slate-400 mt-1">Kosongkan jika status diperbarui saat ini juga.</p>
                 </div>
 
                 <!-- Saved Templates Panel -->
