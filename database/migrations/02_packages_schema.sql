@@ -30,6 +30,7 @@ CREATE TABLE `tracking_histories` (
   `id` int NOT NULL AUTO_INCREMENT,
   `package_id` int NOT NULL,
   `branch_id` int DEFAULT NULL,
+  `city_name` varchar(100) DEFAULT NULL,
   `user_id` int DEFAULT NULL,
   `status` varchar(50) NOT NULL,
   `description` text NOT NULL,
