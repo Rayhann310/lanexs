@@ -351,6 +351,31 @@
                 </div>
             </div>
 
+            <!-- Tracking Histories (Editable) -->
+            <div class="px-6 pb-2" x-show="histories.length > 0">
+                <h4 class="text-xs font-bold text-slate-700 uppercase mb-2">Riwayat Perjalanan</h4>
+                <div class="space-y-2 max-h-40 overflow-y-auto pr-2" id="modalHistoryList">
+                    <template x-for="(hist, idx) in histories" :key="hist.id">
+                        <div class="bg-slate-50 border border-slate-200 p-3 rounded-lg text-sm relative">
+                            <div class="font-bold text-slate-800" x-text="hist.status"></div>
+                            <div class="text-slate-600 mb-1" x-text="hist.description"></div>
+                            
+                            <template x-if="hist.location">
+                                <p class="text-xs font-semibold text-teal-600 mb-1 flex items-center">
+                                    <i class="bi bi-geo-alt-fill mr-1"></i> 
+                                    <span contenteditable="true" class="modal-editable-field outline-none border-b border-dashed border-teal-300 focus:border-teal-600" data-type="location" :data-id="hist.id" x-text="hist.location"></span>
+                                </p>
+                            </template>
+                            
+                            <div class="text-xs text-slate-500 font-medium">
+                                <i class="bi bi-calendar3 mr-1 text-teal-500"></i>
+                                <span contenteditable="true" class="modal-editable-field outline-none border-b border-dashed border-slate-300 focus:border-slate-500" data-type="time" :data-id="hist.id" x-text="formatDate(hist.created_at)"></span>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
             <form :action="statusFormAction" method="POST" enctype="multipart/form-data" class="px-6 pb-6 space-y-4" id="statusUpdateForm">
                 <!-- Status Select -->
                 <div>
@@ -929,6 +954,7 @@
                 description: '',
                 image: ''
             },
+            histories: [],
             
             // Default form state
             defaultFormData: {
@@ -1183,8 +1209,56 @@
                     image: data.last_proof_image || ''
                 };
                 this.statusData.status = data.status;
+                this.histories = [];
+                
+                // Fetch histories
+                fetch('<?= BASE_URL ?>/api/packages/histories/' + data.id)
+                    .then(res => res.json())
+                    .then(res => {
+                        if (res.status === 'success') {
+                            this.histories = res.data;
+                            this.$nextTick(() => {
+                                this.setupModalSelfHealing(data.id);
+                            });
+                        }
+                    });
+                
                 this.statusModal = true;
             },
+            
+            formatDate(dateStr) {
+                const dateObj = new Date(dateStr.replace(' ', 'T'));
+                return dateObj.toLocaleDateString('id-ID', {day:'2-digit', month:'short', year:'numeric'}) + ', ' + 
+                       dateObj.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'});
+            },
+            
+            setupModalSelfHealing(packageId) {
+                const editableFields = document.querySelectorAll('#modalHistoryList .modal-editable-field:not(.healing-attached)');
+                editableFields.forEach(field => {
+                    field.classList.add('healing-attached');
+                    const id = field.getAttribute('data-id');
+                    const type = field.getAttribute('data-type');
+                    const storageKey = 'tracking_heal_' + packageId + '_' + id + '_' + type;
+                    
+                    // Restore if exists
+                    const savedValue = localStorage.getItem(storageKey);
+                    if (savedValue) {
+                        field.textContent = savedValue;
+                    }
+                    
+                    // Save on edit
+                    field.addEventListener('blur', function() {
+                        localStorage.setItem(storageKey, this.textContent);
+                    });
+                    field.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            this.blur();
+                        }
+                    });
+                });
+            },
+
             
             deletePackage(id, resi) {
                 Swal.fire({

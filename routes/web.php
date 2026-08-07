@@ -179,7 +179,9 @@ Router::get('/api/ping', function(Request $request) {
 });
 Router::get('/api/tariffs/calculate', [\App\Controllers\TariffController::class, 'calculate']);
 Router::get('/api/packages/datatable', [PackageController::class, 'datatable']);
+Router::get('/api/packages/histories/{id}', [PackageController::class, 'histories']);
 Router::get('/api/audit-logs/datatable', [\App\Controllers\AuditLogController::class, 'datatable']);
+
 
 // Mobile API Routes (No Auth for Login)
 Router::post('/api/mobile/login', [\App\Controllers\Api\MobileController::class, 'login']);

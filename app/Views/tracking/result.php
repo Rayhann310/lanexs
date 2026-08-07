@@ -106,6 +106,7 @@ ob_start();
                                             <?php if ($history['location']): ?>
                                                 <p class="text-sm font-semibold text-teal-600 mt-3 flex items-center"><i class="bi bi-geo-alt-fill mr-1.5"></i> <?= htmlspecialchars($history['location']) ?></p>
                                             <?php endif; ?>
+
                                             
                                             <?php if (!empty($history['proof_image'])): ?>
                                                 <div class="mt-4">
@@ -128,6 +129,7 @@ ob_start();
                                                 <i class="bi bi-calendar3 mr-1.5 text-teal-500"></i> <?= date('d M Y, H:i', strtotime($history['created_at'])) ?>
                                             </span>
                                         </div>
+
                                     </div>
                                 </div>
                             <?php endforeach; ?>
@@ -177,6 +179,7 @@ ob_start();
                                       dateObj.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'});
                                       
                 const locHtml = data.location ? `<p class="text-sm font-semibold text-teal-600 mt-3 flex items-center"><i class="bi bi-geo-alt-fill mr-1.5"></i> ${data.location}</p>` : '';
+
                 
                 const imgHtml = data.proof_image ? `
                     <div class="mt-4">
@@ -213,6 +216,7 @@ ob_start();
                             </span>
                         </div>
                     </div>
+
                 `;
                 
                 // Insert at top
@@ -238,7 +242,9 @@ ob_start();
             statusBadge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span> Live Tracking Active';
         }
     });
+
 </script>
+
 
 <?php
 $slot = ob_get_clean();

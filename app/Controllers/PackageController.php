@@ -363,6 +363,26 @@ class PackageController extends BaseController
         Response::redirect('/packages');
     }
 
+    public function histories($id)
+    {
+        $packageModel = new Package();
+        $db = $packageModel->getDb();
+        $stmt = $db->prepare("
+            SELECT th.*, b.city as location, b.name as branch_name
+            FROM tracking_histories th
+            LEFT JOIN branches b ON th.branch_id = b.id
+            WHERE th.package_id = :id
+            ORDER BY th.created_at DESC
+        ");
+        $stmt->execute(['id' => $id]);
+        $histories = $stmt->fetchAll();
+        
+        Response::json([
+            'status' => 'success',
+            'data' => $histories
+        ]);
+    }
+
     public function print(Request $request, $id)
     {
         $type = $_GET['type'] ?? 'lama';
