@@ -339,14 +339,21 @@ class PackageController extends BaseController
             }
 
             $trackingModel = new TrackingHistory();
-            $trackingModel->create([
+            $historyData = [
                 'package_id' => $id,
-                'branch_id' => $branchId,
-                'user_id' => $_SESSION['user_id'],
                 'status' => $status,
                 'description' => $description,
+                'user_id' => $_SESSION['user_id'] ?? null,
                 'proof_image' => $imagePath
-            ]);
+            ];
+            
+            if ($branchId) {
+                $historyData['branch_id'] = $branchId;
+            } else if ($request->get('city_name')) {
+                $historyData['city_name'] = $request->get('city_name');
+            }
+
+            $trackingModel->create($historyData);
             
             if ($status === 'SELESAI') {
                 $pkgData = $packageModel->find($id);
@@ -368,7 +375,7 @@ class PackageController extends BaseController
         $packageModel = new Package();
         $db = $packageModel->getDb();
         $stmt = $db->prepare("
-            SELECT th.*, b.city as location, b.name as branch_name
+            SELECT th.*, COALESCE(th.city_name, b.city) as location, b.name as branch_name
             FROM tracking_histories th
             LEFT JOIN branches b ON th.branch_id = b.id
             WHERE th.package_id = :id
@@ -394,6 +401,13 @@ class PackageController extends BaseController
         
         if ($request->get('branch_id')) {
             $data['branch_id'] = $request->get('branch_id');
+            $data['city_name'] = null;
+        } else if ($request->get('city_name')) {
+            $data['branch_id'] = null;
+            $data['city_name'] = $request->get('city_name');
+        } else {
+            $data['branch_id'] = null;
+            $data['city_name'] = null;
         }
 
         if ($trackingModel->update($id, $data)) {
