@@ -383,6 +383,36 @@ class PackageController extends BaseController
         ]);
     }
 
+    public function updateHistory(Request $request, $id)
+    {
+        $trackingModel = new TrackingHistory();
+        $data = [
+            'status' => $request->get('status'),
+            'description' => $request->get('description'),
+            'created_at' => $request->get('created_at')
+        ];
+        
+        if ($request->get('branch_id')) {
+            $data['branch_id'] = $request->get('branch_id');
+        }
+
+        if ($trackingModel->update($id, $data)) {
+            Response::json(['status' => 'success', 'message' => 'Riwayat tracking berhasil diperbarui']);
+        } else {
+            Response::json(['status' => 'error', 'message' => 'Gagal memperbarui riwayat tracking']);
+        }
+    }
+
+    public function deleteHistory(Request $request, $id)
+    {
+        $trackingModel = new TrackingHistory();
+        if ($trackingModel->delete($id)) {
+            Response::json(['status' => 'success', 'message' => 'Riwayat tracking berhasil dihapus']);
+        } else {
+            Response::json(['status' => 'error', 'message' => 'Gagal menghapus riwayat tracking']);
+        }
+    }
+
     public function print(Request $request, $id)
     {
         $type = $_GET['type'] ?? 'lama';

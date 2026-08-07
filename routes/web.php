@@ -180,6 +180,9 @@ Router::get('/api/ping', function(Request $request) {
 Router::get('/api/tariffs/calculate', [\App\Controllers\TariffController::class, 'calculate']);
 Router::get('/api/packages/datatable', [PackageController::class, 'datatable']);
 Router::get('/api/packages/histories/{id}', [PackageController::class, 'histories']);
+Router::post('/api/tracking-histories/update/{id}', [PackageController::class, 'updateHistory']);
+Router::post('/api/tracking-histories/delete/{id}', [PackageController::class, 'deleteHistory']);
+Router::get('/api/audit-logs/datatable', [\App\Controllers\AuditLogController::class, 'datatable']);
 Router::get('/api/audit-logs/datatable', [\App\Controllers\AuditLogController::class, 'datatable']);
 
 

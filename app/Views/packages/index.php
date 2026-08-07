@@ -451,6 +451,98 @@
             </form>
         </div>
     </div>
+
+    <!-- Modal Manajemen Riwayat Tracking -->
+    <div x-show="trackingHistoryModal" 
+         style="display: none;"
+         class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center"
+         x-transition.opacity>
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl mx-4 max-h-[90vh] flex flex-col"
+             x-show="trackingHistoryModal"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
+             x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+             x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95">
+            
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center">
+                <div>
+                    <h3 class="text-xl font-bold text-slate-800">Manajemen Riwayat Tracking</h3>
+                    <p class="text-sm text-slate-500 mt-0.5">Resi: <span class="font-bold text-primary" x-text="currentResi"></span></p>
+                </div>
+                <button @click="trackingHistoryModal = false" class="text-slate-400 hover:text-slate-600 transition">
+                    <i class="bi bi-x-lg text-xl"></i>
+                </button>
+            </div>
+
+            <div class="p-6 overflow-y-auto flex-1 bg-slate-50">
+                <div x-show="histories.length === 0" class="text-center py-10 text-slate-500">
+                    <i class="bi bi-inbox text-4xl mb-3 block"></i>
+                    Belum ada riwayat tracking.
+                </div>
+                <div class="space-y-4">
+                    <template x-for="hist in histories" :key="hist.id">
+                        <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm relative">
+                            <!-- View Mode -->
+                            <div x-show="editingHistoryId !== hist.id">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div class="font-bold text-slate-800 text-base" x-text="hist.status"></div>
+                                    <div class="flex space-x-2">
+                                        <button @click="editHistory(hist)" class="text-xs bg-blue-50 text-blue-600 hover:bg-blue-100 px-2 py-1 rounded transition">
+                                            <i class="bi bi-pencil"></i> Edit
+                                        </button>
+                                        <button @click="deleteHistory(hist.id)" class="text-xs bg-red-50 text-red-600 hover:bg-red-100 px-2 py-1 rounded transition">
+                                            <i class="bi bi-trash"></i> Hapus
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="text-slate-600 mb-2 text-sm" x-text="hist.description"></div>
+                                
+                                <div class="flex gap-4 text-xs text-slate-500 mt-3 pt-3 border-t border-slate-100">
+                                    <span class="flex items-center"><i class="bi bi-geo-alt-fill text-teal-500 mr-1"></i> <span x-text="hist.location || '-'"></span></span>
+                                    <span class="flex items-center"><i class="bi bi-calendar3 text-teal-500 mr-1"></i> <span x-text="formatDate(hist.created_at)"></span></span>
+                                </div>
+                            </div>
+
+                            <!-- Edit Mode -->
+                            <div x-show="editingHistoryId === hist.id" style="display: none;">
+                                <div class="space-y-3">
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label class="block text-xs font-semibold text-slate-600 mb-1">Status</label>
+                                            <input type="text" x-model="editHistoryForm.status" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded focus:border-indigo-400 outline-none">
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal & Waktu</label>
+                                            <input type="datetime-local" step="1" x-model="editHistoryForm.created_at" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded focus:border-indigo-400 outline-none">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-600 mb-1">Deskripsi</label>
+                                        <textarea x-model="editHistoryForm.description" rows="2" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded focus:border-indigo-400 outline-none resize-none"></textarea>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-600 mb-1">Cabang (Lokasi)</label>
+                                        <select x-model="editHistoryForm.branch_id" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded focus:border-indigo-400 outline-none">
+                                            <option value="">-- Tidak Terkait Cabang --</option>
+                                            <?php foreach($branches as $b): ?>
+                                                <option value="<?= $b['id'] ?>"><?= htmlspecialchars($b['name']) ?> (<?= htmlspecialchars($b['city']) ?>)</option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div class="flex justify-end space-x-2 pt-2">
+                                        <button @click="editingHistoryId = null" class="text-xs px-3 py-1.5 rounded text-slate-600 bg-slate-100 hover:bg-slate-200">Batal</button>
+                                        <button @click="saveHistoryEdit()" class="text-xs px-3 py-1.5 rounded text-white bg-indigo-600 hover:bg-indigo-700">Simpan Perubahan</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
 <?php
     $moduleName = 'Paket';
     $importPreviewUrl = BASE_URL . '/packages/import-preview';
@@ -955,6 +1047,15 @@
                 image: ''
             },
             histories: [],
+            trackingHistoryModal: false,
+            editingHistoryId: null,
+            editHistoryForm: {
+                id: '',
+                status: '',
+                description: '',
+                branch_id: '',
+                created_at: ''
+            },
             
             // Default form state
             defaultFormData: {
@@ -1258,6 +1359,86 @@
                     });
                 });
             },
+            
+            openEditTrackingModal(data) {
+                this.currentResi = data.resi;
+                this.histories = [];
+                this.editingHistoryId = null;
+                
+                fetch('<?= BASE_URL ?>/api/packages/histories/' + data.id)
+                    .then(res => res.json())
+                    .then(res => {
+                        if (res.status === 'success') {
+                            this.histories = res.data;
+                            this.trackingHistoryModal = true;
+                        }
+                    });
+            },
+
+            editHistory(hist) {
+                this.editingHistoryId = hist.id;
+                this.editHistoryForm = {
+                    id: hist.id,
+                    status: hist.status,
+                    description: hist.description,
+                    branch_id: hist.branch_id || '',
+                    created_at: hist.created_at.replace(' ', 'T') // Format for datetime-local
+                };
+            },
+
+            saveHistoryEdit() {
+                const formData = new FormData();
+                formData.append('status', this.editHistoryForm.status);
+                formData.append('description', this.editHistoryForm.description);
+                formData.append('branch_id', this.editHistoryForm.branch_id);
+                formData.append('created_at', this.editHistoryForm.created_at.replace('T', ' ')); // Format for DB
+
+                fetch('<?= BASE_URL ?>/api/tracking-histories/update/' + this.editHistoryForm.id, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(res => {
+                    if (res.status === 'success') {
+                        Toast.fire({icon: 'success', title: res.message});
+                        this.editingHistoryId = null;
+                        
+                        // Refetch histories
+                        const pkg = $('#packagesTable').DataTable().rows().data().toArray().find(r => r.resi === this.currentResi);
+                        if (pkg) {
+                            fetch('<?= BASE_URL ?>/api/packages/histories/' + pkg.id)
+                                .then(r => r.json())
+                                .then(r => { if (r.status === 'success') this.histories = r.data; });
+                        }
+                    } else {
+                        Toast.fire({icon: 'error', title: res.message});
+                    }
+                });
+            },
+
+            deleteHistory(id) {
+                Swal.fire({
+                    title: 'Hapus Riwayat?',
+                    text: 'Riwayat tracking ini akan dihapus permanen!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, Hapus',
+                    cancelButtonText: 'Batal'
+                }).then(result => {
+                    if (result.isConfirmed) {
+                        fetch('<?= BASE_URL ?>/api/tracking-histories/delete/' + id, { method: 'POST' })
+                        .then(res => res.json())
+                        .then(res => {
+                            if (res.status === 'success') {
+                                Toast.fire({icon: 'success', title: res.message});
+                                this.histories = this.histories.filter(h => h.id !== id);
+                            } else {
+                                Toast.fire({icon: 'error', title: res.message});
+                            }
+                        });
+                    }
+                });
+            },
 
             
             deletePackage(id, resi) {
@@ -1361,6 +1542,10 @@
                                  
                         html += `<button onclick="window.alpinePackageManager.openStatusModal(${jsonRow})" class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-orange-500 hover:bg-orange-500/10 transition" title="Update Status & Tracking">
                                     <i class="bi bi-pin-map"></i>
+                                 </button>`;
+                                 
+                        html += `<button onclick="window.alpinePackageManager.openEditTrackingModal(${jsonRow})" class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-purple-500 hover:bg-purple-500/10 transition" title="Manajemen Riwayat Tracking">
+                                    <i class="bi bi-clock-history"></i>
                                  </button>`;
                                  
                         if (roleId != 2) {
