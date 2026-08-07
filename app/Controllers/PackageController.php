@@ -363,7 +363,7 @@ class PackageController extends BaseController
         Response::redirect('/packages');
     }
 
-    public function histories($id)
+    public function histories(Request $request, $id)
     {
         $packageModel = new Package();
         $db = $packageModel->getDb();
