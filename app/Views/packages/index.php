@@ -416,7 +416,7 @@
                     </div>
                     
                     <div x-show="statusData.location_type === 'city'" style="display:none;">
-                        <input type="text" name="city_name" x-model="statusData.city_name" placeholder="Contoh: Jakarta Selatan" class="w-full text-sm px-3 py-2 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition bg-white">
+                        <input type="text" name="city_name" x-model="statusData.city_name" list="indonesia_city_list" placeholder="Contoh: Jakarta Selatan" class="w-full text-sm px-3 py-2 border border-slate-300 rounded-lg focus:border-indigo-400 outline-none transition bg-white">
                     </div>
                 </div>
 
@@ -560,7 +560,7 @@
                                             </select>
                                         </div>
                                         <div x-show="editHistoryForm.location_type === 'city'" style="display:none;">
-                                            <input type="text" x-model="editHistoryForm.city_name" placeholder="Nama kota..." class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded focus:border-indigo-400 outline-none">
+                                            <input type="text" x-model="editHistoryForm.city_name" list="indonesia_city_list" placeholder="Nama kota..." class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded focus:border-indigo-400 outline-none">
                                         </div>
                                     </div>
                                     <div class="flex justify-end space-x-2 pt-2">
