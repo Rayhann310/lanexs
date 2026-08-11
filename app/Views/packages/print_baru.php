@@ -31,7 +31,7 @@
 
         body {
             font-family: 'Inter', 'DejaVu Sans', Arial, sans-serif;
-            font-size: 9px;
+            font-size: 11px;
             color: #000;
             background: #fff;
         }
@@ -52,17 +52,17 @@
         /* ---- Header ---- */
         .hdr { text-align: center; margin-bottom: 1mm; }
         .hdr img { max-width: 22mm; max-height: 7mm; display: inline-block; }
-        .hdr-company { font-size: 8px; font-weight: 700; line-height: 1.2; }
-        .hdr-date { font-size: 7px; }
+        .hdr-company { font-size: 10px; font-weight: 700; line-height: 1.2; }
+        .hdr-date { font-size: 9px; }
 
         /* ---- Barcode ---- */
         .barcode { text-align: center; margin: 1mm 0 0.5mm; }
         .barcode img { max-width: 90mm; height: 8mm; display: inline-block; }
-        .barcode-num { font-size: 12px; font-weight: 700; letter-spacing: 0.5px; }
+        .barcode-num { font-size: 14px; font-weight: 700; letter-spacing: 0.5px; }
 
         /* ---- Route ---- */
         .route {
-            font-size: 7px; font-weight: 700;
+            font-size: 9px; font-weight: 700;
             text-align: center; text-transform: uppercase;
             border-top: 1.5px solid #000; border-bottom: 1.5px solid #000;
             padding: 1mm 0; margin: 1mm 0;
@@ -70,10 +70,10 @@
 
         /* ---- Sections ---- */
         .divider { border-top: 1px dashed #888; margin: 1mm 0; }
-        .lbl   { font-size: 7px; font-weight: 700; margin: 0; line-height: 1.3; }
-        .name  { font-size: 9px; font-weight: 700; line-height: 1.2; word-break: break-word; }
-        .phone { font-size: 7.5px; }
-        .addr  { font-size: 7px; line-height: 1.2; word-break: break-word; }
+        .lbl   { font-size: 9px; font-weight: 700; margin: 0; line-height: 1.3; }
+        .name  { font-size: 11px; font-weight: 700; line-height: 1.2; word-break: break-word; }
+        .phone { font-size: 9.5px; }
+        .addr  { font-size: 9px; line-height: 1.2; word-break: break-word; }
 
         /* ---- Info Barang ---- */
         .box {
@@ -81,10 +81,10 @@
             border-radius: 2px;
             padding: 1mm 2mm;
             margin-top: 1mm;
-            font-size: 7.5px;
+            font-size: 9.5px;
         }
         .box-title {
-            text-align: center; font-weight: 700; font-size: 8px;
+            text-align: center; font-weight: 700; font-size: 10px;
             border-bottom: 1px dashed #999; margin-bottom: 1mm; padding-bottom: 0.5mm;
         }
         table { width: 100%; border-collapse: collapse; table-layout: fixed; }
@@ -95,7 +95,7 @@
         .footer {
             margin-top: auto;
             text-align: center;
-            font-size: 7px;
+            font-size: 9px;
             border-top: 1px solid #000;
             padding-top: 1mm;
         }

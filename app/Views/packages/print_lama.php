@@ -23,7 +23,7 @@
 
         body {
             font-family: 'Times New Roman', Times, serif;
-            font-size: 9px;
+            font-size: 11px;
             background: #fff;
         }
 
@@ -58,7 +58,7 @@
             border: 1px solid #000;
             padding: 1px 2px;
             text-align: center;
-            font-size: 8.5px;
+            font-size: 10.5px;
             word-break: break-word;
         }
         .no-bt { border-top: none; }
@@ -69,14 +69,14 @@
         .bold { font-weight: bold; }
 
         .hdr-logo td { border: none; border-bottom: 1.5px solid #000; padding: 2px; }
-        .resi-big { font-size: 13px; font-weight: bold; padding: 2px 3px; }
-        .ttd-cell { height: 40px; }
+        .resi-big { font-size: 15px; font-weight: bold; padding: 2px 3px; }
+        .ttd-cell { height: 35px; }
 
         .footer-note {
             margin-top: auto;
             text-align: center;
             border-top: 1.5px solid #000;
-            font-size: 8px;
+            font-size: 10px;
             padding: 2px;
             background: #fff;
         }
@@ -101,7 +101,7 @@
                     } else { echo '<strong>LANEXS</strong>'; }
                 ?>
             </td>
-            <td style="width:72%; font-size:12px; font-weight:bold; text-align:center;">
+            <td style="width:72%; font-size:14px; font-weight:bold; text-align:center;">
                 PT. LINTAS AREA NUSANTARA EXPRESS
             </td>
         </tr>
@@ -114,19 +114,19 @@
                 <?= htmlspecialchars($pkg['resi']) ?>
             </td>
             <td colspan="2" class="no-bt" style="width:50%; padding:1px 2px;">
-                <div style="border-bottom:1px solid #000; font-weight:bold; font-size:8px; padding-bottom:1px;">
+                <div style="border-bottom:1px solid #000; font-weight:bold; font-size:10px; padding-bottom:1px;">
                     Tgl : <?= date('Y-m-d', strtotime($pkg['created_at'])) ?>
                 </div>
                 <table style="width:100%; border:none; margin-top:1px;">
                     <tr>
-                        <td style="width:50%; border:none; border-right:1px solid #000; font-weight:bold; font-size:7.5px;">ORIGIN</td>
-                        <td style="width:50%; border:none; font-weight:bold; font-size:7.5px;">DESTINATION</td>
+                        <td style="width:50%; border:none; border-right:1px solid #000; font-weight:bold; font-size:9.5px;">ORIGIN</td>
+                        <td style="width:50%; border:none; font-weight:bold; font-size:9.5px;">DESTINATION</td>
                     </tr>
                     <tr>
-                        <td style="border:none; border-right:1px solid #000; font-size:7.5px;">
+                        <td style="border:none; border-right:1px solid #000; font-size:9.5px;">
                             <?= htmlspecialchars($pkg['origin_city'] ?: ($pkg['branch_origin_city'] ?? ($pkg['origin_branch_name'] ?? '-'))) ?>
                         </td>
-                        <td style="border:none; font-size:7.5px;">
+                        <td style="border:none; font-size:9.5px;">
                             <?= htmlspecialchars($pkg['destination_city'] ?: ($pkg['dest_city'] ?? ($pkg['branch_dest_city'] ?? ($pkg['dest_branch_name'] ?? '-')))) ?>
                         </td>
                     </tr>
@@ -166,15 +166,15 @@
         </tr>
         <tr>
             <td class="bold" style="width:12%;">Nama</td>
-            <td style="width:38%; text-align:left; font-size:8px;"><?= htmlspecialchars($pkg['sender_name']) ?></td>
+            <td style="width:38%; text-align:left; font-size:10px;"><?= htmlspecialchars($pkg['sender_name']) ?></td>
             <td class="bold" style="width:12%;">Nama</td>
-            <td style="width:38%; text-align:left; font-size:8px;"><?= htmlspecialchars($pkg['receiver_name']) ?></td>
+            <td style="width:38%; text-align:left; font-size:10px;"><?= htmlspecialchars($pkg['receiver_name']) ?></td>
         </tr>
         <tr>
             <td class="bold">Alamat</td>
-            <td style="font-size:7.5px; text-align:left;"><?= htmlspecialchars($pkg['sender_address']) ?></td>
+            <td style="font-size:9.5px; text-align:left;"><?= htmlspecialchars($pkg['sender_address']) ?></td>
             <td class="bold">Alamat</td>
-            <td style="font-size:7.5px; text-align:left;"><?= htmlspecialchars($pkg['receiver_address']) ?></td>
+            <td style="font-size:9.5px; text-align:left;"><?= htmlspecialchars($pkg['receiver_address']) ?></td>
         </tr>
         <tr>
             <td class="bold">No.Telp</td>
